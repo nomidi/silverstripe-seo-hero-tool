@@ -1,10 +1,10 @@
 {
     "name": "nomidi/silverstripe-seo-hero-tool",
-    "description": "Bugherd.com implementation for Silverstripe",
+    "description": "SEO Hero Tool helps in optimizing websites for search engines",
     "keywords": [
         "silverstripe",
         "SEO",
-        "Search Engine"
+        "Search Engine Optimization"
     ],
     "version": "0.1.0",
     "type": "silverstripe-module",
