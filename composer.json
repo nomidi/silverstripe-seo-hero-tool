@@ -1,0 +1,39 @@
+{
+    "name": "nomidi/silverstripe-seo-hero-tool",
+    "description": "Bugherd.com implementation for Silverstripe",
+    "keywords": [
+        "silverstripe",
+        "SEO",
+        "Search Engine"
+    ],
+    "version": "0.1.0",
+    "type": "silverstripe-module",
+    "authors": [{
+        "name": "Bastian Fritsch",
+        "email": "mail@bastian-fritsch.de",
+        "homepage": "http://www.bastian-fritsch.de/",
+        "role": "Developer"
+        },
+        {
+        "name": "Armin Eden",
+        "email": "eden@bit-basti.de",
+        "homepage": "http://www.bastian-fritsch.de/",
+        "role": "Developer"
+    }],
+    "extra": {
+    "installer-name": "seo-hero-tool"
+    },
+    "support": {
+    "issues": "https://github.com/nomidi/silverstripe-seo-hero-tool/issues"
+    },
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": ">=5.5.31",
+        "composer/installers": "~1.0",
+        "silverstripe/cms": "~3.2"
+    },
+    "require-dev": {
+		    "phpunit/PHPUnit": "~3.7@stable"
+	  }
+
+}
