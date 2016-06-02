@@ -17,5 +17,5 @@
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
     ga('create', '$getAnalyticsKey', 'auto');
-    ga('send', 'pageview');
+    ga('send', 'pageview', location.pathname.replace(/\\/+\$/, ''));
     <% if getAnonymizeStatus %>ga('set', 'anonymizeIp', true);<% end_if %>

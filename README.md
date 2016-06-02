@@ -8,7 +8,7 @@ SeoHeroTool:
   loadTime: false
   userOptOut: false
 ```
-to your config.yml. Replace UA-xxx with your Google Analytics ID.
+to your config.yml. Replace UA-xxx with your Google Analytics Universal ID.
 Environment type can be either 'dev','test','live' or 'all'.
 Member status checks if logged in Members are also counted. true counts them,
 false not.
