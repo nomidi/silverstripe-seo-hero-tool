@@ -1,67 +1,111 @@
 <?php
-class SeoHeroToolGoogleAnalytics extends Extension
+class SeoHeroToolGoogleAnalytics extends DataObject
 {
-    public function getAnalyticsKey()
+    private static $db = array(
+      'AnalyticsKey' => 'Text',
+      'UserOptOut' => 'Boolean',
+      'AnonymizeIp' => 'Boolean',
+      'LoadTime' => 'Boolean',
+      'ActivateInMode' => "Enum('dev, live, test, All', 'live')",
+    );
+
+    private static $defaults = array(
+      'UserOptOut' => true,
+      'AnonymizeIp' => true,
+      'ActivateInMode' => 'All'
+    );
+
+    public static $singular_name = 'Google Analytics';
+
+    public function getCMSFields()
     {
-        $return =  Config::inst()->get('SeoHeroTool', 'google_key');
-        if ($return == '') {
-            $return =  'not valid';
+        $fields = parent::getCMSFields();
+
+        $fields->addFieldToTab('Root.Main', new TextField('AnalyticsKey', _t('SeoHeroToolGoogleAnalytics.AnalyticsKey', 'Google Analytics Key')));
+        $fields->addFieldToTab('Root.Main', new CheckboxField('UserOptOut', _t('SeoHeroToolGoogleAnalytics.UserOptOut', 'User Opt-out?')));
+        $fields->addFieldToTab('Root.Main', new CheckboxField('AnonymizeIp', _t('SeoHeroToolGoogleAnalytics.AnonymizeIp', 'Anonymize IP Adress?')));
+        $fields->addFieldToTab('Root.Main', new CheckboxField('LoadTime', _t('SeoHeroToolGoogleAnalytics.LoadTime', 'Record Loading Time?')));
+        $fields->addFieldToTab('Root.Main', new DropdownField('ActivateInMode', _t('SeoHeroToolGoogleAnalytics.ActivateInMode', 'Activate when Site is in Mode'), $this->dbObject('ActivateInMode')->enumValues()));
+
+        if (SS_ENVIRONMENT_TYPE == $this->ActivateInMode || $this->ActivateInMode == 'All') {
+            $matchString = _t('SeoHeroToolGoogleAnalytics.ActualModeMatchEnvironment', 'Your actual Environment mode does match the Settings. Google Anayltics should be working.');
+        } else {
+            $matchString = _t('SeoHeroToolGoogleAnalytics.ActualModeDoesNotMatchEnvironment', 'Your actual Environment mode does not Match the Settings. Google Analytics will not work.');
         }
-        return $return;
+        $fields->addFieldToTab('Root.Main', new LiteralField('DoesModeMatch', $matchString), 'ActivateInMode');
+
+        return $fields;
     }
 
-    public function getEnvironmentType()
+    public function InitAnalytics()
     {
-        $return = Config::inst()->get('SeoHeroTool', 'environment_type');
-
-        if ($return == '') {
-            $return =  'dev';
+        if (
+            (SS_ENVIRONMENT_TYPE == $this->ActivateInMode || $this->ActivateInMode == 'All') &&
+            strpos($_SERVER['REQUEST_URI'], '/admin') === false &&
+            strpos($_SERVER['REQUEST_URI'], '/Security') === false &&
+            strpos($_SERVER['REQUEST_URI'], '/dev') === false) {
+            return true;
         }
-        return $return;
+        return false;
     }
 
-    public function getMemberStatus()
+    public static function current_entry()
     {
-        $return = Config::inst()->get('SeoHeroTool', 'member_status');
-
-        if (!$return) {
-            $return =  false;
+        if ($entry = DataObject::get_one('SeoHeroToolGoogleAnalytics')) {
+            return $entry;
         }
-        return $return;
+        return self::make_site_config();
+    }
+    /**
+     * Create SiteConfig with defaults from language file.
+     *
+     * @return SiteConfig
+     */
+    public static function make_entry()
+    {
+        $config = SeoHeroToolGoogleAnalytics::create();
+        $config->write();
+        return $config;
     }
 
-    public function getAnonymizeStatus()
+  /**
+     * Setup a default SiteConfig record if none exists
+     */
+    public function requireDefaultRecords()
     {
-        $return = Config::inst()->get('SeoHeroTool', 'anonymizeIP');
-
-        if (!$return) {
-            $return =  true;
+        parent::requireDefaultRecords();
+        $entry = DataObject::get_one('SeoHeroToolGoogleAnalytics');
+        if (!$entry) {
+            self::make_entry();
+            DB::alteration_message("Added default SeoHeroToolGoogleAnalytics", "created");
         }
-        return $return;
     }
 
-    public function getUserOptOut()
+    /**
+     * Disable the creation of new records, as a site should have just one!
+     * @param  [type] $Member The logged in Member^
+     * @return [type]         Always return false to disallow any creation.
+     */
+    public function canCreate($Member = null)
     {
-        $return = Config::inst()->get('SeoHeroTool', 'userOptOut');
-        if (!$return) {
-            $return = true;
+        if (permission::check('SUPERUSER')) {
+            return false;
+        } else {
+            return false;
         }
-      
-        return $return;
     }
 
-
-    public function onAfterInit()
+    /**
+     * Disable the Deletion of records, as a site should always have one!
+     * @param  [type] $Member The lggef in Member
+     * @return [type]         Always return false to disallow any deletion
+     */
+    public function canDelete($Member = null)
     {
-        $google_key = $this->getAnalyticsKey();
-        $env_type = $this->getEnvironmentType();
-        $member_status = $this->getMemberStatus();
-        if ($google_key != 'not valid') {
-            if ($env_type == Config::inst()->get('Director', 'environment_type') or $env_type == 'all') {
-                if ((!$member_status && Member::currentUserID() == 0) || $member_status) {
-                    Requirements::customScript($this->owner->renderWith('SeoHeroToolsGoogleAnalytics'), 'SeoHeroToolsGoogleAnalytics');
-                }
-            }
+        if (permission::check('SUPERUSER')) {
+            return false;
+        } else {
+            return false;
         }
     }
 }

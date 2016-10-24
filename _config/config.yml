@@ -1,4 +1,3 @@
 ContentController:
   extensions:
-    - SeoHeroToolGoogleAnalytics
-    - SeoHeroTool
+    - SeoHeroToolController

@@ -1,0 +1,9 @@
+de:
+  SeoHeroToolGoogleAnalytics:
+    AnalyticsKey: 'Google Analytics Key'
+    UserOptOut: 'User Opt Out?'
+    AnonymizeIp: 'IP Addressen anonymsieren?'
+    LoadTime: 'Ladezeiten Aufzeichnen?'
+    ActivateInMode: 'Analytics aktivieren, wenn im folgenden Modus:'
+    ActualModeMatchEnvironment: 'Die aktuellen Umgebungseinstellungen entsprechen den ausgewählten Einstellungen. Google Analytics wird geladen.'
+    ActualModeDoesNotMatchEnvironment: 'Die aktuellen Umgebungseinstellungen entsprechende nicht den ausgewählten Einstellungen. Google Analytics wird nicht geladen.'

@@ -1,0 +1,9 @@
+en:
+  SeoHeroToolGoogleAnalytics:
+    AnalyticsKey: 'Google Analytics Key'
+    UserOptOut: 'User Opt Out?'
+    AnonymizeIp: 'Anonymize IP Addresses?'
+    LoadTime: 'Record Load Time?'
+    ActivateInMode: 'Activate Analytics just in Mode:'
+    ActualModeMatchEnvironment: 'Your actual Environment mode does match the Settings. Google Anayltics should be working.'
+    ActualModeDoesNotMatchEnvironment: 'Your actual Environment mode does not Match the Settings. Google Analytics will not work.'
