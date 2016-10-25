@@ -24,6 +24,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         // Test if  both settings are dev
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $this->searchAnalytics);
+        var_dump($body);
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('dev', 'dev')));
 
         // test if it is not displayed if env is dev but display type set to live
