@@ -1,0 +1,33 @@
+Page:
+   home:
+      Title: home
+      URLSegment: home
+Group:
+   cmseditorgroup:
+      Code: cmseditorgroup
+   admingroup:
+      Code: admingroup
+Member:
+   cmseditor:
+      FirstName: Editor
+      Groups: =>Group.cmseditorgroup
+   websiteuser:
+      FirstName: Website User
+   admin:
+      FirstName: Admin
+      Groups: =>Group.admingroup
+Permission:
+   admincode:
+      Code: ADMIN
+      Group: =>Group.admingroup
+   cmsmaincode:
+      Code: CMS_ACCESS_CMSMain
+      Group: =>Group.cmseditorgroup
+SeoHeroToolGoogleAnalytics:
+   default:
+      AnalyticsKey: 'UA-12345678-1'
+      ActivateInMode: 'dev'
+      UserOptOut: false
+      AnonymizeIp: false
+      LoadTime: false
+      ID: 1

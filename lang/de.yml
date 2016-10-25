@@ -7,3 +7,8 @@ de:
     ActivateInMode: 'Analytics aktivieren, wenn im folgenden Modus:'
     ActualModeMatchEnvironment: 'Die aktuellen Umgebungseinstellungen entsprechen den ausgewählten Einstellungen. Google Analytics wird geladen.'
     ActualModeDoesNotMatchEnvironment: 'Die aktuellen Umgebungseinstellungen entsprechende nicht den ausgewählten Einstellungen. Google Analytics wird nicht geladen.'
+  SeoHeroToolTest:
+    FindInTemplate: 'Google Analytics wurden im Template gefunden.'
+    CantFindInTemplate: 'Google Analytics wurden nicht im Template gefunden.'
+    ModeTestedMode: 'Modus: %s - getesteter Modus: %s'
+    CanFindAnalyticsKey: 'Kann den Google Analytics Key nicht finden'

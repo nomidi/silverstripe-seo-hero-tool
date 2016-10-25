@@ -2,7 +2,6 @@
   <% if $AnalyticsKey %>
 
     <% if $UserOptOut %>
-
       <script>
         var gaProperty = '$Property';
         var disableStr = 'ga-disable-' + gaProperty;

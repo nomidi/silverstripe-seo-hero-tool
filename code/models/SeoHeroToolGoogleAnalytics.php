@@ -27,7 +27,9 @@ class SeoHeroToolGoogleAnalytics extends DataObject
         $fields->addFieldToTab('Root.Main', new CheckboxField('LoadTime', _t('SeoHeroToolGoogleAnalytics.LoadTime', 'Record Loading Time?')));
         $fields->addFieldToTab('Root.Main', new DropdownField('ActivateInMode', _t('SeoHeroToolGoogleAnalytics.ActivateInMode', 'Activate when Site is in Mode'), $this->dbObject('ActivateInMode')->enumValues()));
 
-        if (SS_ENVIRONMENT_TYPE == $this->ActivateInMode || $this->ActivateInMode == 'All') {
+        $env_type = Config::inst()->get('Director', 'environment_type');
+
+        if ($env_type == $this->ActivateInMode || $this->ActivateInMode == 'All') {
             $matchString = _t('SeoHeroToolGoogleAnalytics.ActualModeMatchEnvironment', 'Your actual Environment mode does match the Settings. Google Anayltics should be working.');
         } else {
             $matchString = _t('SeoHeroToolGoogleAnalytics.ActualModeDoesNotMatchEnvironment', 'Your actual Environment mode does not Match the Settings. Google Analytics will not work.');

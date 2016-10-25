@@ -15,12 +15,16 @@ class SeoHeroToolController extends Extension
             strpos($_SERVER['REQUEST_URI'], '/Security') === false &&
             strpos($_SERVER['REQUEST_URI'], '/dev') === false) {
             $AnalyticsData = SeoHeroToolGoogleAnalytics::get()->first();
-          //  debug::show($AnalyticsData);
+            //debug::show($AnalyticsData);
             $template = $this->owner->customise(array(
                 'GoogleAnalytics' => $AnalyticsData,
             ))->renderWith('SeoHeroToolGoogleAnalytics');
           //  debug::show($template);
-            return $template;
+          $env_type =  Config::inst()->get('Director', 'environment_type');
+            if ($AnalyticsData->ActivateInMode === $env_type || $AnalyticsData->ActivateInMode === 'All') {
+                return $template;
+            }
+            return false;
         } else {
             return false;
         }
