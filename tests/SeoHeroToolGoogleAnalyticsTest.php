@@ -19,15 +19,11 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
     {
         Config::inst()->update('Director', 'environment_type', 'dev');
         $config = Config::inst()->get('Director', 'environment_type');
-        $bla = new SeoHeroToolController();
-        $bla->getGoogleAnalytics();
         $ga = $this->objFromFixture('SeoHeroToolGoogleAnalytics', 'default');
-        $ga->ActivateInMode = 'dev';
-        $ga->write();
         var_dump($ga);
         var_dump($config);
         // Test if  both settings are dev
-        $response = $this->get($this->objFromFixture('Page', 'home')->Link());
+        $response = $this->get('home/');
         $body = strpos($response->getBody(), $this->searchAnalytics);
         var_dump($body);
         //debug::show($response);
