@@ -23,9 +23,10 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         var_dump($ga);
         var_dump($config);
         // Test if  both settings are dev
-        $response = $this->get('home/');
+        $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $this->searchAnalytics);
         var_dump($body);
+        var_dump($response->getBody());
         //debug::show($response);
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('dev', 'dev')));
 
