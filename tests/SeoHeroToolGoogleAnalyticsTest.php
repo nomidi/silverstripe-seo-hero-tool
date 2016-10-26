@@ -20,13 +20,13 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         Config::inst()->update('Director', 'environment_type', 'dev');
         $config = Config::inst()->get('Director', 'environment_type');
         $ga = $this->objFromFixture('SeoHeroToolGoogleAnalytics', 'default');
-        var_dump($ga);
-        var_dump($config);
+        //var_dump($ga);
+        //var_dump($config);
         // Test if  both settings are dev
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), 'UA-12345678-1');
-        var_dump($body);
-        var_dump($response->getBody());
+        //var_dump($body);
+        //var_dump($response->getBody());
         //debug::show($response);
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('dev', 'dev')));
 
@@ -48,6 +48,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         $ga->write();
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $this->searchAnalytics);
+        var_dump($body);
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('dev', 'All')));
     }
 
@@ -93,6 +94,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         // Test if bot settings are in test
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $this->searchAnalytics);
+        var_dump($body);
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('test', 'test')));
 
         $ga->ActivateInMode = 'dev';
