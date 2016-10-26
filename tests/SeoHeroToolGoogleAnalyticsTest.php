@@ -4,7 +4,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
     protected static $fixture_file = 'SeoHeroToolGoogleAnalyticsTest.yml';
     public static $use_draft_site = true;
     private $googleAnalyticsKey = 'UA-12345678-1';
-    private $searchAnalytics = '//www.google-analytics.com/analytics.js';
+    private $searchAnalytics = 'www.google-analytics.com';
     /*
 
      */
@@ -24,7 +24,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         var_dump($config);
         // Test if  both settings are dev
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
-        $body = strpos($response->getBody(), $this->searchAnalytics);
+        $body = strpos($response->getBody(), 'UA-12345678-1');
         var_dump($body);
         var_dump($response->getBody());
         //debug::show($response);
