@@ -1,6 +1,6 @@
 language: php
 php:
-  - '5.6.25'
+  - '5.6'
 
 env:
   - DB=MYSQL CORE_RELEASE=3.2
@@ -11,6 +11,7 @@ before_script:
   - php ~/travis-support/travis_setup.php --source `pwd` --target ~/builds/ss
   - cd ~/builds/ss
   - composer install
+  - composer require nomidi/silverstripe-seo-hero-tool
 
 script:
   - "vendor/bin/phpunit seo-hero-tool/tests"
