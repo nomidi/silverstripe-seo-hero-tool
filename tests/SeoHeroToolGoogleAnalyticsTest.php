@@ -18,7 +18,8 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
     public function testModusDev()
     {
         Config::inst()->update('Director', 'environment_type', 'dev');
-
+        $bla = new SeoHeroToolController();
+        $bla->getGoogleAnalytics();
         $ga = $this->objFromFixture('SeoHeroToolGoogleAnalytics', 'default');
 
         // Test if  both settings are dev
@@ -26,6 +27,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         $body = strpos($response->getBody(), $this->searchAnalytics);
         var_dump($response->getBody());
         var_dump($body);
+        //debug::show($response);
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('dev', 'dev')));
 
         // test if it is not displayed if env is dev but display type set to live
