@@ -18,14 +18,17 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
     public function testModusDev()
     {
         Config::inst()->update('Director', 'environment_type', 'dev');
+        $config = Config::inst()->get('Director', 'environment_type');
         $bla = new SeoHeroToolController();
         $bla->getGoogleAnalytics();
         $ga = $this->objFromFixture('SeoHeroToolGoogleAnalytics', 'default');
-
+        $ga->ActivateInMode = 'dev';
+        $ga->write();
+        var_dump($ga);
+        var_dump($config);
         // Test if  both settings are dev
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $this->searchAnalytics);
-        var_dump($response->getBody());
         var_dump($body);
         //debug::show($response);
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('dev', 'dev')));
