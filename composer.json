@@ -31,7 +31,7 @@
         "php": ">=5.5.31",
         "composer/installers": "~1.0",
         "silverstripe/cms": "~3.2",
-        "silverstripe/framwork": "~3.2"
+        "silverstripe/framework": "~3.2"
     },
     "require-dev": {
 		    "phpunit/PHPUnit": "~3.7@stable"
