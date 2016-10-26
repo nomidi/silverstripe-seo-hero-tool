@@ -126,12 +126,14 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         $ga = $this->objFromFixture('SeoHeroToolGoogleAnalytics', 'default');
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $needle);
+        var_dump($body);
         $this->assertFalse($body, _t('SeoHeroToolGoogleAnalyticsTest.FindAnonymizeInTemplate'));
 
         $ga->AnonymizeIp = true;
         $ga->write();
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $needle);
+        var_dump($body);
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.MissingAnonymizeInTemplate'));
     }
 
