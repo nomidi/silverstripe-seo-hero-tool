@@ -4,7 +4,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
     protected static $fixture_file = 'SeoHeroToolGoogleAnalyticsTest.yml';
     public static $use_draft_site = true;
     private $googleAnalyticsKey = 'UA-12345678-1';
-    private $searchAnalytics = 'Simple';
+    private $searchAnalytics = 'TEST123';
     /*
 
      */
@@ -24,7 +24,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         //var_dump($config);
         // Test if  both settings are dev
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
-        $body = strpos($response->getBody(), 'UA-12345678-1');
+        $body = strpos($response->getBody(), $this->searchAnalytics);
         //var_dump($body);
         //var_dump($response->getBody());
         //debug::show($response);
@@ -65,7 +65,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
 
         $body = strpos($response->getBody(), $this->searchAnalytics);
-        //$this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('live', 'live')));
+        $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('live', 'live')));
 
         $ga->ActivateInMode = 'dev';
         $ga->write();
@@ -83,8 +83,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         $ga->write();
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $this->searchAnalytics);
-        var_dump($response);
-        var_dump($body);
+
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('live', 'All')));
     }
 
