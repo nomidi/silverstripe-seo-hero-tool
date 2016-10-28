@@ -8,7 +8,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
 
 
 
-    
+
     /*
 
      */
@@ -24,18 +24,12 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         Config::inst()->update('Director', 'environment_type', 'dev');
         $config = Config::inst()->get('Director', 'environment_type');
         $ga = $this->objFromFixture('SeoHeroToolGoogleAnalytics', 'default');
-        //var_dump($ga);
-        //var_dump($config);
-        // Test if  both settings are dev
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $this->searchAnalytics);
-        //var_dump($body);
-        //var_dump($response->getBody());
-        //debug::show($response);
         $this->assertTrue(is_numeric($body), 'test');
 
         // test if it is not displayed if env is dev but display type set to live
-        /*
+
         $ga->ActivateInMode = 'live';
         $ga->write();
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
@@ -55,7 +49,6 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
         $body = strpos($response->getBody(), $this->searchAnalytics);
         var_dump($body);
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticsTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticsTest.ModeTestedMode'), array('dev', 'All')));
-        */
     }
 
     public function testModusLive()
