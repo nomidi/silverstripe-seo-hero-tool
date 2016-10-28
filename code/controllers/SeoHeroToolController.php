@@ -1,7 +1,13 @@
 <?php
 
-class SeoHeroToolController extends Extension
+class SeoHeroToolController extends DataExtension
 {
+    public function onAfterInit()
+    {
+        Requirements::insertHeadTags($this->SeoHeroToolMeta());
+    }
+
+    
     public function SeoHeroToolMeta()
     {
         return $this->compressTemplate(
