@@ -5,6 +5,18 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
     public static $use_draft_site = true;
     private $googleAnalyticsKey = 'UA-12345678-1';
     private $searchAnalytics = 'TEST123';
+
+
+
+    public function testgetGoogleAnalytics()
+    {
+        Config::inst()->update('Director', 'environment_type', 'dev');
+        $config = Config::inst()->get('Director', 'environment_type');
+        $ga = $this->objFromFixture('SeoHeroToolGoogleAnalytics', 'default');
+        $test = new SeoHeroToolController();
+        debug::show($test->getGoogleAnalytics());
+        die('ende');
+    }
     /*
 
      */

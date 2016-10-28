@@ -44,8 +44,7 @@ class SeoHeroToolGoogleAnalytics extends DataObject
         if (
             (SS_ENVIRONMENT_TYPE == $this->ActivateInMode || $this->ActivateInMode == 'All') &&
             strpos($_SERVER['REQUEST_URI'], '/admin') === false &&
-            strpos($_SERVER['REQUEST_URI'], '/Security') === false &&
-            strpos($_SERVER['REQUEST_URI'], '/dev') === false) {
+            strpos($_SERVER['REQUEST_URI'], '/Security') === false) {
             return true;
         }
         return false;
