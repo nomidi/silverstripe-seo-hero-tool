@@ -8,15 +8,7 @@ class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
 
 
 
-    public function testgetGoogleAnalytics()
-    {
-        Config::inst()->update('Director', 'environment_type', 'dev');
-        $config = Config::inst()->get('Director', 'environment_type');
-        $ga = $this->objFromFixture('SeoHeroToolGoogleAnalytics', 'default');
-        $test = new SeoHeroToolController();
-        debug::show($test->getGoogleAnalytics());
-        die('ende');
-    }
+    
     /*
 
      */
