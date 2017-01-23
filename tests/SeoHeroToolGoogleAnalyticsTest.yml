@@ -31,3 +31,7 @@ SeoHeroToolGoogleAnalytics:
       AnonymizeIp: false
       LoadTime: false
       ID: 1
+SeoHeroToolSchemaCompany:
+   default:
+      OrganizationType: 'Organization'
+      ID: 1
