@@ -4,7 +4,7 @@ class SeoHeroToolSchemaCompany extends DataObject
     private static $db = array(
     'Company' => 'Text',
     'CompanyMore' =>  'Text',
-    'ContactType' => 'Text',
+    'OrganizationType' => 'Text',
     'Street' => 'Text',
     'HouseNmbr' => 'Varchar(10)',
     'Postal' => 'Text',
@@ -24,7 +24,7 @@ class SeoHeroToolSchemaCompany extends DataObject
     {
         $fields = parent::getCMSFields();
         $fields->addFieldToTab('Root.Main',
-          SchemaOrganizationType::create('ContactType', _t('SeoHeroToolSchemaCompany.ContactType', 'Organization Type')));
+          SchemaOrganizationType::create('OrganizationType', _t('SeoHeroToolSchemaCompany.OrganizationType', 'Organization Type')));
         $fields->addFieldToTab('Root.Main', new TextField('Company', _t('SeoHeroToolSchemaCompany.Company', 'Company')));
         $fields->addFieldToTab('Root.Main', new TextField('CompanyMore', _t('SeoHeroToolSchemaCompany.CompanyMore', 'Company second row')));
         $fields->addFieldToTab('Root.Main', new TextField('Street', _t('SeoHeroToolSchemaCompany.Street', 'Street')));

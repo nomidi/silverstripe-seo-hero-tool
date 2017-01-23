@@ -7,11 +7,14 @@ class SeoHeroToolController extends DataExtension
         Requirements::insertHeadTags($this->SeoHeroToolMeta());
     }
 
-    
+
     public function SeoHeroToolMeta()
     {
         return $this->compressTemplate(
-          $this->getGoogleAnalytics()
+          '<!-- Seo Hero Tools for Silverstripe -->' .
+          $this->getGoogleAnalytics().
+          $this->getSchemaCompany().
+          '<!-- Seo Hero Tools for Silverstripe -->'
         );
     }
 
@@ -32,6 +35,15 @@ class SeoHeroToolController extends DataExtension
             return false;
         } else {
             return false;
+        }
+    }
+
+    public function getSchemaCompany()
+    {
+        $SchemaCompany = SeoHeroToolSchemaCompany::get()->first();
+        if ($SchemaCompany->OrganizationType != "") {
+            $template = $this->owner->customise(array('SchemaCompany'=>$SchemaCompany))->renderWith('SeoHeroToolSchemaCompany');
+            return $template;
         }
     }
 
