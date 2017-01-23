@@ -1,7 +1,7 @@
 <?php
 class SeoHeroToolSchemaCompanyTest extends FunctionalTest
 {
-    protected static $fixture_file = 'SeoHeroToolSchemaCompanyTest.yml';
+    protected static $fixture_file = 'SeoHeroToolGoogleAnalyticsTest.yml';
     public static $use_draft_site = true;
 
 
