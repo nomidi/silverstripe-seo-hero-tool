@@ -15,7 +15,8 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
         $ga = $this->objFromFixture('SeoHeroToolSchemaCompany', 'default');
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $needle);
-        $this->assertTrue($body, _t('SeoHeroToolSchemaCompany.FindOrganizationTypeInTemplate'));
+
+        $this->assertTrue(is_numeric($body), _t('SeoHeroToolSchemaCompany.FindOrganizationTypeInTemplate'));
 
         $ga->OrganizationType = "";
         $ga->write();
