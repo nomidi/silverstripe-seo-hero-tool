@@ -3,7 +3,7 @@ class SeoHeroToolSchemaCompany extends DataObject
 {
     private static $db = array(
     'Company' => 'Text',
-    'CompanyMore' =>  'Text',
+    #'CompanyMore' =>  'Text',
     'OrganizationType' => 'Text',
     'Street' => 'Text',
     'HouseNmbr' => 'Varchar(10)',
@@ -27,7 +27,7 @@ class SeoHeroToolSchemaCompany extends DataObject
         $fields->addFieldToTab('Root.Main',
           SchemaOrganizationType::create('OrganizationType', _t('SeoHeroToolSchemaCompany.OrganizationType', 'Organization Type')));
         $fields->addFieldToTab('Root.Main', new TextField('Company', _t('SeoHeroToolSchemaCompany.Company', 'Company')));
-        $fields->addFieldToTab('Root.Main', new TextField('CompanyMore', _t('SeoHeroToolSchemaCompany.CompanyMore', 'Company second row')));
+        #$fields->addFieldToTab('Root.Main', new TextField('CompanyMore', _t('SeoHeroToolSchemaCompany.CompanyMore', 'Company second row')));
         $fields->addFieldToTab('Root.Main', new TextField('Street', _t('SeoHeroToolSchemaCompany.Street', 'Street')));
         $fields->addFieldToTab('Root.Main', new TextField('HouseNmbr', _t('SeoHeroToolSchemaCompany.HouseNmbr', 'Housenumber')));
         $fields->addFieldToTab('Root.Main', new TextField('Postal', _t('SeoHeroToolSchemaCompany.Postal', 'Postal')));
