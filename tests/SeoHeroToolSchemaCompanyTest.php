@@ -39,11 +39,11 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
       $this->assertTrue($checkJson != NULL);
     }
 
-    public function testJSONisBroken(){
+    public function testJSONwithWrongData(){
       $needle = '<script type="application/ld+json">';
       $needleEnd = '</script>';
       $ga = $this->objFromFixture('SeoHeroToolSchemaCompany', 'default');
-      $ga->Mail = 'info@\"example.com';
+      $ga->Mail = 'info@\"ex"ample.com';
       $ga->write();
       $response = $this->get($this->objFromFixture('Page', 'home')->Link());
       $jsonstart = strpos($response->getBody(), $needle);
