@@ -42,4 +42,5 @@ SeoHeroToolSchemaCompany:
       Street: 'Teststreet'
       HouseNmbr: '123'
       Tel: '+49-1234-56789-01'
+      VatID: '12345678901'
       ID: 1

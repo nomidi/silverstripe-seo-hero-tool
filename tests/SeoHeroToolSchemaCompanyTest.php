@@ -1,7 +1,7 @@
 <?php
 class SeoHeroToolSchemaCompanyTest extends FunctionalTest
 {
-    protected static $fixture_file = 'SeoHeroToolGoogleAnalyticsTest.yml';
+    protected static $fixture_file = 'SeoHeroToolControllerTest.yml';
     public static $use_draft_site = true;
 
 
@@ -43,8 +43,7 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
       $needle = '<script type="application/ld+json">';
       $needleEnd = '</script>';
       $ga = $this->objFromFixture('SeoHeroToolSchemaCompany', 'default');
-      //$ga->Link = "http://www.test.de";
-      $ga->Mail = 'info@\example.com';
+      $ga->Mail = 'info@\"example.com';
       $ga->write();
       $response = $this->get($this->objFromFixture('Page', 'home')->Link());
       $jsonstart = strpos($response->getBody(), $needle);
@@ -52,8 +51,6 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
       $jsonend = strpos($jsonObject, $needleEnd);
       $jsonObject = substr($jsonObject, 0, $jsonend);
       $checkJson = json_decode($jsonObject);
-      debug::show($jsonObject);
-      debug::show($checkJson);
       $this->assertTrue($checkJson != NULL);
     }
 }

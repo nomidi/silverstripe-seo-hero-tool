@@ -11,7 +11,8 @@ class SeoHeroToolSchemaCompany extends DataObject
     'Location' => 'Text',
     'Tel' => 'Text',
     'Mail' => 'Text',
-    'Link' => 'Text'
+    'Link' => 'Text',
+    'VatID' => 'Text'
   );
 
     private static $has_one = array(
@@ -34,6 +35,7 @@ class SeoHeroToolSchemaCompany extends DataObject
         $fields->addFieldToTab('Root.Main', new TextField('Tel', _t('SeoHeroToolSchemaCompany.Tel', 'Telephon')));
         $fields->addFieldToTab('Root.Main', new TextField('Mail', _t('SeoHeroToolSchemaCompany.Mail', 'Mail')));
         $fields->addFieldToTab('Root.Main', new TextField('Link', _t('SeoHeroToolSchemaCompany.Link', 'Website')));
+        $fields->addFieldToTab('Root.Main', new TextField('VatID', _t('SeoHeroToolSchemaCompany.VatID', 'VatID')));
         $logoField = new UploadField(
                 $name = 'Logo',
                 $title = _t('SeoHeroToolSchemaCompany.Logo', 'Company Logo')

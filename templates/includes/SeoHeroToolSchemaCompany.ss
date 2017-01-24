@@ -8,6 +8,7 @@
       <% if $Mail %>,"email":"$Mail"<% end_if %>
       <% if $Company %>,"name" : "$Company"<% end_if %>
       <% if $Logo %>,"logo": "{$BaseHref}$Logo.RelativeLink"<% end_if %>
+      <% if $VatID %>,"vatID": "$VatID"<% end_if %>
       <% if $Postal && $Location && $Street %>
        ,"address": {
         "@type": "PostalAddress",

@@ -1,7 +1,7 @@
 <?php
 class SeoHeroToolGoogleAnalyticsTest extends FunctionalTest
 {
-    protected static $fixture_file = 'SeoHeroToolGoogleAnalyticsTest.yml';
+    protected static $fixture_file = 'SeoHeroToolControllerTest.yml';
     public static $use_draft_site = true;
     private $googleAnalyticsKey = 'UA-12345678-1';
     private $searchAnalytics = 'www.google-analytics.com';

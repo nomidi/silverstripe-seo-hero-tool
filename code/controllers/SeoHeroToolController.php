@@ -48,7 +48,6 @@ class SeoHeroToolController extends DataExtension
             $SchemaCompany->$k = stripslashes($SchemaCompany->$k);
           }
         }
-        //debug::show($SchemaCompany);
         if ($SchemaCompany->OrganizationType != "") {
             $template = $this->owner->customise(array('SchemaCompany'=>$SchemaCompany))->renderWith('SeoHeroToolSchemaCompany');
             return $template;
