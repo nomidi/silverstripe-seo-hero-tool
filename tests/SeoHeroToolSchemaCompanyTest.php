@@ -24,4 +24,20 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
         $body = strpos($response->getBody(), $needle);
         $this->assertFalse(is_numeric($body), _t('SeoHeroToolSchemaCompany.MissingOrganizationTypeInTemplate'));
     }
+
+    public function testJSON(){
+      $needle = '<script type="application/ld+json">';
+      $needleEnd = '</script>';
+      $ga = $this->objFromFixture('SeoHeroToolSchemaCompany', 'default');
+      $ga->Link = "http://www.test.de";
+      $ga->Mail = 'info@example.com';
+      $response = $this->get($this->objFromFixture('Page', 'home')->Link());
+      $jsonstart = strpos($response->getBody(), $needle);
+      $jsonObject = substr($response->getBody(), $jsonstart+35);
+      $jsonend = strpos($jsonObject, $needleEnd);
+      $jsonObject = substr($jsonObject, 0, $jsonend);
+      $checkJson = json_decode( stripslashes( $jsonObject ) );
+      //debug::show($jsonObject);
+      $this->assertTrue($checkJson != NULL);
+    }
 }
