@@ -34,4 +34,12 @@ SeoHeroToolGoogleAnalytics:
 SeoHeroToolSchemaCompany:
    default:
       OrganizationType: 'Organization'
+      Link: 'http://www.example.com'
+      Company: 'TestCompany'
+      Mail: 'info@example.com'
+      Postal: '12345'
+      Location: 'Testtown'
+      Street: 'Teststreet'
+      HouseNmbr: '123'
+      Tel: '+49-1234-56789-01'
       ID: 1

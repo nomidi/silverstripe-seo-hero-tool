@@ -25,19 +25,35 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
         $this->assertFalse(is_numeric($body), _t('SeoHeroToolSchemaCompany.MissingOrganizationTypeInTemplate'));
     }
 
-    public function testJSON(){
+    public function testJSONisCorrect(){
       $needle = '<script type="application/ld+json">';
       $needleEnd = '</script>';
       $ga = $this->objFromFixture('SeoHeroToolSchemaCompany', 'default');
-      $ga->Link = "http://www.test.de";
-      $ga->Mail = 'info@example.com';
       $response = $this->get($this->objFromFixture('Page', 'home')->Link());
       $jsonstart = strpos($response->getBody(), $needle);
       $jsonObject = substr($response->getBody(), $jsonstart+35);
       $jsonend = strpos($jsonObject, $needleEnd);
       $jsonObject = substr($jsonObject, 0, $jsonend);
-      $checkJson = json_decode( stripslashes( $jsonObject ) );
+      $checkJson = json_decode($jsonObject);
       //debug::show($jsonObject);
+      $this->assertTrue($checkJson != NULL);
+    }
+
+    public function testJSONisBroken(){
+      $needle = '<script type="application/ld+json">';
+      $needleEnd = '</script>';
+      $ga = $this->objFromFixture('SeoHeroToolSchemaCompany', 'default');
+      //$ga->Link = "http://www.test.de";
+      $ga->Mail = 'info@\example.com';
+      $ga->write();
+      $response = $this->get($this->objFromFixture('Page', 'home')->Link());
+      $jsonstart = strpos($response->getBody(), $needle);
+      $jsonObject = substr($response->getBody(), $jsonstart+35);
+      $jsonend = strpos($jsonObject, $needleEnd);
+      $jsonObject = substr($jsonObject, 0, $jsonend);
+      $checkJson = json_decode($jsonObject);
+      debug::show($jsonObject);
+      debug::show($checkJson);
       $this->assertTrue($checkJson != NULL);
     }
 }

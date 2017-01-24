@@ -38,14 +38,24 @@ class SeoHeroToolController extends DataExtension
         }
     }
 
+
     public function getSchemaCompany()
     {
         $SchemaCompany = SeoHeroToolSchemaCompany::get()->first();
+        $value = $SchemaCompany->custom_database_fields('SeoHeroToolSchemaCompany');
+        foreach ($value as $k => $v){
+          if($k != 'LogoID'){
+            $SchemaCompany->$k = stripslashes($SchemaCompany->$k);
+          }
+        }
+        //debug::show($SchemaCompany);
         if ($SchemaCompany->OrganizationType != "") {
             $template = $this->owner->customise(array('SchemaCompany'=>$SchemaCompany))->renderWith('SeoHeroToolSchemaCompany');
             return $template;
         }
     }
+
+
 
     /**
      * compressTemplate
