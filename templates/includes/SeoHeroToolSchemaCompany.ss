@@ -9,12 +9,13 @@
       <% if $Company %>,"name" : "$Company"<% end_if %>
       <% if $Logo %>,"logo": "{$BaseHref}$Logo.RelativeLink"<% end_if %>
       <% if $VatID %>,"vatID": "$VatID"<% end_if %>
-      <% if $Postal && $Location && $Street %>
+      <% if $Postal && $Location && $Street && $Country %>
        ,"address": {
         "@type": "PostalAddress",
         "addressLocality": "$Location",
         "postalCode": "$Postal",
-        "streetAddress": "$Street<% if $HouseNmbr != $Street %> $HouseNmbr<% end_if %>"
+        "streetAddress": "$Street<% if $HouseNmbr != $Street %> $HouseNmbr<% end_if %>",
+        "addressCountry": "$Country"
       }
       <% end_if %>
       <% if Tel %>
@@ -28,5 +29,20 @@
 
       }
     </script>
+
+  <% if $Latitude && $Longitude %>
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Place",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "$Latitude",
+      "longitude": "$Longitude"
+    },
+    <% if $Company %>"name": "$Company"<% end_if %>
+  }
+  </script>
   <% end_if %>
+<% end_if %>
 <% end_with %>

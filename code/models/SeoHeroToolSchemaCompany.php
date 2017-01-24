@@ -4,6 +4,7 @@ class SeoHeroToolSchemaCompany extends DataObject
     private static $db = array(
     'Company' => 'Text',
     #'CompanyMore' =>  'Text',
+    'Country' =>  'Text',
     'OrganizationType' => 'Text',
     'Street' => 'Text',
     'HouseNmbr' => 'Varchar(10)',
@@ -12,7 +13,9 @@ class SeoHeroToolSchemaCompany extends DataObject
     'Tel' => 'Text',
     'Mail' => 'Text',
     'Link' => 'Text',
-    'VatID' => 'Text'
+    'VatID' => 'Text',
+    'Latitude' => 'Float()',
+    'Longitude' => 'Float()',
   );
 
     private static $has_one = array(
@@ -32,6 +35,7 @@ class SeoHeroToolSchemaCompany extends DataObject
         $fields->addFieldToTab('Root.Main', new TextField('HouseNmbr', _t('SeoHeroToolSchemaCompany.HouseNmbr', 'Housenumber')));
         $fields->addFieldToTab('Root.Main', new TextField('Postal', _t('SeoHeroToolSchemaCompany.Postal', 'Postal')));
         $fields->addFieldToTab('Root.Main', new TextField('Location', _t('SeoHeroToolSchemaCompany.Location', 'Location')));
+        $fields->addFieldToTab('Root.Main', new CountryDropdownField('Country', _t('SeoHeroToolSchemaCompany.Country', 'Country')));
         $fields->addFieldToTab('Root.Main', new TextField('Tel', _t('SeoHeroToolSchemaCompany.Tel', 'Telephon')));
         $fields->addFieldToTab('Root.Main', new TextField('Mail', _t('SeoHeroToolSchemaCompany.Mail', 'Mail')));
         $fields->addFieldToTab('Root.Main', new TextField('Link', _t('SeoHeroToolSchemaCompany.Link', 'Website')));
@@ -46,9 +50,31 @@ class SeoHeroToolSchemaCompany extends DataObject
         $logoField->getValidator()->setAllowedMaxFileSize($size);
         $logoField->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
         $fields->addFieldToTab('Root.Main', $logoField);
+        $fields->addFieldToTab('Root.Main', $latf = new LatLngField('Latitude'));
+        $latf->setConfig('lat', true);
+        $fields->addFieldToTab('Root.Main', $lngf = new LatLngField('Longitude'));
+        $lngf->setConfig('lng', true);
 
         return $fields;
     }
+
+    public function onBeforeWrite()
+    {
+        parent::onBeforeWrite();
+        if (($this->Latitude == 0 || $this->Longitude == 0) && ($this->Street != "" && $this->HouseNmbr != "" && $this->Postal != "" && $this->Location != "" && $this->Country != "")) {
+            $address = urlencode($this->Street." ".$this->HouseNmbr." ".$this->PostalCode." ".$this->Location);
+            $region = $this->Country;
+
+            $json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false&region=$region");
+            $json = json_decode($json);
+            if (count($json->{'results'}) >= 1) {
+                $this->Latitude = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
+                $this->Longitude = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
+            }
+        }
+    }
+
+
 
     public static function current_entry()
     {

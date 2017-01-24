@@ -39,8 +39,11 @@ SeoHeroToolSchemaCompany:
       Mail: 'info@example.com'
       Postal: '12345'
       Location: 'Testtown'
+      Country: 'Germany'
       Street: 'Teststreet'
       HouseNmbr: '123'
       Tel: '+49-1234-56789-01'
       VatID: '12345678901'
       ID: 1
+      Latitude: '53.0788767'
+      Longitude: '8.8085507'
