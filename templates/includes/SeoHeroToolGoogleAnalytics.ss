@@ -3,7 +3,7 @@
 
     <% if $UserOptOut %>
       <script>
-        var gaProperty = '$Property';
+        var gaProperty = '$AnalyticsKey';
         var disableStr = 'ga-disable-' + gaProperty;
         if (document.cookie.indexOf(disableStr + '=true') > -1) {
           window[disableStr] = true;

@@ -12,17 +12,17 @@ class SeoHeroToolController extends DataExtension
     {
         return $this->compressTemplate(
           '<!-- Seo Hero Tools for Silverstripe -->' .
-          $this->getGoogleAnalytics().
+          $this->getGoogleAnalytic().
           $this->getSchemaCompany().
           '<!-- Seo Hero Tools for Silverstripe -->'
         );
     }
 
-    public function getGoogleAnalytics()
+    public function getGoogleAnalytic()
     {
         if (strpos($_SERVER['REQUEST_URI'], '/admin') === false &&
             strpos($_SERVER['REQUEST_URI'], '/Security') === false) {
-            $AnalyticsData = SeoHeroToolGoogleAnalytics::get()->first();
+            $AnalyticsData = SeoHeroToolGoogleAnalytic::get()->first();
             //debug::show($AnalyticsData);
             $template = $this->owner->customise(array(
                 'GoogleAnalytics' => $AnalyticsData,

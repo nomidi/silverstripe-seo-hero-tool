@@ -1,5 +1,5 @@
 <?php
-class SeoHeroToolGoogleAnalytics extends DataObject
+class SeoHeroToolGoogleAnalytic extends DataObject
 {
     private static $db = array(
       'AnalyticsKey' => 'Text',
@@ -21,18 +21,18 @@ class SeoHeroToolGoogleAnalytics extends DataObject
     {
         $fields = parent::getCMSFields();
 
-        $fields->addFieldToTab('Root.Main', new TextField('AnalyticsKey', _t('SeoHeroToolGoogleAnalytics.AnalyticsKey', 'Google Analytics Key')));
-        $fields->addFieldToTab('Root.Main', new CheckboxField('UserOptOut', _t('SeoHeroToolGoogleAnalytics.UserOptOut', 'User Opt-out?')));
-        $fields->addFieldToTab('Root.Main', new CheckboxField('AnonymizeIp', _t('SeoHeroToolGoogleAnalytics.AnonymizeIp', 'Anonymize IP Adress?')));
-        $fields->addFieldToTab('Root.Main', new CheckboxField('LoadTime', _t('SeoHeroToolGoogleAnalytics.LoadTime', 'Record Loading Time?')));
-        $fields->addFieldToTab('Root.Main', new DropdownField('ActivateInMode', _t('SeoHeroToolGoogleAnalytics.ActivateInMode', 'Activate when Site is in Mode'), $this->dbObject('ActivateInMode')->enumValues()));
+        $fields->addFieldToTab('Root.Main', new TextField('AnalyticsKey', _t('SeoHeroToolGoogleAnalytic.AnalyticsKey', 'Google Analytics Key')));
+        $fields->addFieldToTab('Root.Main', new CheckboxField('UserOptOut', _t('SeoHeroToolGoogleAnalytic.UserOptOut', 'User Opt-out?')));
+        $fields->addFieldToTab('Root.Main', new CheckboxField('AnonymizeIp', _t('SeoHeroToolGoogleAnalytic.AnonymizeIp', 'Anonymize IP Adress?')));
+        $fields->addFieldToTab('Root.Main', new CheckboxField('LoadTime', _t('SeoHeroToolGoogleAnalytic.LoadTime', 'Record Loading Time?')));
+        $fields->addFieldToTab('Root.Main', new DropdownField('ActivateInMode', _t('SeoHeroToolGoogleAnalytic.ActivateInMode', 'Activate when Site is in Mode'), $this->dbObject('ActivateInMode')->enumValues()));
 
         $env_type = Config::inst()->get('Director', 'environment_type');
 
         if ($env_type == $this->ActivateInMode || $this->ActivateInMode == 'All') {
-            $matchString = _t('SeoHeroToolGoogleAnalytics.ActualModeMatchEnvironment', 'Your actual Environment mode does match the Settings. Google Anayltics should be working.');
+            $matchString = _t('SeoHeroToolGoogleAnalytic.ActualModeMatchEnvironment', 'Your actual Environment mode does match the Settings. Google Anayltics should be working.');
         } else {
-            $matchString = _t('SeoHeroToolGoogleAnalytics.ActualModeDoesNotMatchEnvironment', 'Your actual Environment mode does not Match the Settings. Google Analytics will not work.');
+            $matchString = _t('SeoHeroToolGoogleAnalytic.ActualModeDoesNotMatchEnvironment', 'Your actual Environment mode does not Match the Settings. Google Analytics will not work.');
         }
         $fields->addFieldToTab('Root.Main', new LiteralField('DoesModeMatch', $matchString), 'ActivateInMode');
 
@@ -52,7 +52,7 @@ class SeoHeroToolGoogleAnalytics extends DataObject
 
     public static function current_entry()
     {
-        if ($entry = DataObject::get_one('SeoHeroToolGoogleAnalytics')) {
+        if ($entry = DataObject::get_one('SeoHeroToolGoogleAnalytic')) {
             return $entry;
         }
         return self::make_site_config();
@@ -64,7 +64,7 @@ class SeoHeroToolGoogleAnalytics extends DataObject
      */
     public static function make_entry()
     {
-        $config = SeoHeroToolGoogleAnalytics::create();
+        $config = SeoHeroToolGoogleAnalytic::create();
         $config->write();
         return $config;
     }
@@ -75,10 +75,10 @@ class SeoHeroToolGoogleAnalytics extends DataObject
     public function requireDefaultRecords()
     {
         parent::requireDefaultRecords();
-        $entry = DataObject::get_one('SeoHeroToolGoogleAnalytics');
+        $entry = DataObject::get_one('SeoHeroToolGoogleAnalytic');
         if (!$entry) {
             self::make_entry();
-            DB::alteration_message("Added default SeoHeroToolGoogleAnalytics", "created");
+            DB::alteration_message("Added default SeoHeroToolGoogleAnalytic", "created");
         }
     }
 

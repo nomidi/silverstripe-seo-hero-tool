@@ -23,7 +23,7 @@ Permission:
    cmsmaincode:
       Code: CMS_ACCESS_CMSMain
       Group: =>Group.cmseditorgroup
-SeoHeroToolGoogleAnalytics:
+SeoHeroToolGoogleAnalytic:
    default:
       AnalyticsKey: 'UA-12345678-1'
       ActivateInMode: 'dev'
