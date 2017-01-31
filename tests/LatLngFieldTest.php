@@ -1,6 +1,6 @@
 <?php
 
-class LatLngFieldTest extends FunctionalTest
+class SeoHeroToolLatLngFieldTest extends FunctionalTest
 {
     public static $use_draft_site = true;
     /**
@@ -25,7 +25,7 @@ class LatLngFieldTest extends FunctionalTest
         $field = new LatLngField("LatLng");
         $field->setValue($value);
 
-        $val = new LatLngFieldTest_Validator();
+        $val = new SeoHeroToolLatLngFieldTest_Validator();
         try {
             $field->validate($val);
             // If we expect failure and processing gets here without an exception, the test failed
@@ -42,7 +42,7 @@ class LatLngFieldTest extends FunctionalTest
     }
 }
 
-class LatLngFieldTest_Validator extends Validator
+class SeoHeroToolLatLngFieldTest_Validator extends Validator
 {
     public function validationError($fieldName, $message, $messageType='')
     {
@@ -58,7 +58,7 @@ class LatLngFieldTest_Validator extends Validator
     }
 }
 
-class LatLngFieldTest_Controller extends Controller implements TestOnly
+class SeoHeroToolLatLngFieldTest_Controller extends Controller implements TestOnly
 {
     private static $allowed_actions = array('Form');
 
@@ -71,7 +71,7 @@ class LatLngFieldTest_Controller extends Controller implements TestOnly
     public function Link($action = null)
     {
         return Controller::join_links(
-            'LatLngFieldTest_Controller',
+            'SeoHeroToolLatLngFieldTest_Controller',
             $this->getRequest()->latestParam('Action'),
             $this->getRequest()->latestParam('ID'),
             $action

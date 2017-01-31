@@ -16,10 +16,30 @@ class SeoHeroToolSchemaCompany extends DataObject
     'VatID' => 'Text',
     'Latitude' => 'Float()',
     'Longitude' => 'Float()',
+    'OpeningHoursMondayOpeningTime' => 'Text',
+    'OpeningHoursMondayClosingTime' => 'Text',
+    'OpeningHoursTuesdayOpeningTime' => 'Text',
+    'OpeningHoursTuesdayClosingTime' => 'Text',
+    'OpeningHoursWednesdayOpeningTime' => 'Text',
+    'OpeningHoursWednesdayClosingTime' => 'Text',
+    'OpeningHoursThursdayOpeningTime' => 'Text',
+    'OpeningHoursThursdayClosingTime' => 'Text',
+    'OpeningHoursFridayOpeningTime' => 'Text',
+    'OpeningHoursFridayClosingTime' => 'Text',
+    'OpeningHoursSaturdayOpeningTime' => 'Text',
+    'OpeningHoursSaturdayClosingTime' => 'Text',
+    'OpeningHoursSundayOpeningTime' => 'Text',
+    'OpeningHoursSundayClosingTime' => 'Text',
+    'OpeningHoursInSchema' => 'Boolean'
+
   );
 
     private static $has_one = array(
     'Logo' => 'Image');
+
+    private static $has_many = array(
+      'SeoHeroToolSocialLinks' => 'SeoHeroToolSocialLink'
+    );
 
     public static $singular_name = 'Schema.org Company';
 
@@ -40,6 +60,22 @@ class SeoHeroToolSchemaCompany extends DataObject
         $fields->addFieldToTab('Root.Main', new TextField('Mail', _t('SeoHeroToolSchemaCompany.Mail', 'Mail')));
         $fields->addFieldToTab('Root.Main', new TextField('Link', _t('SeoHeroToolSchemaCompany.Link', 'Website')));
         $fields->addFieldToTab('Root.Main', new TextField('VatID', _t('SeoHeroToolSchemaCompany.VatID', 'VatID')));
+        $fields->addFieldToTab('Root.OpeningHours', new Literalfield('', _t('SeoHeroToolSchemaCompany.OpeningHoursText', "Hours should be in the format 0900 (for 09.00) or 1730 (for 17.30)")));
+        $fields->addFieldToTab('Root.OpeningHours', new CheckboxField('OpeningHoursInSchema', _t('SeoHeroToolSchemaCompany.OpeningHoursInSchema', 'Display Opening Hours in Schemadata?')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursMondayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursMondayOpeningTime', 'Opening Hour Monday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursMondayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursMondayClosingTime', 'Closing Hour Monday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursTuesdayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursTuesdayOpeningTime', 'Opening Hour Tuesday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursTuesdayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursTuesdayClosingTime', 'Closing Hour Tuesday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursWednesdayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursWednesdayOpeningTime', 'Opening Hour Wednesday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursWednesdayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursWednesdayClosingTime', 'Closing Hour Wednesday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursThursdayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursThursdayOpeningTime', 'Opening Hour Thursday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursThursdayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursThursdayClosingTime', 'Closing Hour Thursday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursFridayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursFridayOpeningTime', 'Opening Hour Friday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursFridayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursFridayClosingTime', 'Closing Hour Friday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursSaturdayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursSaturdayOpeningTime', 'Opening Hour Saturday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursSaturdayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursSaturdayClosingTime', 'Closing Hour Saturday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursSundayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursSundayOpeningTime', 'Opening Hour Sunday')));
+        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursSundayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursSundayClosingTime', 'Closing Hour Sunday')));
         $logoField = new UploadField(
                 $name = 'Logo',
                 $title = _t('SeoHeroToolSchemaCompany.Logo', 'Company Logo')
@@ -74,6 +110,32 @@ class SeoHeroToolSchemaCompany extends DataObject
         }
     }
 
+    public static function OpeningHours(){
+      $Data = SeoHeroToolSchemaCompany::get()->First();
+      $ArrayList = new ArrayList();
+      if($Data->OpeningHoursMondayOpeningTime != NULL || $Data->OpeningHoursMondayClosingTime != Null){
+        $ArrayList->push(new ArrayData(array('Day'=>'Monday', 'Open' => $Data->OpeningHoursMondayOpeningTime, 'Close'=>$Data->OpeningHoursMondayClosingTime)));
+      }
+      if($Data->OpeningHoursTuesdayOpeningTime != NULL || $Data->OpeningHoursTuesdayClosingTime != NULL){
+        $ArrayList->push(new ArrayData(array('Day'=>'Tuesday', 'Open' => $Data->OpeningHoursTuesdayOpeningTime, 'Close'=>$Data->OpeningHoursTuesdayClosingTime)));
+      }
+      if($Data->OpeningHoursWednesdayOpeningTime != NULL || $Data->OpeningHoursWednesdayClosingTime != NULL){
+        $ArrayList->push(new ArrayData(array('Day'=>'Wednesday', 'Open' => $Data->OpeningHoursWednesdayOpeningTime, 'Close'=>$Data->OpeningHoursWednesdayClosingTime)));
+      }
+      if($Data->OpeningHoursThursdayOpeningTime != NULL || $Data->OpeningHoursThursdayClosingTime != NULL){
+        $ArrayList->push(new ArrayData(array('Day'=>'Thursday', 'Open' => $Data->OpeningHoursThursdayOpeningTime, 'Close'=>$Data->OpeningHoursThursdayClosingTime)));
+      }
+      if($Data->OpeningHoursFridayOpeningTime != NULL || $Data->OpeningHoursFridayClosingTime != NULL){
+        $ArrayList->push(new ArrayData(array('Day'=>'Friday', 'Open' => $Data->OpeningHoursFridayOpeningTime, 'Close'=>$Data->OpeningHoursFridayClosingTime)));
+      }
+      if($Data->OpeningHoursSaturdayOpeningTime != NULL || $Data->OpeningHoursSaturdayClosingTime != NULL){
+        $ArrayList->push(new ArrayData(array('Day'=>'Saturday', 'Open' => $Data->OpeningHoursSaturdayOpeningTime, 'Close'=>$Data->OpeningHoursSaturdayClosingTime)));
+      }
+      if($Data->OpeningHoursSundayOpeningTime != NULL || $Data->OpeningHoursSundayClosingTime != NULL){
+        $ArrayList->push(new ArrayData(array('Day'=>'Sunday', 'Open' => $Data->OpeningHoursSundayOpeningTime, 'Close'=>$Data->OpeningHoursSundayClosingTime)));
+      }
+      return $ArrayList;
+    }
 
 
     public static function current_entry()

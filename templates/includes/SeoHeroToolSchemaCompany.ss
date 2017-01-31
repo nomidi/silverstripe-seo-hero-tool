@@ -25,7 +25,25 @@
           "contactType" : "customer service"
         } ]
       <% end_if %>
-
+      <% if $SeoHeroToolSocialLinks %>
+      ,"sameAs":[
+        <% loop $SeoHeroToolSocialLinks %>
+        "{$Link}"<% if not $Last %>,<% end_if %>
+        <% end_loop %>
+      ]
+      <% end_if %>
+      <% if $OpeningHoursInSchema %>
+        ,"openingHoursSpecification": [
+          <% loop OpeningHours %>
+            {
+              "@type": "OpeningHoursSpecification",
+              <% if $Close %>"closes": "{$Close}:00",<% end_if %>
+              <% if $Open %>"opens": "{$Open}:00",<% end_if %>
+              "dayOfWeek": "http://schema.org/{$Day}"
+            }<% if not Last %>,<% end_if %>
+          <% end_loop %>
+        ]
+      <% end_if %>
 
       }
     </script>

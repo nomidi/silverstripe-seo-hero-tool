@@ -69,4 +69,42 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
             }
         }
     }
+
+    public function testSocialSchemaLinks(){
+        $facebookneedle = 'https://www.facebook.com/examplesite';
+        $twitterneedle = 'https://www.twitter.com/mysite';
+        $instagramneedle = 'https://www.instagram.com/examplesite';
+        $data = $this->objFromFixture('SeoHeroToolSchemaCompany', 'default');
+
+        $response = $this->get($this->objFromFixture('Page', 'home')->Link());
+        $fbsearch = strpos($response->getBody(), $facebookneedle);
+        $this->assertTrue(is_numeric($fbsearch), _t('SeoHeroToolSchemaCompany.DidNotFindFacebookSocialMeta'));
+
+        $twittersearch = strpos($response->getBody(), $twitterneedle);
+        $this->assertTrue(is_numeric($twittersearch), _t('SeoHeroToolSchemaCompany.DidNotFindTwitterkSocialMeta'));
+
+        $instasearch = strpos($response->getBody(), $instagramneedle);
+        $this->assertTrue(is_numeric($instasearch), _t('SeoHeroToolSchemaCompany.DidNotFindInstagramSocialMeta'));
+    }
+
+    public function testgetSocialLoop(){
+        $seocontroller = new SeoHeroToolController();
+        $data = $seocontroller->getSocialLoop();
+        $contentarray = array();
+        foreach ($data as $key => $val ){
+          $contentarray[] = $val->Name;
+        }
+        $fbneedle = 'Facebook';
+        $twitterneedle = 'Twitter';
+        $instagramneedle = 'Instagram';
+
+        $searchfb = in_array($fbneedle, $contentarray);
+        $this->assertTrue($searchfb, _t('SeoHeroToolSchemaCompany.DidNotFindFacebookInSocialLoop'));
+
+        $searchtw = in_array($twitterneedle, $contentarray);
+        $this->assertTrue($searchtw, _t('SeoHeroToolSchemaCompany.DidNotFindTwitterInSocialLoop'));
+
+        $searchinst = in_array($instagramneedle, $contentarray);
+        $this->assertFalse($searchinst, _t('SeoHeroToolSchemaCompany.FoundInstagramInSocialLoop'));
+    }
 }

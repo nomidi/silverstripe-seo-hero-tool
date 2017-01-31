@@ -31,6 +31,28 @@ SeoHeroToolGoogleAnalytic:
       AnonymizeIp: false
       LoadTime: false
       ID: 1
+SeoHeroToolSocialLink:
+   default:
+      Name: Facebook
+      Link: https://www.facebook.com/examplesite
+      UserName: ''
+      IconName:''
+      DisplayInSocialLoop: 1
+      ID: 1
+   secondEntry:
+      Name: Twitter
+      Link: https://www.twitter.com/mysite
+      UserName: 'ExampleSite'
+      IconName: ''
+      DisplayInSocialLoop: 1
+      ID: 2
+   thirdEntry:
+      Name: Instagram
+      Link: https://www.instagram.com/examplesite
+      UserName: ''
+      IconName: ''
+      DisplayInSocialLoop: 0
+      ID: 3
 SeoHeroToolSchemaCompany:
    default:
       OrganizationType: 'Organization'
@@ -47,3 +69,4 @@ SeoHeroToolSchemaCompany:
       ID: 1
       Latitude: '53.0788767'
       Longitude: '8.8085507'
+      SeoHeroToolSocialLinks: =>SeoHeroToolSocialLink.default, =>SeoHeroToolSocialLink.secondEntry, =>SeoHeroToolSocialLink.thirdEntry

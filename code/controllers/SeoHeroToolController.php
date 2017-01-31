@@ -69,4 +69,9 @@ class SeoHeroToolController extends DataExtension
             return $template;
         }
     }
+
+    public function getSocialLoop(){
+      $data = SeoHeroToolSocialLink::get()->Filter(array('DisplayInSocialLoop' => 1));
+      return $data;
+    }
 }
