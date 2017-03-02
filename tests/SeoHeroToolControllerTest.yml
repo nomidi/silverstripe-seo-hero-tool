@@ -78,12 +78,3 @@ SeoHeroToolSchemaCompany:
     Latitude: '53.0788767'
     Longitude: '8.8085507'
     SeoHeroToolSocialLinks: =>SeoHeroToolSocialLink.default, =>SeoHeroToolSocialLink.secondEntry, =>SeoHeroToolSocialLink.thirdEntry
-SeoHeroToolRedirect:
-  default:
-    OldLinkName: 'test/xyz'
-    NewLinkName: 'test/abc'
-    ID: 1
-  redirectWithLink:
-    OldLinkName: 'test/fgh'
-    NewLink: =>SiteTree.default
-    ID: 2
