@@ -39,6 +39,11 @@ class SeoHeroToolGoogleAnalytic extends DataObject
         return $fields;
     }
 
+    public function getEditForm($id = null, $fields = null){
+      $form = parent::getEditForm($id, $fields);
+        return $form;      
+    }
+
     public function InitAnalytics()
     {
         if (
