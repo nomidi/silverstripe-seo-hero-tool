@@ -25,6 +25,7 @@ class SeoHeroToolRedirect extends DataObject
     );
 
     public $debug = false;
+    public static $has_written = false;
 
     public function getCMSFields()
     {
@@ -100,17 +101,13 @@ class SeoHeroToolRedirect extends DataObject
             $htaccessFile = $_SERVER["DOCUMENT_ROOT"].'/'.SEO_HERO_TOOL_PATH .'/htaccess-test/.htaccess';
         }
 
-        if ($this->debug) {
-            // in Debug Mode nothing will be written!
-            echo "Debug Mode detected<br/>";
+
+        echo "No Debug Mode detected<br/>";
+        if (strpos($htaccesscontent, "### SEOHEROTOOL Redirects ###") !== false) {
+            $explode = explode("### SEOHEROTOOL Redirects ###", $htaccesscontent);
+            file_put_contents($htaccessFile, $explode[0]. $content . $explode[2]);
         } else {
-            echo "No Debug Mode detected<br/>";
-            if (strpos($htaccesscontent, "### SEOHEROTOOL Redirects ###") !== false) {
-                $explode = explode("### SEOHEROTOOL Redirects ###", $htaccesscontent);
-                file_put_contents($htaccessFile, $explode[0]. $content . $explode[2]);
-            } else {
-                file_put_contents($htaccessFile, $content . $htaccesscontent);
-            }
+            file_put_contents($htaccessFile, $content . $htaccesscontent);
         }
     }
 
