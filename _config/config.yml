@@ -1,3 +1,6 @@
 ContentController:
   extensions:
     - SeoHeroToolController
+SiteTree:
+  extensions:
+    - SeoHeroToolDataObject

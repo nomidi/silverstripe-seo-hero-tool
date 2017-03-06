@@ -2,14 +2,10 @@ Page:
   home:
     Title: home
     URLSegment: home
-  redirectlink:
-    ID: 1
-    Title: RedirectLink
-    URLSegment: RedirectLink
-SiteTree:
-  default:
-    Title: default
-    URLSegment: default
+  dataobjecttest:
+    Title: something
+    ID: 5
+    URLSegment: something
 Group:
   cmseditorgroup:
     Code: cmseditorgroup

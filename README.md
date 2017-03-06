@@ -14,3 +14,6 @@ Member status checks if logged in Members are also counted. true counts them,
 false not.
 anonymizeIP defines if the IP Address will be transmitted anonymized, which is
 the default setting.
+
+SeoHeroTool and MetaDataTitle.
+Please replace in your template in the header section the title output ....
