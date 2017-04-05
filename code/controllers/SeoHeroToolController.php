@@ -26,7 +26,7 @@ class SeoHeroToolController extends DataExtension
             //debug::show($AnalyticsData);
             $template = $this->owner->customise(array(
                 'GoogleAnalytics' => $AnalyticsData,
-            ))->renderWith('SeoHeroToolGoogleAnalytics');
+            ))->renderWith('SeoHeroToolGoogleAnalytic');
           //  debug::show($template);
           $env_type =  Config::inst()->get('Director', 'environment_type');
             if ($AnalyticsData->ActivateInMode === $env_type || $AnalyticsData->ActivateInMode === 'All') {
@@ -43,10 +43,10 @@ class SeoHeroToolController extends DataExtension
     {
         $SchemaCompany = SeoHeroToolSchemaCompany::get()->first();
         $value = $SchemaCompany->custom_database_fields('SeoHeroToolSchemaCompany');
-        foreach ($value as $k => $v){
-          if($k != 'LogoID'){
-            $SchemaCompany->$k = stripslashes($SchemaCompany->$k);
-          }
+        foreach ($value as $k => $v) {
+            if ($k != 'LogoID') {
+                $SchemaCompany->$k = stripslashes($SchemaCompany->$k);
+            }
         }
         if ($SchemaCompany->OrganizationType != "") {
             $template = $this->owner->customise(array('SchemaCompany'=>$SchemaCompany))->renderWith('SeoHeroToolSchemaCompany');
@@ -70,8 +70,9 @@ class SeoHeroToolController extends DataExtension
         }
     }
 
-    public function getSocialLoop(){
-      $data = SeoHeroToolSocialLink::get()->Filter(array('DisplayInSocialLoop' => 1));
-      return $data;
+    public function getSocialLoop()
+    {
+        $data = SeoHeroToolSocialLink::get()->Filter(array('DisplayInSocialLoop' => 1));
+        return $data;
     }
 }
