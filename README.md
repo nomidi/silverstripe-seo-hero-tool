@@ -31,6 +31,8 @@ SeoHeroToolDataObject:
     Title:
       - Title
       - LastEdited
+    DateFormat: SpecialFormat
+    DateFormatting: d/m
     WithoutSpace: true
     SiteConfigTitle: true
 ```
@@ -40,4 +42,8 @@ All Pages with the Type TestPage will have both fields, but there will be no
 space between the fields. The Pages with the Type of TestPage will also have the
 SiteConfigTitle at the end.
 The default Title for those Page Types will just be used if there is no site
-specific BetterTitle given. 
+specific BetterTitle given.
+Options for DateFormat are : Nice24, Year, Nice and SpecialFormat.
+If SpecialFormat is set, then the setting DateFormatting determines how the
+date will be formated. In this example just the day and month of the date will be 
+displayed.
