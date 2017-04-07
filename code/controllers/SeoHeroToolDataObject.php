@@ -3,7 +3,7 @@
 class SeoHeroToolDataObject extends DataExtension
 {
     private static $db = array(
-        'BetterTitle' => 'Varchar(255)',
+        'BetterSiteTitle' => 'Varchar(255)',
     );
 
     /*
@@ -23,10 +23,9 @@ class SeoHeroToolDataObject extends DataExtension
         // Check for YAML Configuration
         $classname = $this->owner->ClassName;
         $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
-        //debug::show($yamlsettings);
         if ($yamlsettings) {
             $return = $this->checkYAMLSettings($yamlsettings);
-          //  debug::show($return);
+
             return $return;
         } else {
             // If no BetterTitle is set and no Title is set via configuration
@@ -56,11 +55,18 @@ class SeoHeroToolDataObject extends DataExtension
 
                 if ($dataobject == 'SS_Datetime' || $dataobject == 'SS_Date') {
                     if (isset($entry['DateFormat'])) {
-                        $formatOption = $entry['DateFormat'];
+                        if ($entry['DateFormat'] == 'Specific' && isset($entry['DateFormatting'])) {
+                            $formatOption = 'Specific';
+                        } else {
+                            $formatOption = $entry['DateFormat'];
+                        }
                     } else {
                         $formatOption = '';
                     }
                     switch ($formatOption) {
+                      case 'SpecialFormat':
+                        $content = $obj->Format($entry['DateFormatting']);
+                        break;
                       case 'Nice24':
                         $content = $obj->Nice24();
                         break;
@@ -92,8 +98,21 @@ class SeoHeroToolDataObject extends DataExtension
 
     public function updateCMSFields(FieldList $fields)
     {
-        $fields->addFieldToTab('Root.SeoHeroTool', new TextField('BetterTitle', _t('SeoHeroTool.BetterTitle', 'BetterTitle')));
-
+        $fields->addFieldToTab('Root.SeoHeroTool', new TextField('BetterSiteTitle', _t('SeoHeroTool.BetterSiteTitle', 'BetterTitle')));
+        $defaultValue = config::inst()->get('SeoHeroToolDataObject', $this->owner->ClassName);
+        if ($defaultValue != '') {
+            $fields->addFieldToTab('Root.SeoHeroTool', new LiteralField('', _t('SeoHeroTool.DefaultValue', 'Default Value for this Pagetype due to config file is: ').$this->checkYAMLSettings($defaultValue)));
+        } elseif ($defaultValue == '' && $this->owner->BetterSiteTitle == null) {
+            $fields->addFieldToTab('Root.SeoHeroTool', new LiteralField('', _t('SeoHeroTool.DefaultTitle', 'Site has no BetterTitle and no Default Value from the configuration, so the title will be displayed.')));
+        }
         return $fields;
+    }
+
+    public function onBeforeWrite()
+    {
+        parent::onBeforeWrite();
+        if ($this->owner->BetterSiteTitle == '') {
+            $this->owner->BetterSiteTitle = null;
+        }
     }
 }
