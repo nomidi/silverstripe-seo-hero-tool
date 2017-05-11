@@ -44,6 +44,7 @@ SeoHeroToolSocialLink:
     IconName:''
     DisplayInSocialLoop: 1
     ID: 1
+    SortOrder: 2
   secondEntry:
     Name: Twitter
     Link: https://www.twitter.com/mysite
@@ -51,6 +52,7 @@ SeoHeroToolSocialLink:
     IconName: ''
     DisplayInSocialLoop: 1
     ID: 2
+    SortOrder: 1
   thirdEntry:
     Name: Instagram
     Link: https://www.instagram.com/examplesite
@@ -58,6 +60,7 @@ SeoHeroToolSocialLink:
     IconName: ''
     DisplayInSocialLoop: 0
     ID: 3
+    SOrtOrder: 1
 SeoHeroToolSchemaCompany:
   default:
     OrganizationType: 'Organization'

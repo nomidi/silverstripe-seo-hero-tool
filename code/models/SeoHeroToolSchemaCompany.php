@@ -47,6 +47,7 @@ class SeoHeroToolSchemaCompany extends DataObject
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
+        $fields->removeByName('SeoHeroToolSocialLinks');
         $fields->addFieldToTab('Root.Main',
           SchemaOrganizationType::create('OrganizationType', _t('SeoHeroToolSchemaCompany.OrganizationType', 'Organization Type')));
         $fields->addFieldToTab('Root.Main', new TextField('Company', _t('SeoHeroToolSchemaCompany.Company', 'Company')));
@@ -90,6 +91,12 @@ class SeoHeroToolSchemaCompany extends DataObject
         $latf->setConfig('lat', true);
         $fields->addFieldToTab('Root.Main', $lngf = new LatLngField('Longitude'));
         $lngf->setConfig('lng', true);
+
+        $grid = new GridField("SeoHeroToolSocialLinks", "Social Links", $this->SeoHeroToolSocialLinks(), GridFieldConfig_RelationEditor::create(), $this);
+        $config = $grid->getConfig();
+        //$config->addComponents(new GridFieldSortableRows('SortOrder'));
+        $config->getComponentByType('GridFieldPaginator')->setItemsPerPage(20);
+        $fields->addFieldToTab('Root.SocialLinks', $grid);
 
         return $fields;
     }

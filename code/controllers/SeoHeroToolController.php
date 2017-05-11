@@ -12,8 +12,10 @@ class SeoHeroToolController extends DataExtension
     {
         return $this->compressTemplate(
           '<!-- Seo Hero Tools for Silverstripe -->' .
+          $this->getMetaRobots().
           $this->getGoogleAnalytic().
           $this->getSchemaCompany().
+          $this->getMetaSocialMedia() .
           '<!-- Seo Hero Tools for Silverstripe -->'
         );
     }
@@ -38,7 +40,9 @@ class SeoHeroToolController extends DataExtension
         }
     }
 
-
+    /*
+    *   getSchemaCompany() returns the Company Schema in a Schema.org format.
+     */
     public function getSchemaCompany()
     {
         $SchemaCompany = SeoHeroToolSchemaCompany::get()->first();
@@ -54,7 +58,25 @@ class SeoHeroToolController extends DataExtension
         }
     }
 
+    /*
+    *   getMetaRobots() returns the Robots Information for the actual Website.
+     */
+    public function getMetaRobots()
+    {
+        $template = $this->owner->renderWith('SeoHeroToolMetaRobots');
+        return $this->compressTemplate($template);
+    }
 
+    /*
+    *   getMetaSocialMedia() returns the site information prepared for facebook, twitter etc. for better sharing
+     */
+     public function getMetaSocialMedia()
+     {
+         $template = $this->owner->customise(array(
+            'SeoHeroToolSocialMediaChannels' => SeoHeroToolSocialLink::get(),
+        ))->renderWith('SeoHeroToolMetaSocialMedia');
+         return $this->compressTemplate($template);
+     }
 
     /**
      * compressTemplate
