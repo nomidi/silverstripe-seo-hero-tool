@@ -11,12 +11,20 @@ class SeoHeroToolDataObject extends DataExtension
         'FollowType' => 'Boolean',
         'Canonical' => 'Text',
         'CanonicalAll' => 'Boolean',
-        'GenMetaDesc' => 'Text'
+        'GenMetaDesc' => 'Text',
+        'FBTitle' => 'Varchar(80)',
+        'FBDescription' => 'Text',
+        'TwTitle' => 'Varchar(80)',
+        'TwDescription' => 'Text',
     );
 
     private static $has_one = array(
         'CanonicalLink' => 'SiteTree',
+        'FBImage' => 'Image',
+        'TwImage' => 'Image',
     );
+
+    public static $current_meta_desc;
 
     /*
     *   Function MetaTitle() overwrites the default title. If BetterTitle is set,
@@ -110,7 +118,13 @@ class SeoHeroToolDataObject extends DataExtension
 
     public function updateCMSFields(FieldList $fields)
     {
-        $fields->addFieldToTab('Root.SeoHeroTool', new TextField('BetterSiteTitle', _t('SeoHeroTool.BetterSiteTitle', 'BetterTitle')));
+        if ($this->owner->MetaDescription == "") {
+            self::$current_meta_desc = $this->owner->GenMetaDesc;
+        } else {
+            self::$current_meta_desc = $this->owner->MetaDescription;
+        }
+
+        $fields->addFieldToTab('Root.SeoHeroTool', $bstitle = new TextField('BetterSiteTitle', _t('SeoHeroTool.BetterSiteTitle', 'BetterTitle')));
         $defaultValue = config::inst()->get('SeoHeroToolDataObject', $this->owner->ClassName);
         if ($defaultValue != '') {
             $fields->addFieldToTab('Root.SeoHeroTool', new LiteralField('', _t('SeoHeroTool.DefaultValue', 'Default Value for this Pagetype due to config file is: ').$this->checkYAMLSettings($defaultValue)));
@@ -122,7 +136,7 @@ class SeoHeroToolDataObject extends DataExtension
                 'Keywords', 'Keywords',
                 array(
                     $keywordField = TextField::create('FeaturedKeyword', _t('SeoHeroTool.FeaturedKeyword', 'Keywords')),
-                    $keywordQuestionField = TextareaField::create('KeywordQuestion', _t('SeoHeroTool.KeywordQuestion', 'Fragestellungen')),
+                    $keywordQuestionField = TextareaField::create('KeywordQuestion', _t('SeoHeroTool.KeywordQuestion', 'Interrogation')),
 
                 )
             );
@@ -173,9 +187,46 @@ class SeoHeroToolDataObject extends DataExtension
                     $metaDescField = TextareaField::create("MetaDescription", _t('SeoHeroTool.OwnMetaDesc', 'Meta description'))
                 )
             );
+
+        $fb = ToggleCompositeField::create(
+            'Facebook', 'Facebook',
+            array(
+                $fbtit = Textfield::create('FBTitle', _t('SeoHeroTool.FBTitle', 'Title for Facebook')),
+                $fbimg = UploadField::create('FBImage', _t('SeoHeroTool.FBImage', 'Image for Facebook')),
+                $fbdesc = TextareaField::create('FBDescription', _t('SeoHeroTool.FBDescription', 'Description for Facebook')),
+            )
+        );
+
+        $tw = ToggleCompositeField::create(
+            'Twitter', 'Twitter',
+            array(
+                $twtit = Textfield::create('TwTitle', _t('SeoHeroTool.TwTitle', 'Title for Twitter')),
+                $twimg = UploadField::create('TwImage', _t('SeoHeroTool.TwImage', 'Image for Twitter')),
+                $twdesc = TextareaField::create('TwDescription', _t('SeoHeroTool.TwDescription', 'Description for Twitter')),
+            )
+        );
+        // Set Attributes and Placeholder values
+        $imgFilesize = 2 * 1024 * 1024;
+        $fbimg->getValidator()->setAllowedMaxFileSize($imgFilesize);
+        $fbimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
+        $fbimg->setFolderName('social-media-images');
+
+        $twimg->getValidator()->setAllowedMaxFileSize($imgFilesize);
+        $twimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
+        $twimg->setFolderName('social-media-images');
+
+        $bstitle->setAttribute('placeholder', $this->MetaTitle());
+        $fbtit->setAttribute('placeholder', $this->MetaTitle());
+        $fbdesc->setAttribute('placeholder', self::$current_meta_desc);
+        $twtit->setAttribute('placeholder', $this->MetaTitle());
+        $twdesc->setAttribute('placeholder', self::$current_meta_desc);
+        $metaDescField->setAttribute('placeholder', self::$current_meta_desc);
+
         // Hide Silverstripe default Metadata and display instead our own MetaData
         $fields->removeFieldsFromTab('Root', array('Metadata'));
         $fields->addFieldToTab('Root.SeoHeroTool', $meta);
+        $fields->addFieldToTab('Root.SeoHeroTool', $fb);
+        $fields->addFieldToTab('Root.SeoHeroTool', $tw);
         return $fields;
     }
 
@@ -197,9 +248,8 @@ class SeoHeroToolDataObject extends DataExtension
             $this->owner->BetterSiteTitle = null;
         }
 
-        if ($this->owner->MetaDescription != '') {
+        if ($this->owner->MetaDescription == '') {
             $genMetaDescription = substr(strip_tags(html_entity_decode($this->owner->Content)), 0, 140);
-
             $pos = strrpos($genMetaDescription, " ");
             if ($pos) {
                 $genMetaDescription = substr($genMetaDescription, 0, $pos);

@@ -19,7 +19,6 @@ class SeoHeroToolSocialLink extends DataObject
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-        //$fields->removeByName('SortOrder');
         $DropDownValues = $fields->addFieldToTab('Root.Main', new LiteralField('', _t('SeoHeroToolSocialLink.ChooseFromSelectionOrEnterData', 'Please choose either an entry from the Dropdown or enter a Value on your own.')));
         $fields->addFieldToTab('Root.Main', new DropdownField('NameFromSelection', _t('SeoHeroToolSocialLink.NameFromSelection', 'Name from Selection'), array(''=>'Keine Auswahl', 'Facebook'=>'Facebook', 'Twitter'=>'Twitter', 'Instagram'=>'Instagram', 'LinkedIn'=>'LinkedIn', 'YouTube'=>'YouTube', 'Google+'=>'Google+', 'Xing' => 'Xing')));
         $fields->addFieldToTab('Root.Main', new TextField('Name', _t('SeoHeroToolSocialLink.Name', 'Name')));
@@ -28,6 +27,8 @@ class SeoHeroToolSocialLink extends DataObject
         $fields->addFieldToTab('Root.Main', new TextField('IconName', _t('SeoHeroToolSocialLink.IconName', 'Icon Name')));
         $fields->addFieldToTab('Root.Main', new CheckboxField('DisplayInSocialLoop', _t('SeoHeroToolSocialLink.DisplayInSocialLoop', 'Make available in Social Loop Function')));
         $fields->addFieldToTab('Root.Main', new LiteralField('SocialLoopStatement', _t('SeoHeroToolSocialLink.SocialLoopStatement', 'The Social Loop can be sorted either alphabetical or it can be sorted via the overview')));
+        $fields->addFieldToTab('Root.Main', new TextField('SortOrder', _t('SeoHeroToolSocialLink.SortOrder', 'Sorting in Social Loop')));
+        $fields->addFieldToTab('Root.Main', new LiteralField('SortOrderStatement', _t('SeoHeroToolSocialLink.SortOrderStatement', 'Sorting in Social Loop is by default by SortOrder Ascending')));
         return $fields;
     }
 
