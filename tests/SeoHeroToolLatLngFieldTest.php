@@ -3,17 +3,7 @@
 class SeoHeroToolLatLngFieldTest extends FunctionalTest
 {
     public static $use_draft_site = true;
-    /**
-     * Check the php validator for email addresses. We should be checking against RFC 5322 which defines email address
-     * syntax.
-     *
-     * @TODO
-     *   - double quotes around the local part (before @) is not supported
-     *   - special chars ! # $ % & ' * + - / = ? ^ _ ` { | } ~ are all valid in local part
-     *   - special chars ()[]\;:,<> are valid in the local part if the local part is in double quotes
-     *   - "." is valid in the local part as long as its not first or last char
-     * @return void
-     */
+
     public function testLatLngSyntax()
     {
         $this->internalCheck("8.8085507", "Valid", true);

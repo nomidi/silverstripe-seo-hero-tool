@@ -70,7 +70,8 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
         }
     }
 
-    public function testSocialSchemaLinks(){
+    public function testSocialSchemaLinks()
+    {
         $facebookneedle = 'https://www.facebook.com/examplesite';
         $twitterneedle = 'https://www.twitter.com/mysite';
         $instagramneedle = 'https://www.instagram.com/examplesite';
@@ -87,12 +88,13 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
         $this->assertTrue(is_numeric($instasearch), _t('SeoHeroToolSchemaCompany.DidNotFindInstagramSocialMeta'));
     }
 
-    public function testgetSocialLoop(){
+    public function testgetSocialLoop()
+    {
         $seocontroller = new SeoHeroToolController();
         $data = $seocontroller->getSocialLoop();
         $contentarray = array();
-        foreach ($data as $key => $val ){
-          $contentarray[] = $val->Name;
+        foreach ($data as $key => $val) {
+            $contentarray[] = $val->Name;
         }
         $fbneedle = 'Facebook';
         $twitterneedle = 'Twitter';

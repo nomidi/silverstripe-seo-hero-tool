@@ -47,6 +47,7 @@ class SeoHeroToolSchemaCompany extends DataObject
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
+        $fields->removeByName('SeoHeroToolSocialLinks');
         $fields->addFieldToTab('Root.Main',
           SchemaOrganizationType::create('OrganizationType', _t('SeoHeroToolSchemaCompany.OrganizationType', 'Organization Type')));
         $fields->addFieldToTab('Root.Main', new TextField('Company', _t('SeoHeroToolSchemaCompany.Company', 'Company')));
@@ -91,6 +92,12 @@ class SeoHeroToolSchemaCompany extends DataObject
         $fields->addFieldToTab('Root.Main', $lngf = new LatLngField('Longitude'));
         $lngf->setConfig('lng', true);
 
+        $grid = new GridField("SeoHeroToolSocialLinks", "Social Links", $this->SeoHeroToolSocialLinks(), GridFieldConfig_RelationEditor::create(), $this);
+        $config = $grid->getConfig();
+        //$config->addComponents(new GridFieldSortableRows('SortOrder'));
+        $config->getComponentByType('GridFieldPaginator')->setItemsPerPage(20);
+        $fields->addFieldToTab('Root.SocialLinks', $grid);
+
         return $fields;
     }
 
@@ -110,31 +117,32 @@ class SeoHeroToolSchemaCompany extends DataObject
         }
     }
 
-    public static function OpeningHours(){
-      $Data = SeoHeroToolSchemaCompany::get()->First();
-      $ArrayList = new ArrayList();
-      if($Data->OpeningHoursMondayOpeningTime != NULL || $Data->OpeningHoursMondayClosingTime != Null){
-        $ArrayList->push(new ArrayData(array('Day'=>'Monday', 'Open' => $Data->OpeningHoursMondayOpeningTime, 'Close'=>$Data->OpeningHoursMondayClosingTime)));
-      }
-      if($Data->OpeningHoursTuesdayOpeningTime != NULL || $Data->OpeningHoursTuesdayClosingTime != NULL){
-        $ArrayList->push(new ArrayData(array('Day'=>'Tuesday', 'Open' => $Data->OpeningHoursTuesdayOpeningTime, 'Close'=>$Data->OpeningHoursTuesdayClosingTime)));
-      }
-      if($Data->OpeningHoursWednesdayOpeningTime != NULL || $Data->OpeningHoursWednesdayClosingTime != NULL){
-        $ArrayList->push(new ArrayData(array('Day'=>'Wednesday', 'Open' => $Data->OpeningHoursWednesdayOpeningTime, 'Close'=>$Data->OpeningHoursWednesdayClosingTime)));
-      }
-      if($Data->OpeningHoursThursdayOpeningTime != NULL || $Data->OpeningHoursThursdayClosingTime != NULL){
-        $ArrayList->push(new ArrayData(array('Day'=>'Thursday', 'Open' => $Data->OpeningHoursThursdayOpeningTime, 'Close'=>$Data->OpeningHoursThursdayClosingTime)));
-      }
-      if($Data->OpeningHoursFridayOpeningTime != NULL || $Data->OpeningHoursFridayClosingTime != NULL){
-        $ArrayList->push(new ArrayData(array('Day'=>'Friday', 'Open' => $Data->OpeningHoursFridayOpeningTime, 'Close'=>$Data->OpeningHoursFridayClosingTime)));
-      }
-      if($Data->OpeningHoursSaturdayOpeningTime != NULL || $Data->OpeningHoursSaturdayClosingTime != NULL){
-        $ArrayList->push(new ArrayData(array('Day'=>'Saturday', 'Open' => $Data->OpeningHoursSaturdayOpeningTime, 'Close'=>$Data->OpeningHoursSaturdayClosingTime)));
-      }
-      if($Data->OpeningHoursSundayOpeningTime != NULL || $Data->OpeningHoursSundayClosingTime != NULL){
-        $ArrayList->push(new ArrayData(array('Day'=>'Sunday', 'Open' => $Data->OpeningHoursSundayOpeningTime, 'Close'=>$Data->OpeningHoursSundayClosingTime)));
-      }
-      return $ArrayList;
+    public static function OpeningHours()
+    {
+        $Data = SeoHeroToolSchemaCompany::get()->First();
+        $ArrayList = new ArrayList();
+        if ($Data->OpeningHoursMondayOpeningTime != null || $Data->OpeningHoursMondayClosingTime != null) {
+            $ArrayList->push(new ArrayData(array('Day'=>'Monday', 'Open' => $Data->OpeningHoursMondayOpeningTime, 'Close'=>$Data->OpeningHoursMondayClosingTime)));
+        }
+        if ($Data->OpeningHoursTuesdayOpeningTime != null || $Data->OpeningHoursTuesdayClosingTime != null) {
+            $ArrayList->push(new ArrayData(array('Day'=>'Tuesday', 'Open' => $Data->OpeningHoursTuesdayOpeningTime, 'Close'=>$Data->OpeningHoursTuesdayClosingTime)));
+        }
+        if ($Data->OpeningHoursWednesdayOpeningTime != null || $Data->OpeningHoursWednesdayClosingTime != null) {
+            $ArrayList->push(new ArrayData(array('Day'=>'Wednesday', 'Open' => $Data->OpeningHoursWednesdayOpeningTime, 'Close'=>$Data->OpeningHoursWednesdayClosingTime)));
+        }
+        if ($Data->OpeningHoursThursdayOpeningTime != null || $Data->OpeningHoursThursdayClosingTime != null) {
+            $ArrayList->push(new ArrayData(array('Day'=>'Thursday', 'Open' => $Data->OpeningHoursThursdayOpeningTime, 'Close'=>$Data->OpeningHoursThursdayClosingTime)));
+        }
+        if ($Data->OpeningHoursFridayOpeningTime != null || $Data->OpeningHoursFridayClosingTime != null) {
+            $ArrayList->push(new ArrayData(array('Day'=>'Friday', 'Open' => $Data->OpeningHoursFridayOpeningTime, 'Close'=>$Data->OpeningHoursFridayClosingTime)));
+        }
+        if ($Data->OpeningHoursSaturdayOpeningTime != null || $Data->OpeningHoursSaturdayClosingTime != null) {
+            $ArrayList->push(new ArrayData(array('Day'=>'Saturday', 'Open' => $Data->OpeningHoursSaturdayOpeningTime, 'Close'=>$Data->OpeningHoursSaturdayClosingTime)));
+        }
+        if ($Data->OpeningHoursSundayOpeningTime != null || $Data->OpeningHoursSundayClosingTime != null) {
+            $ArrayList->push(new ArrayData(array('Day'=>'Sunday', 'Open' => $Data->OpeningHoursSundayOpeningTime, 'Close'=>$Data->OpeningHoursSundayClosingTime)));
+        }
+        return $ArrayList;
     }
 
 

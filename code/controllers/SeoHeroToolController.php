@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * SeoHeroToolController takes care that all SeoHeroTool modules will be included.
+ */
 class SeoHeroToolController extends DataExtension
 {
     public function onAfterInit()
@@ -7,13 +10,17 @@ class SeoHeroToolController extends DataExtension
         Requirements::insertHeadTags($this->SeoHeroToolMeta());
     }
 
-
+    /**
+     * SeoHeroToolMeta runs all necessary Seo Hero Tool Parts.
+     */
     public function SeoHeroToolMeta()
     {
         return $this->compressTemplate(
           '<!-- Seo Hero Tools for Silverstripe -->' .
+          $this->getMetaRobots().
           $this->getGoogleAnalytic().
           $this->getSchemaCompany().
+          $this->getMetaSocialMedia() .
           '<!-- Seo Hero Tools for Silverstripe -->'
         );
     }
@@ -26,7 +33,7 @@ class SeoHeroToolController extends DataExtension
             //debug::show($AnalyticsData);
             $template = $this->owner->customise(array(
                 'GoogleAnalytics' => $AnalyticsData,
-            ))->renderWith('SeoHeroToolGoogleAnalytics');
+            ))->renderWith('SeoHeroToolGoogleAnalytic');
           //  debug::show($template);
           $env_type =  Config::inst()->get('Director', 'environment_type');
             if ($AnalyticsData->ActivateInMode === $env_type || $AnalyticsData->ActivateInMode === 'All') {
@@ -38,15 +45,17 @@ class SeoHeroToolController extends DataExtension
         }
     }
 
-
+    /*
+    *   getSchemaCompany() returns the Company Schema in a Schema.org format.
+     */
     public function getSchemaCompany()
     {
         $SchemaCompany = SeoHeroToolSchemaCompany::get()->first();
         $value = $SchemaCompany->custom_database_fields('SeoHeroToolSchemaCompany');
-        foreach ($value as $k => $v){
-          if($k != 'LogoID'){
-            $SchemaCompany->$k = stripslashes($SchemaCompany->$k);
-          }
+        foreach ($value as $k => $v) {
+            if ($k != 'LogoID') {
+                $SchemaCompany->$k = stripslashes($SchemaCompany->$k);
+            }
         }
         if ($SchemaCompany->OrganizationType != "") {
             $template = $this->owner->customise(array('SchemaCompany'=>$SchemaCompany))->renderWith('SeoHeroToolSchemaCompany');
@@ -54,10 +63,28 @@ class SeoHeroToolController extends DataExtension
         }
     }
 
+    /*
+    *   getMetaRobots() returns the Robots Information for the actual Website.
+     */
+    public function getMetaRobots()
+    {
+        $template = $this->owner->renderWith('SeoHeroToolMetaRobots');
+        return $this->compressTemplate($template);
+    }
 
+    /*
+    *   getMetaSocialMedia() returns the site information prepared for facebook, twitter etc. for better sharing
+     */
+     public function getMetaSocialMedia()
+     {
+         $template = $this->owner->customise(array(
+            'SeoHeroToolSocialMediaChannels' => SeoHeroToolSocialLink::get(),
+        ))->renderWith('SeoHeroToolMetaSocialMedia');
+         return $this->compressTemplate($template);
+     }
 
     /**
-     * compressTemplate
+     * compressTemplate compresses the template data and minimize them
      * @param  string $template uncompressed Meta Information
      * @return string $template compressed Meta Information
      */
@@ -70,8 +97,14 @@ class SeoHeroToolController extends DataExtension
         }
     }
 
-    public function getSocialLoop(){
-      $data = SeoHeroToolSocialLink::get()->Filter(array('DisplayInSocialLoop' => 1));
-      return $data;
+    /**
+     * getSocialLoop returns all Social Media Channel which are allowed to be displayed in a social loop.
+     * By default this data is sorted by SortOrder. But the loop can in any template be sorted by the default
+     * Silverstripe Sorting functions
+     */
+    public function getSocialLoop()
+    {
+        $data = SeoHeroToolSocialLink::get()->Filter(array('DisplayInSocialLoop' => 1));
+        return $data;
     }
 }
