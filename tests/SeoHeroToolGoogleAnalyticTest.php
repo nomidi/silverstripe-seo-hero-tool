@@ -34,6 +34,7 @@ class SeoHeroToolGoogleAnalyticTest extends FunctionalTest
         $data = $this->objFromFixture('SeoHeroToolGoogleAnalytic', 'default');
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $this->searchAnalytics);
+        debug::show($response->getBody());
         $this->assertTrue(is_numeric($body), _t('SeoHeroToolGoogleAnalyticTest.CantFindInTemplate').vsprintf(_t('SeoHeroToolGoogleAnalyticTest.ModeTestedMode'), array('dev', 'dev')));
 
         // test :  not display if env is dev but display type set to live

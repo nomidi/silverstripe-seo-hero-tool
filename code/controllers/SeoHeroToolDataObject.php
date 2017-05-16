@@ -27,12 +27,11 @@ class SeoHeroToolDataObject extends DataExtension
     public static $current_meta_desc;
 
     /*
-    *   Function MetaTitle() overwrites the default title. If BetterTitle is set,
+    *   Function MetaTitle() overwrites the default title. If BetterSiteTitle is set,
     *   then this will be used. Otherwise it will check the if there is a
     *   yml file for this. If this is also not the case, the default
     *   title will be returned
     */
-
     public function MetaTitle()
     {
         // check for BetterTitle
@@ -229,7 +228,7 @@ class SeoHeroToolDataObject extends DataExtension
         $fields->addFieldToTab('Root.SeoHeroTool', $tw);
         return $fields;
     }
-
+    
     public function BetterMetaDescription()
     {
         if ($this->owner->MetaDescription == '') {

@@ -1,6 +1,8 @@
 <?php
 class SeoHeroToolDataObjectTest extends FunctionalTest
 {
+    public static $use_draft_site = true;
+
     protected static $fixture_file = array(
         'SeoHeroToolControllerTest.yml',
       );
@@ -57,5 +59,41 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $data = array('Title'=>array(0=>'Created'), 'DateFormat'=>'SpecialFormat', 'DateFormatting'=>'d/m');
         $test = $seodo->checkYAMLSettings($data);
         $this->assertTrue($test == '12/12');
+    }
+
+    public function testFBspecificTitle()
+    {
+        $obj = $this->objFromFixture('Page', 'dataobjecttest');
+        $response = $this->get($this->objFromFixture('Page', 'dataobjecttest')->Link());
+        $needle = '<meta property="og:title" content="'.$obj->FBTitle.'" />';
+        $body = strpos($response->getBody(), $needle);
+        $this->assertTrue(is_numeric($body), 'Could not find a specific FBTitle within the data');
+    }
+
+    public function testTWspecificTitle()
+    {
+        $obj = $this->objFromFixture('Page', 'dataobjecttest');
+        $response = $this->get($this->objFromFixture('Page', 'dataobjecttest')->Link());
+        $needle = '<meta name="twitter:title" content="'.$obj->TwTitle.'">';
+        $body = strpos($response->getBody(), $needle);
+        $this->assertTrue(is_numeric($body), 'Could not find a specific TwTitle within the data');
+    }
+
+    public function testFBTitleDefaultTitle()
+    {
+        $obj = $this->objFromFixture('Page', 'objectWithBetterSiteTitle');
+        $response = $this->get($this->objFromFixture('Page', 'objectWithBetterSiteTitle')->Link());
+        $needle = '<meta property="og:title" content="'.$obj->BetterSiteTitle.'" />';
+        $body = strpos($response->getBody(), $needle);
+        $this->assertTrue(is_numeric($body), 'Could not find BetterSiteTitle as og:title ');
+    }
+
+    public function testTWTitleDefaultTitle()
+    {
+        $obj = $this->objFromFixture('Page', 'objectWithBetterSiteTitle');
+        $response = $this->get($this->objFromFixture('Page', 'objectWithBetterSiteTitle')->Link());
+        $needle = '<meta name="twitter:title" content="'.$obj->BetterSiteTitle.'">';
+        $body = strpos($response->getBody(), $needle);
+        $this->assertTrue(is_numeric($body), 'Could not find BetterSiteTitle as twitter:title ');
     }
 }
