@@ -4,3 +4,6 @@ ContentController:
 SiteTree:
   extensions:
     - SeoHeroToolDataObject
+LeftAndMain:
+  extra_requirements_css:
+    - silverstripe-seo-hero-tool/css/SeoHeroTool.css

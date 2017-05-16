@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  DataExtension which gives the ability to specify better Data for SEO, Twitter and Facebook
+ *
+ * @package : SeoHeroTool
+ *
+ */
 class SeoHeroToolDataObject extends DataExtension
 {
     private static $db = array(
@@ -14,6 +20,8 @@ class SeoHeroToolDataObject extends DataExtension
         'GenMetaDesc' => 'Text',
         'FBTitle' => 'Varchar(80)',
         'FBDescription' => 'Text',
+        'FBType' => "Enum('website, article, product','website')",
+        'FBTypeOverride' => 'Boolean',
         'TwTitle' => 'Varchar(80)',
         'TwDescription' => 'Text',
     );
@@ -26,12 +34,15 @@ class SeoHeroToolDataObject extends DataExtension
 
     public static $current_meta_desc;
 
-    /*
-    *   Function MetaTitle() overwrites the default title. If BetterSiteTitle is set,
-    *   then this will be used. Otherwise it will check the if there is a
-    *   yml file for this. If this is also not the case, the default
-    *   title will be returned
-    */
+    /**
+     *
+     *   Function MetaTitle() overwrites the default title. If BetterSiteTitle is set,
+     *   then this will be used. Otherwise it will check the if there is a
+     *   yml file for this. If this is also not the case, the default
+     *   title will be returned
+     *
+     *   @return string       Title for this webpage
+     */
     public function MetaTitle()
     {
         // check for BetterTitle
@@ -52,6 +63,11 @@ class SeoHeroToolDataObject extends DataExtension
         }
     }
 
+    /**
+     * checkYAMLSettings checks if there is a title configuration for the given classname
+     * @param  array $entry array from the configuration file which contains the settings for this classname
+     * @return string       The Title configuration from the yml file
+     */
     public function checkYAMLSettings($entry)
     {
         if (isset($entry)) {
@@ -115,6 +131,11 @@ class SeoHeroToolDataObject extends DataExtension
         return false;
     }
 
+    /**
+     * udpateCMSFields updates the CMS Fields and adds the fields from the SeoHeroToolDataObject-Extension.
+     *
+     * @param FieldList $fields existing fields
+     */
     public function updateCMSFields(FieldList $fields)
     {
         if ($this->owner->MetaDescription == "") {
@@ -123,13 +144,19 @@ class SeoHeroToolDataObject extends DataExtension
             self::$current_meta_desc = $this->owner->MetaDescription;
         }
 
-        $fields->addFieldToTab('Root.SeoHeroTool', $bstitle = new TextField('BetterSiteTitle', _t('SeoHeroTool.BetterSiteTitle', 'BetterTitle')));
-        $defaultValue = config::inst()->get('SeoHeroToolDataObject', $this->owner->ClassName);
-        if ($defaultValue != '') {
-            $fields->addFieldToTab('Root.SeoHeroTool', new LiteralField('', _t('SeoHeroTool.DefaultValue', 'Default Value for this Pagetype due to config file is: ').$this->checkYAMLSettings($defaultValue)));
-        } elseif ($defaultValue == '' && $this->owner->BetterSiteTitle == null) {
-            $fields->addFieldToTab('Root.SeoHeroTool', new LiteralField('', _t('SeoHeroTool.DefaultTitle', 'Site has no BetterTitle and no Default Value from the configuration, so the title will be displayed.')));
-        }
+        # Snippet Preview
+        $SEOPreview = $this->owner->customise(array(
+          'Title' => $this->MetaTitle(),
+          'AbsoluteLink' => $this->owner->AbsoluteLink,
+          'MetaDesc' => self::$current_meta_desc))->renderWith('SeoHeroToolSnippetPreview');
+
+        $SEOPreviewField = CompositeField::create(
+          HeaderField::create('SeoHeroTool', _t('SeoHeroTool.SEOSnippetPreviewHeadline', 'Snippet Preview')),
+          LiteralField::create('SeoPreviewLiteral', $SEOPreview)
+        );
+
+        $fields->addFieldToTab('Root.SeoHeroTool', $SEOPreviewField);
+        $fields->addFieldToTab('Root.SeoHeroTool', $bstitle = new TextField('BetterSiteTitle', _t('SeoHeroTool.BetterSiteTitle', 'SEO Title')));
 
         $keywordToggleField = ToggleCompositeField::create(
                 'Keywords', 'Keywords',
@@ -148,7 +175,7 @@ class SeoHeroToolDataObject extends DataExtension
                 _t('SeoHeroTool.KeywordQuestionAfter', 'This field saves questions from the W-Questions, available only in German right now.')
             );
 
-        $SeoFollowFields = singleton('Page')->dbObject('Follow')->enumValues();
+        $SeoFollowFields = $this->owner->dbObject('Follow')->enumValues();
         $SeoFormArray = array();
         foreach ($SeoFollowFields as $SeoFollowFieldKey => $SeoFollowFieldVal) {
             switch ($SeoFollowFieldKey) {
@@ -187,11 +214,30 @@ class SeoHeroToolDataObject extends DataExtension
                 )
             );
 
+        $FBTypeFields = $this->owner->dbObject('FBType')->enumValues();
+        $FBFormArray = array();
+
+        foreach ($FBTypeFields as $FBFieldKey => $FBFieldValue) {
+            switch ($FBFieldKey) {
+            case 'product':
+              $FBFormArray['product'] = _t('SeoHeroTool.FBType_Product', 'Product');
+              break;
+            case 'article':
+              $FBFormArray['article'] = _t('SeoHeroTool.FBType_Article', 'Article or Blogpost');
+              break;
+            default:
+              $FBFormArray['website'] = _t('SeoHeroTool.FBType_Website', 'Website - default value');
+          }
+        }
+
+
         $fb = ToggleCompositeField::create(
             'Facebook', 'Facebook',
             array(
                 $fbtit = Textfield::create('FBTitle', _t('SeoHeroTool.FBTitle', 'Title for Facebook')),
                 $fbimg = UploadField::create('FBImage', _t('SeoHeroTool.FBImage', 'Image for Facebook')),
+                $fbtypedd = DropdownField::create('FBType', _t('SeoHerotool.FBType', 'Type of Site'), $FBFormArray),
+                CheckboxField::create('FBTypeOverride', _t('SeoHeroTool.FBTypeOverride', 'Overturn config setting')),
                 $fbdesc = TextareaField::create('FBDescription', _t('SeoHeroTool.FBDescription', 'Description for Facebook')),
             )
         );
@@ -205,6 +251,18 @@ class SeoHeroToolDataObject extends DataExtension
             )
         );
         // Set Attributes and Placeholder values
+        $checkConfigForFBType = $this->getFBTypeFromConfig();
+        if ($checkConfigForFBType) {
+            $fbtypesentence = _t('SeoHeroTool.FBConfigExists', 'There is a value for this page type in the configuration which is:').$checkConfigForFBType;
+            $fbtypedd->setRightTitle($fbtypesentence);
+        }
+
+        $defaultValue = config::inst()->get('SeoHeroToolDataObject', $this->owner->ClassName);
+        if ($defaultValue != '') {
+            $bstitle->setRightTitle(_t('SeoHeroTool.DefaultValue', 'Default Value for this Pagetype due to config file is: ').$this->checkYAMLSettings($defaultValue));
+        }
+
+
         $imgFilesize = 2 * 1024 * 1024;
         $fbimg->getValidator()->setAllowedMaxFileSize($imgFilesize);
         $fbimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
@@ -228,7 +286,14 @@ class SeoHeroToolDataObject extends DataExtension
         $fields->addFieldToTab('Root.SeoHeroTool', $tw);
         return $fields;
     }
-    
+
+    /**
+     * BetterMetaDescription returns the current MetaDescription.
+     * If there is no MetaDescription then the generated MetaDescription will be used (if existing).
+     * If there is even no generated MetaDescription the function will return false
+     *
+     * @return string       String containg either the MetaDrescription, the genereated MetaDescription or false
+     */
     public function BetterMetaDescription()
     {
         if ($this->owner->MetaDescription == '') {
@@ -240,6 +305,45 @@ class SeoHeroToolDataObject extends DataExtension
         }
     }
 
+    /**
+     * getFBTypeFromConfig returns, if existing, the value for FBType (which is used in og:type) which was stored for this
+     * classname in the config.yml file.
+     *
+     * @return string Containing the value for og:type stored in the config.yml
+     */
+    private function getFBTypeFromConfig()
+    {
+        $classname = $this->owner->ClassName;
+        $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
+        if ($yamlsettings && isset($yamlsettings['FBType'])) {
+            return $yamlsettings['FBType'];
+        }
+    }
+
+    /*
+      public function which gets called for example in the template to get the value for og:type
+      Uses private function to check if there is a configuration which needs to be read
+     */
+    /**
+     * checkFBType checks and returns the value which is used in og:type. This value can either be selected via the backend or
+     * can be generated via the config.yml.
+     * If there is a value from the configuration and this value gets not overturned for the actual page, then the configuration value will be used.
+     *
+     * @return string Containg the og:type value, which can be one of the enumValues from FBType (see above)
+     */
+    public function checkFBType()
+    {
+        $check = $this->getFBTypeFromConfig();
+        if (!$this->owner->FBTypeOverride && isset($check)) {
+            return $check;
+        } else {
+            return $this->owner->FBType;
+        }
+    }
+
+    /**
+     * onBeforeWrite checks before the dataobject gets written. If the MetaDescription is empty, then it will generate a Description from the Content.
+     */
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();

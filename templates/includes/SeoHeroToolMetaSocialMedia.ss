@@ -1,6 +1,7 @@
 <%-- Facebook --%>
 <meta property="og:title" content="<% if FBTitle %>$FBTitle<% else %>$MetaTitle<% end_if %>" />
 <meta property="og:url" content="$AbsoluteLink" />
+<meta property="og:type" content="$CheckFBType" />
 <% if FBImage %><meta property="og:image" content="$FBImage.AbsoluteURL" /><% end_if %>
 <% if FBDescription || BetterMetaDescription %> <meta property="og:description" content="<% if FBDescription %>$FBDescription<% else %>$BetterMetaDescription<% end_if %>"><% end_if %>
 <meta property="article:published_time" content="$Created.format('c')" />

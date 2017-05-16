@@ -42,7 +42,7 @@ Silverstripe functions which would look like this $SocialLoop.Sort(Name,ASC)
 
 ## Keywords and Metadata
 
-### Generating of the MetaDataTitle
+### Generating of the MetaDataTitle and FB Type
 
 SeoHeroTool and MetaDataTitle.
 Please replace in your template in the header section the title output.
@@ -64,6 +64,7 @@ SeoHeroToolDataObject:
     DateFormatting: d/m
     WithoutSpace: true
     SiteConfigTitle: true
+    FBType: article
 ```
 All Pages with the Type Page will be displayed in the title in this case with
 the Title and the Date of the last Edit. Between both there will be a space.
@@ -76,6 +77,9 @@ Options for DateFormat are : Nice24, Year, Nice and SpecialFormat.
 If SpecialFormat is set, then the setting DateFormatting determines how the
 date will be formatted. In this example just the day and month of the date will be
 displayed.
+The option FBType defines the og:type attribute of the page type. The og:type is part of the OpenGraph Protocol.
+By default each page is a 'website', but it can also be for example an 'article', which is usefuel for Blogs or News Posts or it can be a 'product'.
+
 
 Please keep in mind, that in the default theme the Sitename will always be attached at the end of the title.
 If you use this option with the SeoHeroToolDataObject the Sitename will appear twice, so please check your

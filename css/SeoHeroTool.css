@@ -1,0 +1,31 @@
+#SeoHeroToolSnippetPreview{
+	background:white;
+	    width: auto;
+    max-width: 520px;
+    margin: 0 0 10px;
+    padding: 0 5px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-style: normal;
+}
+
+.SeoHeroToolSnippetPreview--title{
+		display: block;
+	    overflow: hidden;
+	    width: 512px;
+	    color: #1E0FBE;
+	    font-size: 18px!important;
+	    line-height: 1.2;
+	    white-space: nowrap;
+	    text-overflow: ellipsis;
+	}
+	.SeoHeroToolSnippetPreview--url{
+		color: #006621;
+	    font-size: 13px;
+	    line-height: 16px;
+	}
+	.SeoHeroToolSnippetPreview--meta{
+		font-size: small;
+	    line-height: 1.4;
+	    word-wrap: break-word;
+	    color: #777;
+	}
