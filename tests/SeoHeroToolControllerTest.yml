@@ -9,11 +9,17 @@ Page:
     Created: 2016-12-12 12:34:34
     FBTitle: ThisIsAFBTitleTest
     TwTitle: ThisIsATwTitleTest
+    FBDescription: This is a FB description
+    TwDescription: This is a Twitter Description
   objectWithBetterSiteTitle:
     Title: Some Default Title
     URLSegment: somedefaulttitle
     Created: 2016-12-12 12:34:34
     BetterSiteTitle: Not Your Default Title
+  objectWithMetaDescription:
+    Title: Site with MetaDescription
+    URLSegment: sitewithmetadescription
+    MetaDescription: This is a Meta Description
 Group:
   cmseditorgroup:
     Code: cmseditorgroup
