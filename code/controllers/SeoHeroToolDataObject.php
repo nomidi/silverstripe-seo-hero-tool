@@ -202,7 +202,7 @@ class SeoHeroToolDataObject extends DataExtension
 
 
         $meta = ToggleCompositeField::create(
-                'MetaData', 'Meta Daten',
+                'MetaData', 'Meta Data',
                 array(
                     DropdownField::create('Follow', _t('SeoHeroTool.RobotsHeadline', 'Robots'), $SeoFormArray),
                     CheckboxField::create("FollowType", _t('SeoHeroTool.FollowType', 'Should the site inherit the settings from the parent site?')),
@@ -262,6 +262,7 @@ class SeoHeroToolDataObject extends DataExtension
             $bstitle->setRightTitle(_t('SeoHeroTool.DefaultValue', 'Default Value for this Pagetype due to config file is: ').$this->checkYAMLSettings($defaultValue));
         }
 
+        $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));
 
         $imgFilesize = 2 * 1024 * 1024;
         $fbimg->getValidator()->setAllowedMaxFileSize($imgFilesize);

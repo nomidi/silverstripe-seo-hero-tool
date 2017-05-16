@@ -171,12 +171,12 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $return = $obj->checkFBType();
         $this->assertTrue($return == $obj->FBType, 'og:type does not meet the expectations. Should be "article" but is "'.$return.'".');
 
-        $obj = $this->objFromFixture('TestPage', 'objectWithFBTypeFromConfig');
+        $obj = $this->objFromFixture('Page', 'objectWithFBTypeFromConfig');
         $obj->FBTypeOverride = 0;
         $response = $this->get($obj->Link());
-        $config = Config::inst()->get('SeoHeroToolDataObject', 'TestPage');
+        $config = Config::inst()->get('SeoHeroToolDataObject', 'Page');
         $config['FBType'] = 'product';
-        Config::inst()->update('SeoHeroToolDataObject', 'TestPage', $config);
+        Config::inst()->update('SeoHeroToolDataObject', 'Page', $config);
         $return = $obj->checkFBType();
         $this->assertTrue($return == $config['FBType'], 'og:type does not meet the expectations. Should be "product" but is "'.$return.'".');
 

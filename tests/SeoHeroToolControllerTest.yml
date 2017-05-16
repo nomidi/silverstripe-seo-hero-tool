@@ -20,7 +20,6 @@ Page:
     Title: Site with MetaDescription
     URLSegment: sitewithmetadescription
     MetaDescription: This is a Meta Description
-TestPage:
   objectWithFBTypeFromConfig:
     Title: Site with FBType from Config
     FBTitle: Site with FBType from Config
