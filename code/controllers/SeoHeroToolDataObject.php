@@ -54,7 +54,7 @@ class SeoHeroToolDataObject extends DataExtension
         $classname = $this->owner->ClassName;
         $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
         if ($yamlsettings) {
-            $return = $this->checkYAMLSettings($yamlsettings);
+            $return = $this->checkTitleYAMLSettings($yamlsettings);
 
             return $return;
         } else {
@@ -64,11 +64,11 @@ class SeoHeroToolDataObject extends DataExtension
     }
 
     /**
-     * checkYAMLSettings checks if there is a title configuration for the given classname
+     * checkTitleYAMLSettings checks if there is a title configuration for the given classname
      * @param  array $entry array from the configuration file which contains the settings for this classname
      * @return string       The Title configuration from the yml file
      */
-    public function checkYAMLSettings($entry)
+    public function checkTitleYAMLSettings($entry)
     {
         if (isset($entry)) {
             $return = '';
@@ -156,8 +156,15 @@ class SeoHeroToolDataObject extends DataExtension
         );
 
         $fields->addFieldToTab('Root.SeoHeroTool', $SEOPreviewField);
+        # BetterSiteTitle
         $fields->addFieldToTab('Root.SeoHeroTool', $bstitle = new TextField('BetterSiteTitle', _t('SeoHeroTool.BetterSiteTitle', 'SEO Title')));
+        $defaultValue = config::inst()->get('SeoHeroToolDataObject', $this->owner->ClassName);
+        if ($defaultValue != '') {
+            $bstitle->setRightTitle(_t('SeoHeroTool.DefaultValue', 'Default Value for this Pagetype due to config file is: ').$this->checkTitleYAMLSettings($defaultValue));
+        }
+        $bstitle->setAttribute('placeholder', $this->MetaTitle());
 
+        # Keywords
         $keywordToggleField = ToggleCompositeField::create(
                 'Keywords', 'Keywords',
                 array(
@@ -166,7 +173,6 @@ class SeoHeroToolDataObject extends DataExtension
 
                 )
             );
-
         $fields->addFieldToTab('Root.SeoHeroTool', $keywordToggleField);
         $keywordField->setRightTitle(
                 _t('SeoHeroTool.FeaturedKeywordAfter', 'Using commas to separate Keywords..')
@@ -175,32 +181,8 @@ class SeoHeroToolDataObject extends DataExtension
                 _t('SeoHeroTool.KeywordQuestionAfter', 'This field saves questions from the W-Questions, available only in German right now.')
             );
 
-        $SeoFollowFields = $this->owner->dbObject('Follow')->enumValues();
-        $SeoFormArray = array();
-        foreach ($SeoFollowFields as $SeoFollowFieldKey => $SeoFollowFieldVal) {
-            switch ($SeoFollowFieldKey) {
-                    case 'in':
-                        $SeoFormArray['in'] = _t('SeoHeroTool.FOLLOW_IN', 'Index website, do not follow links (index, nofollow)');
-                        break;
-                    case 'i':
-                        $SeoFormArray['i'] = _t('SeoHeroTool.FOLLOW_I', 'Index website, follow links (index)');
-                        break;
-                    case 'nf':
-                        $SeoFormArray['nf'] = _t('SeoHeroTool.FOLLOW_NF', 'Do not index website, follow links (noindex, follow)');
-                        break;
-                    case 'nn':
-                        $SeoFormArray['nn'] = _t('SeoHeroTool.FOLLOW_NN', 'Do not index website, do not follow links (noindex, nofollow)');
-                        break;
-                    case 'n':
-                        $SeoFormArray['n'] = _t('SeoHeroTool.FOLLOW_N', 'Do not follow website, follow index (noindex)');
-                        break;
-                    default:
-                        $SeoFormArray['if'] = _t('SeoHeroTool.FOLLOW_IF', 'Index website, follow links (index,follow)');
-                        break;
-                }
-        }
-
-
+        # Meta Datas
+        $SeoFormArray = $this->getSeoFollowFields();
         $meta = ToggleCompositeField::create(
                 'MetaData', 'Meta Data',
                 array(
@@ -213,24 +195,11 @@ class SeoHeroToolDataObject extends DataExtension
                     $metaDescField = TextareaField::create("MetaDescription", _t('SeoHeroTool.OwnMetaDesc', 'Meta description'))
                 )
             );
+        $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));
+        $metaDescField->setAttribute('placeholder', self::$current_meta_desc);
 
-        $FBTypeFields = $this->owner->dbObject('FBType')->enumValues();
-        $FBFormArray = array();
-
-        foreach ($FBTypeFields as $FBFieldKey => $FBFieldValue) {
-            switch ($FBFieldKey) {
-            case 'product':
-              $FBFormArray['product'] = _t('SeoHeroTool.FBType_Product', 'Product');
-              break;
-            case 'article':
-              $FBFormArray['article'] = _t('SeoHeroTool.FBType_Article', 'Article or Blogpost');
-              break;
-            default:
-              $FBFormArray['website'] = _t('SeoHeroTool.FBType_Website', 'Website - default value');
-          }
-        }
-
-
+        # Facebook
+        $FBFormArray = $this->getFBFormFields();
         $fb = ToggleCompositeField::create(
             'Facebook', 'Facebook',
             array(
@@ -241,7 +210,19 @@ class SeoHeroToolDataObject extends DataExtension
                 $fbdesc = TextareaField::create('FBDescription', _t('SeoHeroTool.FBDescription', 'Description for Facebook')),
             )
         );
+        $checkConfigForFBType = $this->getFBTypeFromConfig();
+        if ($checkConfigForFBType) {
+            $fbtypesentence = _t('SeoHeroTool.FBConfigExists', 'There is a value for this page type in the configuration which is:').$checkConfigForFBType;
+            $fbtypedd->setRightTitle($fbtypesentence);
+        }
+        $imgFilesize = 2 * 1024 * 1024;
+        $fbimg->getValidator()->setAllowedMaxFileSize($imgFilesize);
+        $fbimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
+        $fbimg->setFolderName('social-media-images');
+        $fbtit->setAttribute('placeholder', $this->MetaTitle());
+        $fbdesc->setAttribute('placeholder', self::$current_meta_desc);
 
+        # Twitter
         $tw = ToggleCompositeField::create(
             'Twitter', 'Twitter',
             array(
@@ -250,35 +231,11 @@ class SeoHeroToolDataObject extends DataExtension
                 $twdesc = TextareaField::create('TwDescription', _t('SeoHeroTool.TwDescription', 'Description for Twitter')),
             )
         );
-        // Set Attributes and Placeholder values
-        $checkConfigForFBType = $this->getFBTypeFromConfig();
-        if ($checkConfigForFBType) {
-            $fbtypesentence = _t('SeoHeroTool.FBConfigExists', 'There is a value for this page type in the configuration which is:').$checkConfigForFBType;
-            $fbtypedd->setRightTitle($fbtypesentence);
-        }
-
-        $defaultValue = config::inst()->get('SeoHeroToolDataObject', $this->owner->ClassName);
-        if ($defaultValue != '') {
-            $bstitle->setRightTitle(_t('SeoHeroTool.DefaultValue', 'Default Value for this Pagetype due to config file is: ').$this->checkYAMLSettings($defaultValue));
-        }
-
-        $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));
-
-        $imgFilesize = 2 * 1024 * 1024;
-        $fbimg->getValidator()->setAllowedMaxFileSize($imgFilesize);
-        $fbimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
-        $fbimg->setFolderName('social-media-images');
-
         $twimg->getValidator()->setAllowedMaxFileSize($imgFilesize);
         $twimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
         $twimg->setFolderName('social-media-images');
-
-        $bstitle->setAttribute('placeholder', $this->MetaTitle());
-        $fbtit->setAttribute('placeholder', $this->MetaTitle());
-        $fbdesc->setAttribute('placeholder', self::$current_meta_desc);
         $twtit->setAttribute('placeholder', $this->MetaTitle());
         $twdesc->setAttribute('placeholder', self::$current_meta_desc);
-        $metaDescField->setAttribute('placeholder', self::$current_meta_desc);
 
         // Hide Silverstripe default Metadata and display instead our own MetaData
         $fields->removeFieldsFromTab('Root', array('Metadata'));
@@ -304,6 +261,63 @@ class SeoHeroToolDataObject extends DataExtension
         } else {
             return false;
         }
+    }
+
+    /**
+     * getFBFormFields delivers the localized Data for the FBType-Field in an Array. This data is used in the frontend to generate the og:type value.
+     * @return [Array] Array containing the key and localized value pairs for the different FBTypes.
+     */
+    private function getFBFormFields()
+    {
+        $FBTypeFields = $this->owner->dbObject('FBType')->enumValues();
+        $FBFormArray = array();
+
+        foreach ($FBTypeFields as $FBFieldKey => $FBFieldValue) {
+            switch ($FBFieldKey) {
+          case 'product':
+            $FBFormArray['product'] = _t('SeoHeroTool.FBType_Product', 'Product');
+            break;
+          case 'article':
+            $FBFormArray['article'] = _t('SeoHeroTool.FBType_Article', 'Article or Blogpost');
+            break;
+          default:
+            $FBFormArray['website'] = _t('SeoHeroTool.FBType_Website', 'Website - default value');
+          }
+        }
+        return $FBFormArray;
+    }
+
+    /**
+     * getSeoFolloFields delivers the localized Data for the Follow Type for robots.
+     * @return [Array] Array containing the key and localized value pairs for the different Follow Types.
+     */
+    private function getSeoFollowFields()
+    {
+        $SeoFollowFields = $this->owner->dbObject('Follow')->enumValues();
+        $SeoFormArray = array();
+        foreach ($SeoFollowFields as $SeoFollowFieldKey => $SeoFollowFieldVal) {
+            switch ($SeoFollowFieldKey) {
+                  case 'in':
+                      $SeoFormArray['in'] = _t('SeoHeroTool.FOLLOW_IN', 'Index website, do not follow links (index, nofollow)');
+                      break;
+                  case 'i':
+                      $SeoFormArray['i'] = _t('SeoHeroTool.FOLLOW_I', 'Index website, follow links (index)');
+                      break;
+                  case 'nf':
+                      $SeoFormArray['nf'] = _t('SeoHeroTool.FOLLOW_NF', 'Do not index website, follow links (noindex, follow)');
+                      break;
+                  case 'nn':
+                      $SeoFormArray['nn'] = _t('SeoHeroTool.FOLLOW_NN', 'Do not index website, do not follow links (noindex, nofollow)');
+                      break;
+                  case 'n':
+                      $SeoFormArray['n'] = _t('SeoHeroTool.FOLLOW_N', 'Do not follow website, follow index (noindex)');
+                      break;
+                  default:
+                      $SeoFormArray['if'] = _t('SeoHeroTool.FOLLOW_IF', 'Index website, follow links (index,follow)');
+                      break;
+              }
+        }
+        return $SeoFormArray;
     }
 
     /**

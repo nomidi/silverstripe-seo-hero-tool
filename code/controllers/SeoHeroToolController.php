@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * SeoHeroToolController takes care that all SeoHeroTool modules will be included.
+ */
 class SeoHeroToolController extends DataExtension
 {
     public function onAfterInit()
@@ -7,7 +10,9 @@ class SeoHeroToolController extends DataExtension
         Requirements::insertHeadTags($this->SeoHeroToolMeta());
     }
 
-
+    /**
+     * SeoHeroToolMeta runs all necessary Seo Hero Tool Parts.
+     */
     public function SeoHeroToolMeta()
     {
         return $this->compressTemplate(
@@ -79,7 +84,7 @@ class SeoHeroToolController extends DataExtension
      }
 
     /**
-     * compressTemplate
+     * compressTemplate compresses the template data and minimize them
      * @param  string $template uncompressed Meta Information
      * @return string $template compressed Meta Information
      */
@@ -92,6 +97,11 @@ class SeoHeroToolController extends DataExtension
         }
     }
 
+    /**
+     * getSocialLoop returns all Social Media Channel which are allowed to be displayed in a social loop.
+     * By default this data is sorted by SortOrder. But the loop can in any template be sorted by the default
+     * Silverstripe Sorting functions
+     */
     public function getSocialLoop()
     {
         $data = SeoHeroToolSocialLink::get()->Filter(array('DisplayInSocialLoop' => 1));

@@ -13,7 +13,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $seodo = new SeoHeroToolDataObject();
         $seodo = $obj;
         $data = array('Title'=>array(0=>'Title', 1=>'LastEdited'), 'WithoutSpace'=>false);
-        $test = $seodo->checkYAMLSettings($data);
+        $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == $obj->Title.' '.date('d/m/Y'), 'The return does not match the expected value');
     }
 
@@ -24,7 +24,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $seodo = $obj;
 
         $data = array('Title'=>array(0=>'Title', 1=>'LastEdited'), 'WithoutSpace'=>true);
-        $test = $seodo->checkYAMLSettings($data);
+        $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == $obj->Title.date('d/m/Y'), 'The return does not match the expected value, found space character between values');
     }
 
@@ -35,7 +35,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $seodo = $obj;
 
         $data = array('Title'=>array(0=>'LastEdited'), 'DateFormat'=>'Year');
-        $test = $seodo->checkYAMLSettings($data);
+        $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == date('Y'));
     }
 
@@ -46,7 +46,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $seodo = $obj;
 
         $data = array('Title'=>array(0=>'Created'), 'DateFormat'=>'Nice');
-        $test = $seodo->checkYAMLSettings($data);
+        $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == '12/12/2016 12:34pm');
     }
 
@@ -57,7 +57,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $seodo = $obj;
 
         $data = array('Title'=>array(0=>'Created'), 'DateFormat'=>'SpecialFormat', 'DateFormatting'=>'d/m');
-        $test = $seodo->checkYAMLSettings($data);
+        $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == '12/12');
     }
 
