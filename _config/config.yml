@@ -6,4 +6,4 @@ SiteTree:
     - SeoHeroToolDataObject
 LeftAndMain:
   extra_requirements_css:
-    - silverstripe-seo-hero-tool/css/SeoHeroTool.css
+    - seo-hero-tool/css/SeoHeroTool.css
