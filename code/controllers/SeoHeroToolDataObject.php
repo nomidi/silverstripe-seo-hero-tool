@@ -219,7 +219,6 @@ class SeoHeroToolDataObject extends DataExtension
                         ),
                 )
             );
-        $metaLangHrefField->addExtraClass('field')->setAttribute('style', 'padding-left:12px');
         $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));
         $metaDescField->setAttribute('placeholder', self::$current_meta_desc);
 
