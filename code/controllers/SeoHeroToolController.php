@@ -21,6 +21,7 @@ class SeoHeroToolController extends DataExtension
           $this->getGoogleAnalytic().
           $this->getSchemaCompany().
           $this->getMetaSocialMedia() .
+          $this->getTranslationLink() .
           '<!-- Seo Hero Tools for Silverstripe -->'
         );
     }
@@ -82,6 +83,12 @@ class SeoHeroToolController extends DataExtension
         ))->renderWith('SeoHeroToolMetaSocialMedia');
          return $this->compressTemplate($template);
      }
+
+    public function getTranslationLink()
+    {
+        $template = $this->owner->renderWith('SeoHeroToolTranslationLink');
+        return $this->compressTemplate($template);
+    }
 
     /**
      * compressTemplate compresses the template data and minimize them
