@@ -30,8 +30,57 @@ the default setting.
 
 ## Schema.org
 
-Data entered here will be used to create a correct schema file which is useful for searchengines.
+Data entered here will be used to create a correct schema file which is useful for search engines.
 
+Furthermore it is possible via the .yml configuration to create own schemas. In those schemas it is possible
+to access variables of the page and to access variables of has_one connections.
+
+The below example shows all possibilities which can be used within the .yml creation.
+The normal fields should be pretty self-explanatory. Just keep in mind that the first part should match
+exactly the definition on schema.org.
+name, streetAddress and addressLocality are the interesting parts.
+
+name has $Title. This means that after processing there will be displayed the Title-Varibale from the DummyPage.
+streetAddress has the value of the method getStreet() which must be either part of the class or any parent-class. This way it is possible to create return values of basically any kind.
+$DummyOBject.Title means, that DummyPage has a has_one connection with DummyObject. And from this dataobject the Title will be used.
+
+If any of the variable/connections/methods returns nothing or an empty value the whole json object will not be created.
+
+```
+SeoHeroToolSchemaDataObject:
+  DummyPage:
+    @context: "http://www.schema.org"
+    @type: "LocalBusiness"
+    address:
+      @type: "PostalAddress"
+      addressLocality: $DummyObject.Title
+      postalCode: "12345"
+      streetAddress: $getStreet()
+    name: $Title
+    telephone: "01234 23234234"
+    email: "mail@testfirma.de"
+```
+
+This will create when the page is rendered the following json in the schema.org format. It is important that if you are
+willing to use this feature you ensure that you know about the correct structure of the schema you want to represent.
+
+```
+<script type="application/ld+json">
+ {
+   "@context": "http:\/\/www.schema.org",
+   "@type": "LocalBusiness",
+   "address": {
+       "@type": "PostalAddress",
+       "addressLocality": "Dummy Object Title",
+       "postalCode": "12345",
+       "streetAddress": "Am Bruch 1"
+   },
+   "name": "Dummy Page Title",
+   "telephone": "01234 23234234",
+   "email": "mail@testfirma.de"
+}
+ </script>
+```
 ## SocialMedia
 
 SocialMedia sites can be entered and for examples looped later on the website. this is useful to have all important social media data in one place.

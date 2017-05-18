@@ -200,6 +200,8 @@ class SeoHeroToolDataObject extends DataExtension
             }
         }
 
+        # json schema
+        $schemaData = $this->getSchemaObject();
 
         # Meta Datas
         $SeoFormArray = $this->getSeoFollowFields();
@@ -217,6 +219,7 @@ class SeoHeroToolDataObject extends DataExtension
                         $langhrefFieldLabel,
                         $langhrefField
                         ),
+                  $jsonSchemaField = LiteralField::create('SeoPreviewLiteral', '<pre class="prettyprint">'.$schemaData.'</pre><br>'._t('SeoHeroTool.jsonschemaDataExplanation', 'If any of the variables is empty or non existing then the whole json will not be displayed on the website. In this case you will see the Variable above.')),
                 )
             );
         $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));
@@ -267,6 +270,14 @@ class SeoHeroToolDataObject extends DataExtension
         $fields->addFieldToTab('Root.SeoHeroTool', $fb);
         $fields->addFieldToTab('Root.SeoHeroTool', $tw);
         return $fields;
+    }
+
+    private function getSchemaObject()
+    {
+        if ($this->owner->hasExtension('SeoHeroToolSchemaDataObject')) {
+            return $this->owner->getDisplayForBackend();
+        }
+        return false;
     }
 
     /**

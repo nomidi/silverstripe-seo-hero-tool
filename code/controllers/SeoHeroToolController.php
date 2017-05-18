@@ -22,6 +22,7 @@ class SeoHeroToolController extends DataExtension
           $this->getSchemaCompany().
           $this->getMetaSocialMedia() .
           $this->getTranslationLink() .
+          $this->getSchemaDataObject() .
           '<!-- Seo Hero Tools for Silverstripe -->'
         );
     }
@@ -73,6 +74,15 @@ class SeoHeroToolController extends DataExtension
         return $this->compressTemplate($template);
     }
 
+
+    /**
+     *
+    */
+   public function getSchemaDataObject()
+   {
+       $template = $this->owner->renderWith('SeoHeroToolSchemaDataObject');
+       return $this->compressTemplate($template);
+   }
     /*
     *   getMetaSocialMedia() returns the site information prepared for facebook, twitter etc. for better sharing
      */

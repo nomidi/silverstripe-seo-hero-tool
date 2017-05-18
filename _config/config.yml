@@ -4,3 +4,4 @@ ContentController:
 SiteTree:
   extensions:
     - SeoHeroToolDataObject
+    - SeoHeroToolSchemaDataObject
