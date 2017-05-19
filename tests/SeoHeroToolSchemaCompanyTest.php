@@ -16,13 +16,7 @@ class SeoHeroToolSchemaCompanyTest extends FunctionalTest
         $response = $this->get($this->objFromFixture('Page', 'home')->Link());
         $body = strpos($response->getBody(), $needle);
 
-        $this->assertTrue(is_numeric($body), _t('SeoHeroToolSchemaCompany.FindOrganizationTypeInTemplate'));
-
-        $ga->OrganizationType = "";
-        $ga->write();
-        $response = $this->get($this->objFromFixture('Page', 'home')->Link());
-        $body = strpos($response->getBody(), $needle);
-        $this->assertFalse(is_numeric($body), _t('SeoHeroToolSchemaCompany.MissingOrganizationTypeInTemplate'));
+        $this->assertTrue(is_numeric($body), 'Did not find @type within response.');
     }
 
     public function testJSONisCorrect()

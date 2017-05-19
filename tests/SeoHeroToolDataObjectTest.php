@@ -4,7 +4,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
     public static $use_draft_site = true;
 
     protected static $fixture_file = array(
-        'SeoHeroToolControllerTest.yml',
+        'SeoHeroToolSchemaAndDataObjectControllerTest.yml',
       );
 
     public function testYAMLSettingsForDay()
@@ -12,7 +12,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $obj = $this->objFromFixture('Page', 'dataobjecttest');
         $seodo = new SeoHeroToolDataObject();
         $seodo = $obj;
-        $data = array('Title'=>array(0=>'Title', 1=>'LastEdited'), 'WithoutSpace'=>false);
+        $data = array('Title'=>array(0=>'$Title', 1=>'$LastEdited'), 'WithoutSpace'=>false);
         $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == $obj->Title.' '.date('d/m/Y'), 'The return does not match the expected value');
     }
@@ -23,7 +23,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $seodo = new SeoHeroToolDataObject();
         $seodo = $obj;
 
-        $data = array('Title'=>array(0=>'Title', 1=>'LastEdited'), 'WithoutSpace'=>true);
+        $data = array('Title'=>array(0=>'$Title', 1=>'$LastEdited'), 'WithoutSpace'=>true);
         $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == $obj->Title.date('d/m/Y'), 'The return does not match the expected value, found space character between values');
     }
@@ -34,7 +34,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $seodo = new SeoHeroToolDataObject();
         $seodo = $obj;
 
-        $data = array('Title'=>array(0=>'LastEdited'), 'DateFormat'=>'Year');
+        $data = array('Title'=>array(0=>'$LastEdited'), 'DateFormat'=>'Year');
         $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == date('Y'));
     }
@@ -45,7 +45,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $seodo = new SeoHeroToolDataObject();
         $seodo = $obj;
 
-        $data = array('Title'=>array(0=>'Created'), 'DateFormat'=>'Nice');
+        $data = array('Title'=>array(0=>'$Created'), 'DateFormat'=>'Nice');
         $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == '12/12/2016 12:34pm');
     }
@@ -56,7 +56,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $seodo = new SeoHeroToolDataObject();
         $seodo = $obj;
 
-        $data = array('Title'=>array(0=>'Created'), 'DateFormat'=>'SpecialFormat', 'DateFormatting'=>'d/m');
+        $data = array('Title'=>array(0=>'$Created'), 'DateFormat'=>'SpecialFormat', 'DateFormatting'=>'d/m');
         $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == '12/12');
     }
@@ -186,3 +186,32 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $this->assertTrue($return == $obj->FBType, 'og:type does not meet the expectations. Should be "article" but is "'.$return.'".');
     }
 }
+
+/**
+ * Test DataObject which gets created to be able to test a has_one connection on the TestPage
+ */
+/*
+class SeoHeroToolDataObject_TestObject extends DataObject implements TestOnly
+{
+    private static $db = array(
+        "Name" => "Varchar",
+        "Title" => "Varchar"
+      );
+}
+*/
+/**
+ * Test Page which gets used in the test cases.
+ */
+/*
+class SeoHeroToolDataObject_TestPage extends Page implements TestOnly
+{
+    private static $has_one = array(
+      "SeoHeroToolSchema_TestObject" => "SeoHeroToolSchema_TestObject"
+    );
+
+    public function myTest()
+    {
+        return "this seems to work";
+    }
+}
+*/
