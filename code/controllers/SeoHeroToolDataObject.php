@@ -138,6 +138,7 @@ class SeoHeroToolDataObject extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
+        Requirements::javascript('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true');
         if ($this->owner->MetaDescription == "") {
             self::$current_meta_desc = $this->owner->GenMetaDesc;
         } else {
@@ -202,9 +203,15 @@ class SeoHeroToolDataObject extends DataExtension
 
         # json schema
         $schemaData = $this->getSchemaObject();
+
+        # validation schema
+        $schemaData =  preg_replace('(\$\w+)', '<span class="nocode" style="color:red;font-weight:bold">$0</span>', $schemaData);
+        $schemaErrorOutput = "";
+
+
         # json google validator
         $googleSchemaValidatorLink = "https://search.google.com/structured-data/testing-tool?url=".urlencode($this->owner->AbsoluteLink());
-        $googleSchemaLinkField = '<br> <a href="'.$googleSchemaValidatorLink.'" target="_blank">Test Schema with Google Structured Data</a>.';
+        $googleSchemaLinkField = '<br> <a href="'.$googleSchemaValidatorLink.'" target="_blank">Test your Schema with Google Structured Data Testing Tool</a>.';
 
         # Meta Datas
         $SeoFormArray = $this->getSeoFollowFields();
@@ -222,8 +229,10 @@ class SeoHeroToolDataObject extends DataExtension
                         $langhrefFieldLabel,
                         $langhrefField
                         ),
-                  $jsonSchemaField = LiteralField::create('SeoPreviewLiteral', '<pre class="prettyprint">'.$schemaData.'</pre><br>'._t('SeoHeroTool.jsonschemaDataExplanation', 'If any of the variables is empty or non existing then the whole json will not be displayed on the website. In this case you will see the Variable above.')),
-                  $jsonSchemaGoogleLink = LiteralField::create('SeoPreviewGoogleLink', $googleSchemaLinkField),
+                  $jsonSchemaField = LiteralField::create('SeoPreviewLiteral', '<div class="field"><p>Google Schema Org Data</p>
+                    <pre class="prettyprint linenums:1">'.$schemaData.'</pre><br>'._t('SeoHeroTool.jsonschemaDataExplanation', 'If there is any red text above this means that either a variable or a connection was not resolveable. Please check your configuration.').'
+                    <br><p>'.$googleSchemaLinkField.'</p></div>
+                    '),
                 )
             );
         $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));
