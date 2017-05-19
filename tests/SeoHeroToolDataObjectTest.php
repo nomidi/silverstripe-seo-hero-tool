@@ -3,8 +3,14 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
 {
     public static $use_draft_site = true;
 
+    protected $extraDataObjects = array(
+      'SeoHeroToolDataObjectTest_TestPage',
+      'SeoHeroToolDataObjectTest_TestObject',
+    );
+
     protected static $fixture_file = array(
         'SeoHeroToolSchemaAndDataObjectControllerTest.yml',
+        'SeoHeroToolDataObjectTest.yml'
       );
 
     public function testYAMLSettingsForDay()
@@ -36,7 +42,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
 
         $data = array('Title'=>array(0=>'$LastEdited'), 'DateFormat'=>'Year');
         $test = $seodo->checkTitleYAMLSettings($data);
-        $this->assertTrue($test == date('Y'));
+        $this->assertTrue($test == date('Y'), 'The return does not match the expected value. Should be just the year.');
     }
 
     public function testYAMLSettingsSepcificDateFormatNice()
@@ -47,7 +53,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
 
         $data = array('Title'=>array(0=>'$Created'), 'DateFormat'=>'Nice');
         $test = $seodo->checkTitleYAMLSettings($data);
-        $this->assertTrue($test == '12/12/2016 12:34pm');
+        $this->assertTrue($test == '12/12/2016 12:34pm', 'The return does not match the expected Nice format.');
     }
 
     public function testYAMLSettingsSpecificDateFormatSpecialSettings()
@@ -58,9 +64,32 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
 
         $data = array('Title'=>array(0=>'$Created'), 'DateFormat'=>'SpecialFormat', 'DateFormatting'=>'d/m');
         $test = $seodo->checkTitleYAMLSettings($data);
-        $this->assertTrue($test == '12/12');
+        $this->assertTrue($test == '12/12', 'The return does not match the specific format and is not day/month.');
     }
 
+    public function testYAMLSettingsWithFunction()
+    {
+        $obj = $this->objFromFixture('SeoHeroToolDataObjectTest_TestPage', 'testsite');
+        $seodo = new SeoHeroToolDataObject();
+        $seodo = $obj;
+
+        $data = array('Title'=>array(0=>'$myTest()'));
+        $test = $seodo->checkTitleYAMLSettings($data);
+        $TestPage = new SeoHeroToolSchema_TestPage;
+        $this->assertTrue($test == $TestPage->myTest(), 'It seems that there is a problem with the return value');
+    }
+/*
+    public function testYAMLSettingsWithHasOneConnection()
+    {
+        $obj = $this->objFromFixture('SeoHeroToolDataObjectTest_TestPage', 'testsite');
+        $seodo = new SeoHeroToolDataObject();
+        $seodo = $obj;
+
+        $data = array('Title'=>array(0=>'$SeoHeroToolDataObjectTest_TestObject.Title', 1=>'Test'));
+        $test = $seodo->checkTitleYAMLSettings($data);
+        debug::show($test);
+    }
+*/
     /*
       Function tests that if a FBTitle is present this will be used
      */
@@ -190,23 +219,22 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
 /**
  * Test DataObject which gets created to be able to test a has_one connection on the TestPage
  */
-/*
-class SeoHeroToolDataObject_TestObject extends DataObject implements TestOnly
+
+class SeoHeroToolDataObjectTest_TestObject extends DataObject implements TestOnly
 {
     private static $db = array(
         "Name" => "Varchar",
         "Title" => "Varchar"
       );
 }
-*/
 /**
  * Test Page which gets used in the test cases.
  */
-/*
-class SeoHeroToolDataObject_TestPage extends Page implements TestOnly
+
+class SeoHeroToolDataObjectTest_TestPage extends Page implements TestOnly
 {
     private static $has_one = array(
-      "SeoHeroToolSchema_TestObject" => "SeoHeroToolSchema_TestObject"
+      "SeoHeroToolDataObjectTest_TestObject" => "SeoHeroToolDataObjectTest_TestObject"
     );
 
     public function myTest()
@@ -214,4 +242,3 @@ class SeoHeroToolDataObject_TestPage extends Page implements TestOnly
         return "this seems to work";
     }
 }
-*/
