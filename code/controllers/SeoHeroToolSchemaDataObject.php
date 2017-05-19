@@ -22,14 +22,8 @@ class SeoHeroToolSchemaDataObject extends DataExtension
                     if (strpos($valueForReturn, '.')) {
                         // Has One Connection
                         $HasOneArray = explode(".", $valueForReturn);
-                        //debug::show($HasOneArray);
                         $object = $this->owner->{$HasOneArray[0]}();
-                        //debug::show($HasOneArray);
-                        //debug::show($object);
-                        debug::show($this->owner->DummyObject());
-
-                    //    debug::show($object->$HasOneArray[1]);
-                        if (isset($object->$HasOneArray[1])) {
+                        if (isset($object->$HasOneArray[1]) && $object->ID != 0) {
                             $arr[$idx] = $object->$HasOneArray[1];
                         } else {
                             $this->emptyValues = true;
