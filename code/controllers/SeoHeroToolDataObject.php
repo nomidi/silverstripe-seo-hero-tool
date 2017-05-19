@@ -181,6 +181,31 @@ class SeoHeroToolDataObject extends DataExtension
                 _t('SeoHeroTool.KeywordQuestionAfter', 'This field saves questions from the W-Questions, available only in German right now.')
             );
 
+        # translations href
+        $langhrefField = "";
+        $langhrefFieldLabel = "";
+        if ($this->owner->Translations) {
+            $langhrefFieldTranslations = "";
+
+            foreach ($this->owner->Translations as $lang) {
+                $langhrefFieldTranslations .= " " . '<link rel="alternate" hreflang="' . i18n::convert_rfc1766($lang->Locale) . '" href="' . $lang->AbsoluteLink() . '" />';
+            }
+            if ($langhrefFieldTranslations != "") {
+                $langhrefField = '<link rel="alternate" hreflang="' . i18n::convert_rfc1766($this->owner->Locale) . '" href="' . $this->owner->AbsoluteLink() . '" />';
+                $langhrefField .= "\r" . $langhrefFieldTranslations;
+                $langhrefField = str_replace("<", "&lt;", $langhrefField);
+                $langhrefField = str_replace("<", "&gt;", $langhrefField);
+                $langhrefFieldLabel = LabelField::create("LangHrefField", 'langhref Attribut')->addExtraClass('left');
+                $langhrefField = LiteralField::create("LangHrefField", '<pre class="prettyprint">' . $langhrefField . '</pre>');
+            }
+        }
+
+        # json schema
+        $schemaData = $this->getSchemaObject();
+        # json google validator
+        $googleSchemaValidatorLink = "https://search.google.com/structured-data/testing-tool?url=".urlencode($this->owner->AbsoluteLink());
+        $googleSchemaLinkField = '<br> <a href="'.$googleSchemaValidatorLink.'" target="_blank">Test Schema with Google Structured Data</a>.';
+
         # Meta Datas
         $SeoFormArray = $this->getSeoFollowFields();
         $meta = ToggleCompositeField::create(
@@ -192,7 +217,13 @@ class SeoHeroToolDataObject extends DataExtension
                         ->setRightTitle(_t('SeoHeroTool.CanonicalAfter', 'Canonical URL, only use it if you know what you are going to do.')),
                     $canonicalFieldSiteTree = new TreeDropdownField("CanonicalLinkID", "Choose Canonical URL from the SiteTree", "SiteTree"),
                     $canonicalFieldAll = CheckboxField::create('CanonicalAll', _t('SeoHeroTool.CanonicalAll', 'Add at the end of the Canonical URL all=all.')),
-                    $metaDescField = TextareaField::create("MetaDescription", _t('SeoHeroTool.OwnMetaDesc', 'Meta description'))
+                    $metaDescField = TextareaField::create("MetaDescription", _t('SeoHeroTool.OwnMetaDesc', 'Meta description')),
+                    $metaLangHrefField = CompositeField::create(
+                        $langhrefFieldLabel,
+                        $langhrefField
+                        ),
+                  $jsonSchemaField = LiteralField::create('SeoPreviewLiteral', '<pre class="prettyprint">'.$schemaData.'</pre><br>'._t('SeoHeroTool.jsonschemaDataExplanation', 'If any of the variables is empty or non existing then the whole json will not be displayed on the website. In this case you will see the Variable above.')),
+                  $jsonSchemaGoogleLink = LiteralField::create('SeoPreviewGoogleLink', $googleSchemaLinkField),
                 )
             );
         $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));
@@ -243,6 +274,14 @@ class SeoHeroToolDataObject extends DataExtension
         $fields->addFieldToTab('Root.SeoHeroTool', $fb);
         $fields->addFieldToTab('Root.SeoHeroTool', $tw);
         return $fields;
+    }
+
+    private function getSchemaObject()
+    {
+        if ($this->owner->hasExtension('SeoHeroToolSchemaDataObject')) {
+            return $this->owner->getDisplayForBackend();
+        }
+        return false;
     }
 
     /**
