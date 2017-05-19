@@ -202,6 +202,9 @@ class SeoHeroToolDataObject extends DataExtension
 
         # json schema
         $schemaData = $this->getSchemaObject();
+        # json google validator
+        $googleSchemaValidatorLink = "https://search.google.com/structured-data/testing-tool?url=".urlencode($this->owner->AbsoluteLink());
+        $googleSchemaLinkField = '<br> <a href="'.$googleSchemaValidatorLink.'" target="_blank">Test Schema with Google Structured Data</a>.';
 
         # Meta Datas
         $SeoFormArray = $this->getSeoFollowFields();
@@ -220,6 +223,7 @@ class SeoHeroToolDataObject extends DataExtension
                         $langhrefField
                         ),
                   $jsonSchemaField = LiteralField::create('SeoPreviewLiteral', '<pre class="prettyprint">'.$schemaData.'</pre><br>'._t('SeoHeroTool.jsonschemaDataExplanation', 'If any of the variables is empty or non existing then the whole json will not be displayed on the website. In this case you will see the Variable above.')),
+                  $jsonSchemaGoogleLink = LiteralField::create('SeoPreviewGoogleLink', $googleSchemaLinkField),
                 )
             );
         $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));

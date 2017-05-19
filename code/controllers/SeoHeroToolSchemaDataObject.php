@@ -24,7 +24,10 @@ class SeoHeroToolSchemaDataObject extends DataExtension
                         $HasOneArray = explode(".", $valueForReturn);
                         //debug::show($HasOneArray);
                         $object = $this->owner->{$HasOneArray[0]}();
-                        debug::show($HasOneArray);
+                        //debug::show($HasOneArray);
+                        //debug::show($object);
+                        debug::show($this->owner->DummyObject());
+
                     //    debug::show($object->$HasOneArray[1]);
                         if (isset($object->$HasOneArray[1])) {
                             $arr[$idx] = $object->$HasOneArray[1];
