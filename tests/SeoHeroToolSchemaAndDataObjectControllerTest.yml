@@ -1,0 +1,106 @@
+Page:
+  home:
+    Title: home
+    URLSegment: home
+  dataobjecttest:
+    Title: something
+    ID: 5
+    URLSegment: something
+    Created: 2016-12-12 12:34:34
+    FBTitle: ThisIsAFBTitleTest
+    TwTitle: ThisIsATwTitleTest
+    FBDescription: This is a FB description
+    TwDescription: This is a Twitter Description
+  objectWithBetterSiteTitle:
+    Title: Some Default Title
+    URLSegment: somedefaulttitle
+    Created: 2016-12-12 12:34:34
+    BetterSiteTitle: Not Your Default Title
+  objectWithMetaDescription:
+    Title: Site with MetaDescription
+    URLSegment: sitewithmetadescription
+    MetaDescription: This is a Meta Description
+  objectWithFBTypeFromConfig:
+    Title: Site with FBType from Config
+    FBTitle: Site with FBType from Config
+    URLSegment: sitewithfbtypefromconfig
+    FBType: website
+SeoHeroToolGoogleAnalytic:
+  default:
+    AnalyticsKey: 'UA-12345678-1'
+    ActivateInMode: 'dev'
+    UserOptOut: false
+    AnonymizeIp: false
+    LoadTime: false
+    ID: 1
+Group:
+  cmseditorgroup:
+    Code: cmseditorgroup
+  admingroup:
+    Code: admingroup
+Member:
+  cmseditor:
+    FirstName: Editor
+    Groups: =>Group.cmseditorgroup
+  websiteuser:
+    FirstName: Website User
+  admin:
+    FirstName: Admin
+    Groups: =>Group.admingroup
+Permission:
+  admincode:
+    Code: ADMIN
+    Group: =>Group.admingroup
+  cmsmaincode:
+    Code: CMS_ACCESS_CMSMain
+    Group: =>Group.cmseditorgroup
+SeoHeroToolGoogleAnalytic:
+  default:
+    AnalyticsKey: 'UA-12345678-1'
+    ActivateInMode: 'dev'
+    UserOptOut: false
+    AnonymizeIp: false
+    LoadTime: false
+    ID: 1
+SeoHeroToolSocialLink:
+  default:
+    Name: Facebook
+    Link: https://www.facebook.com/examplesite
+    UserName: ''
+    IconName:''
+    DisplayInSocialLoop: 1
+    ID: 1
+    SortOrder: 2
+  secondEntry:
+    Name: Twitter
+    Link: https://www.twitter.com/mysite
+    UserName: 'ExampleSite'
+    IconName: ''
+    DisplayInSocialLoop: 1
+    ID: 2
+    SortOrder: 1
+  thirdEntry:
+    Name: Instagram
+    Link: https://www.instagram.com/examplesite
+    UserName: ''
+    IconName: ''
+    DisplayInSocialLoop: 0
+    ID: 3
+    SOrtOrder: 1
+SeoHeroToolSchemaCompany:
+  default:
+    OrganizationType: 'Organization'
+    Link: 'http://www.example.com'
+    Company: 'TestCompany'
+    Mail: 'info@example.com'
+    Postal: '12345'
+    Location: 'Testtown'
+    Country: 'Germany'
+    Street: 'Teststreet'
+    HouseNmbr: '123'
+    Tel: '+49-1234-56789-01'
+    VatID: '12345678901'
+    ID: 1
+    Latitude: '53.0788767'
+    Longitude: '8.8085507'
+    SeoHeroToolSocialLinks: =>SeoHeroToolSocialLink.default, =>SeoHeroToolSocialLink.secondEntry, =>SeoHeroToolSocialLink.thirdEntry

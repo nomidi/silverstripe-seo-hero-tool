@@ -83,37 +83,73 @@ class SeoHeroToolDataObject extends DataExtension
             }
 
             $titleList = $entry['Title'];
+            //debug::show($titleList);
             for ($i = 0; $i < count($titleList); $i++) {
-                $obj = $this->owner->obj($titleList[$i]);
-                $content = $obj->Value;
-                $dataobject = $this->owner->obj($titleList[$i])->__get('class');
+                $elementIsVariable = false;
+                if (substr($titleList[$i], 0, 1) == '$') {
+                    $actualElement = substr($titleList[$i], 1);
+                    $elementIsVariable = true;
+                } else {
+                    $actualElement = $titleList[$i];
+                }
 
-                if ($dataobject == 'SS_Datetime' || $dataobject == 'SS_Date') {
-                    if (isset($entry['DateFormat'])) {
-                        if ($entry['DateFormat'] == 'Specific' && isset($entry['DateFormatting'])) {
-                            $formatOption = 'Specific';
+
+                if ($elementIsVariable) {
+                    # es handelt sich um eine Variable
+                    //debug::show($actualElement);
+                    if (strpos($actualElement, '()')) {
+                        $actualElement = substr($actualElement, 0, -2);
+                        if (method_exists($this->owner->ClassName, $actualElement)) {
+                            $content = $this->owner->{$actualElement}();
                         } else {
-                            $formatOption = $entry['DateFormat'];
+                            $content = '';
+                        }
+                    } elseif (strpos($actualElement, '.')) {
+                        //  debug::show($actualElement.' ist eine has-one connection');
+                        $HasOneArray = explode(".", $actualElement);
+                        $object = $this->owner->{$HasOneArray[0]}();
+                        if (isset($object->$HasOneArray[1]) && $object->ID != 0) {
+                            $content = $object->$HasOneArray[1];
+                        } else {
+                            $content = '';
                         }
                     } else {
-                        $formatOption = '';
+                        $obj = $this->owner->obj($actualElement);
+                        $content = $obj->Value;
+
+                        $dataobject = $this->owner->obj($actualElement)->__get('class');
+
+                        if ($dataobject == 'SS_Datetime' || $dataobject == 'SS_Date') {
+                            if (isset($entry['DateFormat'])) {
+                                if ($entry['DateFormat'] == 'Specific' && isset($entry['DateFormatting'])) {
+                                    $formatOption = 'Specific';
+                                } else {
+                                    $formatOption = $entry['DateFormat'];
+                                }
+                            } else {
+                                $formatOption = '';
+                            }
+                            switch ($formatOption) {
+                          case 'SpecialFormat':
+                            $content = $obj->Format($entry['DateFormatting']);
+                            break;
+                          case 'Nice24':
+                            $content = $obj->Nice24();
+                            break;
+                          case 'Year':
+                            $content = $obj->Year();
+                            break;
+                          case 'Nice':
+                            $content = $obj->Nice();
+                            break;
+                          default:
+                            $content = $obj->Date();
+                          }
+                        }
                     }
-                    switch ($formatOption) {
-                      case 'SpecialFormat':
-                        $content = $obj->Format($entry['DateFormatting']);
-                        break;
-                      case 'Nice24':
-                        $content = $obj->Nice24();
-                        break;
-                      case 'Year':
-                        $content = $obj->Year();
-                        break;
-                      case 'Nice':
-                        $content = $obj->Nice();
-                        break;
-                      default:
-                        $content = $obj->Date();
-                      }
+                } else {
+                    # es handelt sich um einen String
+                    $content = $actualElement;
                 }
 
                 if ($i == 0) {
