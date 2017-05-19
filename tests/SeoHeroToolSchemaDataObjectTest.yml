@@ -1,0 +1,9 @@
+SeoHeroToolSchema_TestObject:
+  testobject1:
+    Name: TestObject1
+    Title: Title of TestObject1
+SeoHeroToolSchema_TestPage:
+  testsite:
+    Title: Testsite
+    URLSegment: testsite
+    SeoHeroToolSchema_TestObject: =>SeoHeroToolSchema_TestObject.testobject1

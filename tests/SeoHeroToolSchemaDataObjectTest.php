@@ -6,7 +6,7 @@ class SeoHeroToolSchemaDataObjectTest extends FunctionalTest
     'SeoHeroToolSchema_TestPage',
   );
 
-    protected static $fixture_file = 'SeoHeroToolSchemaAndDataObjectControllerTest.yml';
+    protected static $fixture_file = array('SeoHeroToolSchemaAndDataObjectControllerTest.yml', 'SeoHeroToolSchemaDataObjectTest.yml');
     public static $use_draft_site = true;
 
     /**
