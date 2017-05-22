@@ -83,7 +83,6 @@ class SeoHeroToolDataObject extends DataExtension
             }
 
             $titleList = $entry['Title'];
-            //debug::show($titleList);
             for ($i = 0; $i < count($titleList); $i++) {
                 $elementIsVariable = false;
                 if (substr($titleList[$i], 0, 1) == '$') {
@@ -95,8 +94,8 @@ class SeoHeroToolDataObject extends DataExtension
 
 
                 if ($elementIsVariable) {
-                    # es handelt sich um eine Variable
-                    //debug::show($actualElement);
+                    #Variable
+
                     if (strpos($actualElement, '()')) {
                         $actualElement = substr($actualElement, 0, -2);
                         if (method_exists($this->owner->ClassName, $actualElement)) {
@@ -105,7 +104,7 @@ class SeoHeroToolDataObject extends DataExtension
                             $content = '';
                         }
                     } elseif (strpos($actualElement, '.')) {
-                        //  debug::show($actualElement.' ist eine has-one connection');
+                        #has-one connection
                         $HasOneArray = explode(".", $actualElement);
                         $object = $this->owner->{$HasOneArray[0]}();
                         if (isset($object->$HasOneArray[1]) && $object->ID != 0) {

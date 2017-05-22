@@ -1,9 +1,11 @@
-SeoHeroToolDataObjectTest_TestObject:
+SeoHeroToolDataObject_TestObject:
   testobject1:
     Name: TestObject1
     Title: Title of TestObject1
-SeoHeroToolDataObjectTest_TestPage:
+    ID: 1
+SeoHeroToolDataObject_TestPage:
   testsite:
     Title: Testsite
     URLSegment: testsite
-    SeoHeroToolSchema_TestObject: =>SeoHeroToolDataObjectTest_TestObject.testobject1
+    SeoHeroToolDataObject_TestObject: =>SeoHeroToolDataObject_TestObject.testobject1
+    ID: 12

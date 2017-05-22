@@ -1,17 +1,17 @@
 <?php
 class SeoHeroToolDataObjectTest extends FunctionalTest
 {
-    public static $use_draft_site = true;
-
     protected $extraDataObjects = array(
-      'SeoHeroToolDataObjectTest_TestPage',
-      'SeoHeroToolDataObjectTest_TestObject',
+      'SeoHeroToolDataObject_TestObject',
+      'SeoHeroToolDataObject_TestPage',
     );
 
     protected static $fixture_file = array(
         'SeoHeroToolSchemaAndDataObjectControllerTest.yml',
         'SeoHeroToolDataObjectTest.yml'
       );
+
+    public static $use_draft_site = true;
 
     public function testYAMLSettingsForDay()
     {
@@ -69,7 +69,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
 
     public function testYAMLSettingsWithFunction()
     {
-        $obj = $this->objFromFixture('SeoHeroToolDataObjectTest_TestPage', 'testsite');
+        $obj = $this->objFromFixture('SeoHeroToolDataObject_TestPage', 'testsite');
         $seodo = new SeoHeroToolDataObject();
         $seodo = $obj;
 
@@ -78,21 +78,23 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $TestPage = new SeoHeroToolSchema_TestPage;
         $this->assertTrue($test == $TestPage->myTest(), 'It seems that there is a problem with the return value');
     }
-/*
+
+
     public function testYAMLSettingsWithHasOneConnection()
     {
-        $obj = $this->objFromFixture('SeoHeroToolDataObjectTest_TestPage', 'testsite');
+        $obj = $this->objFromFixture('SeoHeroToolDataObject_TestPage', 'testsite');
         $seodo = new SeoHeroToolDataObject();
         $seodo = $obj;
 
-        $data = array('Title'=>array(0=>'$SeoHeroToolDataObjectTest_TestObject.Title', 1=>'Test'));
+        $data = array('Title'=>array(0=>'$SeoHeroToolDataObject_TestObject.Title'));
         $test = $seodo->checkTitleYAMLSettings($data);
-        debug::show($test);
+        $this->assertTrue($test == 'Title of TestObject1', 'The response does not match the expected value of the title. The response is '.$test.' while the expected value is Title of TestObject1');
     }
-*/
+
     /*
       Function tests that if a FBTitle is present this will be used
      */
+
     public function testFBspecificTitle()
     {
         $obj = $this->objFromFixture('Page', 'dataobjecttest');
@@ -105,6 +107,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
     /*
       Function tests that if a FBDescription is present this will be used
      */
+
     public function testFBspecificDescription()
     {
         $obj = $this->objFromFixture('Page', 'dataobjecttest');
@@ -117,6 +120,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
     /*
       Functions tests that if a TwTitle is present this will be used
      */
+
     public function testTWspecificTitle()
     {
         $obj = $this->objFromFixture('Page', 'dataobjecttest');
@@ -129,6 +133,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
     /*
       Function tests that if a TwDescription is present this will be used
     */
+
     public function testTWspecificDescription()
     {
         $obj = $this->objFromFixture('Page', 'dataobjecttest');
@@ -141,6 +146,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
     /*
       Function tests that if no FBTitle is present but a BetterSiteTitle then this will be used
     */
+
     public function testFBTitleDefaultTitle()
     {
         $obj = $this->objFromFixture('Page', 'objectWithBetterSiteTitle');
@@ -153,6 +159,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
     /*
       Function tests that if no TwTitle is present but a BetterSiteTitle then this will be used
     */
+
     public function testTWTitleDefaultTitle()
     {
         $obj = $this->objFromFixture('Page', 'objectWithBetterSiteTitle');
@@ -165,6 +172,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
     /*
       Function tests that if no FBDescription is available but a default Description this will be used
     */
+
     public function testFBDescriptionMetaDescription()
     {
         $obj = $this->objFromFixture('Page', 'objectWithMetaDescription');
@@ -177,6 +185,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
     /*
       Function tests that if no TwDescription is available but a default Description this will be used
      */
+
     public function testTWDescriptionMetaDescription()
     {
         $obj = $this->objFromFixture('Page', 'objectWithMetaDescription');
@@ -189,6 +198,7 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
     /*
       Function tests that the FBType which is used as og:type returns the correct values for different settings.
      */
+
     public function testFBType()
     {
         $obj = $this->objFromFixture('Page', 'home');
@@ -215,12 +225,11 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $this->assertTrue($return == $obj->FBType, 'og:type does not meet the expectations. Should be "article" but is "'.$return.'".');
     }
 }
-
 /**
  * Test DataObject which gets created to be able to test a has_one connection on the TestPage
  */
 
-class SeoHeroToolDataObjectTest_TestObject extends DataObject implements TestOnly
+class SeoHeroToolDataObject_TestObject extends DataObject implements TestOnly
 {
     private static $db = array(
         "Name" => "Varchar",
@@ -231,10 +240,10 @@ class SeoHeroToolDataObjectTest_TestObject extends DataObject implements TestOnl
  * Test Page which gets used in the test cases.
  */
 
-class SeoHeroToolDataObjectTest_TestPage extends Page implements TestOnly
+class SeoHeroToolDataObject_TestPage extends Page implements TestOnly
 {
     private static $has_one = array(
-      "SeoHeroToolDataObjectTest_TestObject" => "SeoHeroToolDataObjectTest_TestObject"
+      "SeoHeroToolDataObject_TestObject" => "SeoHeroToolDataObject_TestObject"
     );
 
     public function myTest()

@@ -102,26 +102,27 @@ To do so please add the following:
 SeoHeroToolDataObject:
   Page:
     Title:
-      - Title
-      - LastEdited
+      - $Title
+      - $LastEdited
     WithoutSpace: false
   TestPage:
     Title:
-      - Title
-      - LastEdited
+      - $Title
+      - " at "
+      - $LastEdited
+      - $MyTest()
+      - $TestObject.Title
     DateFormat: SpecialFormat
     DateFormatting: d/m
     WithoutSpace: true
     SiteConfigTitle: true
     FBType: article
 ```
+
 All Pages with the Type Page will be displayed in the title in this case with
 the Title and the Date of the last Edit. Between both there will be a space.
-All Pages with the Type TestPage will have both fields, but there will be no
-space between the fields. The Pages with the Type of TestPage will also have the
-SiteConfigTitle at the end.
-The default Title for those Page Types will just be used if there is no site
-specific BetterTitle given.
+All Pages with the Type TestPage will have the field Title, followed by an "at", followed by the time of the last edit of the page, followed by the return of the function MyTest() and lastly the Title of the has-one connection TestObject. There will be no spacing character between each entry. The Pages with the Type of TestPage will also have the SiteConfigTitle at the end.
+
 Options for DateFormat are : Nice24, Year, Nice and SpecialFormat.
 If SpecialFormat is set, then the setting DateFormatting determines how the
 date will be formatted. In this example just the day and month of the date will be
@@ -129,6 +130,7 @@ displayed.
 The option FBType defines the og:type attribute of the page type. The og:type is part of the OpenGraph Protocol.
 By default each page is a 'website', but it can also be for example an 'article', which is usefuel for Blogs or News Posts or it can be a 'product'.
 
+It is always possible to overrite a configuraiton title by giving a website in the backend via the SeoHeroTool a specific title.
 
 Please keep in mind, that in the default theme the Sitename will always be attached at the end of the title.
 If you use this option with the SeoHeroToolDataObject the Sitename will appear twice, so please check your
