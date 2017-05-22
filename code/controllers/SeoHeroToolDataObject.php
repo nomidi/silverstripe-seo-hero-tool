@@ -212,17 +212,16 @@ class SeoHeroToolDataObject extends DataExtension
         if (!defined('SEO_HERO_TOOL_ADVANCED_PATH')) {
             $advancedRemark = _t('SeoHeroTool.AdvancedVersionRemark', 'The Keywords and Keyword Question are just available in the Advanced Version!');
             $keywordQuestionField->setRightTitle($advancedRemark);
+        } else {
+            $keywordQuestionField->setRightTitle(
+                     _t('SeoHeroTool.KeywordQuestionAfter', 'This field saves questions from the W-Questions, available only in German right now.')
+                 );
         }
-
-
         $fields->addFieldToTab('Root.SeoHeroTool', $keywordToggleField);
         $keywordField->setRightTitle(
                 _t('SeoHeroTool.FeaturedKeywordAfter', 'Using commas to separate Keywords..')
             );
-    /*    $keywordQuestionField->setRightTitle(
-                _t('SeoHeroTool.KeywordQuestionAfter', 'This field saves questions from the W-Questions, available only in German right now.')
-            );
-*/
+
         # translations href
         $langhrefField = "";
         $langhrefFieldLabel = "";
