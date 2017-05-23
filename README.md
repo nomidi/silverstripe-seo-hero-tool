@@ -1,11 +1,14 @@
 # SeoHeroTool
 
+[![Build Status](https://travis-ci.org/nomidi/silverstripe-seo-hero-tool.svg?branch=master)](https://travis-ci.org/nomidi/silverstripe-seo-hero-tool)
+
 The SeoHeroTool offers options to control the Meta Information of a Website better than with the default Silverstripe possibilities.
 
 ## Overview
  - GoogleAnalytics
  - Schema.org
  - Social Media
+ - SeoHeroTool Tab
  - Keywords and Meta
  - Robots and .htaccess Editor
 
@@ -83,20 +86,65 @@ willing to use this feature you ensure that you know about the correct structure
 ```
 ## SocialMedia
 
-SocialMedia sites can be entered and for examples looped later on the website. this is useful to have all important social media data in one place.
+SocialMedia sites can be entered and for examples looped later on the website. This is useful to have all important social media data in one place.
 
 To output the Social Media Loop simply loop the function $SocialLoop.
 By default the loop will be sorted by the sorting which can be changed in the backend. But it is possible to sort it alphabetical with the default
 Silverstripe functions which would look like this $SocialLoop.Sort(Name,ASC)
 
+## SeoHeroTool Tab
+
+Once the SeoHeroTool is installed you will see on all pages a tab called SeoHeroTool. Within this tab you can configure the following:
+
+- SEO Title Tag
+- Keywords (used in SeoHeroTool Pro)
+- MetaData
+- Facebook
+- Twitter
+
+Furthermore the SeoHeroTool Tab gives you a preview on how your website will appear in a search result.
+
+### SEO Title Tag
+
+The SEO Title defines the value for the Title attribute. By default this is the title of this site.
+It is possible via the SeoHeroToolDataObject to define a title based on data fields. This is explained in detail in the chapter
+Generating of the MetaDataTitle and FB Type.
+
+### Keywords
+
+The Keywords are not used in the SeoHeroTool right now. At the moment they are used in the SeoHeroTool Pro in the keyword analysis and general webpage analysis.
+
+### MetaData
+
+Metadata contains all necessary MetaData Information. This includes the following:
+- information for search robots
+- possiblity to add a canonical URL
+- Meta Description
+- langhref attribute if this is a multilingual page.
+- Google Schema Org Data if defined in SeoHeroToolSchemaDataObject
+
+### Facebook
+
+For a better sharing experience it is possible to enter data for Facebook Sharing.
+This includes the Title for the page, an Image for Facebook which will be shown if this page gets shared, the Type of this Site and a Description for Facebook.
+As Default value for Title and Description the SEO Title and Meta Description will be used.
+The default Type for the site will be Website. This can be also configured via the SeoHeroToolDataObject.
+In case that a specific page shall have a different Type it is possible to overturn the one from the configuration via a checkbox.  
+
+### Twitter
+
+For a better sharing experience it is possible to enter data for Twitter Sharing.
+This includes the Title for the page, an Image for Twitter and a Description.
+As Default value for Title and Description the SEO Title and Meta Description will be used.
+
 ## Keywords and Metadata
 
 ### Generating of the MetaDataTitle and FB Type
 
-SeoHeroTool and MetaDataTitle.
-Please replace in your template in the header section the title output.
-You can add in your config.yml default values for the title for certain types of page.
+With an installed SeoHeroTool the Title for the page which appear in within the <title>-Tag will always be generated with the Method MetaTitle().
+Therefore the Variable $Title is not necessary anymore within the <title>-Tag and can be removed. But this is not necessary.
 
+It is possible to generate the MetaTitle for a website via the config.yml file.
 To do so please add the following:
 ```
 SeoHeroToolDataObject:
@@ -127,14 +175,13 @@ Options for DateFormat are : Nice24, Year, Nice and SpecialFormat.
 If SpecialFormat is set, then the setting DateFormatting determines how the
 date will be formatted. In this example just the day and month of the date will be
 displayed.
+
 The option FBType defines the og:type attribute of the page type. The og:type is part of the OpenGraph Protocol.
-By default each page is a 'website', but it can also be for example an 'article', which is usefuel for Blogs or News Posts or it can be a 'product'.
+By default each page is a 'website', but it can also be for example an 'article', which is usefuel for Blogs or News Posts or it can be a 'product'. If a specific page should have a different Type than all other pages with the same page type it is possible to overturn the configuration FBType in the SeoHeroTool for this specific page.
 
-It is always possible to overrite a configuraiton title by giving a website in the backend via the SeoHeroTool a specific title.
-
-Please keep in mind, that in the default theme the Sitename will always be attached at the end of the title.
-If you use this option with the SeoHeroToolDataObject the Sitename will appear twice, so please check your
-theme and remove the Sitename in the title if you want to control it via SeoHeroTools.
+Please keep in mind, that in the default theme the Sitename will always be attached to the pagename at the end of the title.
+If you want to use the SiteConfigTitle option with the SeoHeroToolDataObject the Sitename will appear twice. Please check your
+theme and remove the Sitename in the <title>-tag if you want to control it via SeoHeroTools.
 
 ## Robots and .htaccess Editor
 
