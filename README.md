@@ -53,7 +53,7 @@ The order of appearance if the following:
 - Title entered via the SeoHeroTool
 
 The SEO Title which is actually used is entered as placeholder. If this Page Type has a Title configuration then the Title from the configuration will be displayed below the SEO Title.
-[Configuring the title in the config](#Define-Title-for-Page-Types)
+[Configuring the title in the config](#define-title-for-page-types)
 
 ### Keywords
 
