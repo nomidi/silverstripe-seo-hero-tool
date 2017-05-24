@@ -17,7 +17,7 @@ As many Pages of the same type (for example all DummyPages) have the same MetaTi
 composer require nomidi/silverstripe-seo-hero-tool
 ```
 Alternatively simply download the zip file from github.
-After installation run a run `dev/build`
+After installation run a run `dev/build?flush=1` on your project.
 
 ## Seo Hero Tool
 
