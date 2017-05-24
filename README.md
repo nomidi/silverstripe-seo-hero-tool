@@ -37,6 +37,8 @@ The SeoHeroTool-Tab offers the following information:
 
 The Snippet Preview is a preview on how this webpage will appear in a search result. If you update any site information it is necessary to save the site to get an updated Preview.
 
+![](docs/images/snippet_preview.png)
+
 ### SEO Title
 
 The SEO Title is the part which appears in the *<head>* of each website within the *<title>*-tag. By default this is the *Title* of the Website.
