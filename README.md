@@ -1,6 +1,7 @@
 # SeoHeroTool
 
 [![Build Status](https://travis-ci.org/nomidi/silverstripe-seo-hero-tool.svg?branch=master)](https://travis-ci.org/nomidi/silverstripe-seo-hero-tool)
+[![License](https://poser.pugx.org/nomidi/silverstripe-seo-hero-tool/license)](https://packagist.org/packages/nomidi/silverstripe-seo-hero-tool)
 
 The SeoHeroTool offers options to control the Meta Information of a Website. The SeoHeroTool offers on the hand to change settings on a per page basis (like the MetaTitle, OpenGraph- or Twitterinformation) and to enter general information (like Google Analytics, links to Facebook, Twitter or for example to enter Redirects).
 While the page settings are entered on each page, the general settings can be accessed via the SeoHeroTool-Icon.
