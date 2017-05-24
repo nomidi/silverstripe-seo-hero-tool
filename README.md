@@ -42,6 +42,9 @@ The Snippet Preview is a preview on how this webpage will appear in a search res
 ### SEO Title
 
 The SEO Title is the part which appears in the *<head>* of each website within the *<title>*-tag. By default this is the *Title* of the Website.
+
+![](docs/images/seotitle.png)
+
 It is possible to define the SEO Title via the *config.yml*-file. This is explained in the part *Creating default settings in the configuration* later in this document.
 But it is also possible to set the SEO Title manually.
 The order of appearance if the following:
