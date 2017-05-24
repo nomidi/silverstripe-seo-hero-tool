@@ -45,7 +45,7 @@ The SEO Title is the part which appears in the *<head>* of each website within t
 
 ![](docs/images/seotitle.png)
 
-It is possible to define the SEO Title via the *config.yml*-file. This is explained in the part *Creating default settings in the configuration* later in this document.
+It is possible to define the SEO Title via the *config.yml*-file. This is explained in the part [Creating default settings in the configuration](#define-title-for-page-types).
 But it is also possible to set the SEO Title manually.
 The order of appearance if the following:
 - default Title
@@ -53,11 +53,10 @@ The order of appearance if the following:
 - Title entered via the SeoHeroTool
 
 The SEO Title which is actually used is entered as placeholder. If this Page Type has a Title configuration then the Title from the configuration will be displayed below the SEO Title.
-[Configuring the title in the config](#define-title-for-page-types)
 
 ### Keywords
 
-The Keywords section is just used in the Pro Version of the SeoHeroTools.
+The Keywords section is just used in the Pro Version of the SeoHeroTools. The entered Keywords are used in the Analysis of the page. The *W*-Questions are right now just available in german in the Pro Version of the SeoHeroTools.
 
 ### Meta Data
 
@@ -72,7 +71,7 @@ Meta Data contains information regarding Meta Informations:
 The MetaDescription is by default the first 140 Characters from the Content. From that everything until the last space will be removed so that no incomplete word will be shown.
 The Meta Description can be overwritten.
 
-If there is any Schema Data for this page type defined this will be displayed under Google Schema Org Data.
+If there is any [Schema Data for this page type defined](#define-schema-data-for-page-types) this will be displayed under Google Schema Org Data.
 The preview will also show any errors in case that a field can not be resolved (for example missing field).
 
 
