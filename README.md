@@ -9,7 +9,7 @@ As many Pages of the same type (for example all DummyPages) have the same MetaTi
 
 ## Requirements
 
-- SilverStripe CMS ~3.5
+- SilverStripe CMS ~3.2
 
 ## Installation
 
@@ -247,3 +247,5 @@ The Robots and .htaccess Editor allows right now just the insertion of 301-Redir
 - Beautify General Settings structure so that it needs less clicks
 - add more functionality to the Robots and .htaccess Editor
 - add configuration setting to enable/disable Robots and .htaccess Editor
+
+To add your own Feature Request please use the [Github Issues for this project](https://github.com/nomidi/silverstripe-seo-hero-tool/issues)
