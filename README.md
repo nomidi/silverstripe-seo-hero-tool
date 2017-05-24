@@ -23,7 +23,7 @@ After installation run a run `dev/build`
 
 Once the SeoHeroTool is installed on each page a new tab called *SeoHeroTool* will appear.
 
-![](docs/images/seoherotooltab.png)
+![](docs/images/seoherotool_tab.png)
 
 The SeoHeroTool-Tab offers the following information:
 - Snippet Preview
