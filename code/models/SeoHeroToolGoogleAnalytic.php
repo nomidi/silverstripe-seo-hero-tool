@@ -28,7 +28,6 @@ class SeoHeroToolGoogleAnalytic extends DataObject
         $fields->addFieldToTab('Root.Main', new DropdownField('ActivateInMode', _t('SeoHeroToolGoogleAnalytic.ActivateInMode', 'Activate when Site is in Mode'), $this->dbObject('ActivateInMode')->enumValues()));
 
         $env_type = Config::inst()->get('Director', 'environment_type');
-
         if ($env_type == $this->ActivateInMode || $this->ActivateInMode == 'All') {
             $matchString = _t('SeoHeroToolGoogleAnalytic.ActualModeMatchEnvironment', 'Your actual Environment mode does match the Settings. Google Anayltics should be working.');
         } else {
@@ -39,9 +38,10 @@ class SeoHeroToolGoogleAnalytic extends DataObject
         return $fields;
     }
 
-    public function getEditForm($id = null, $fields = null){
-      $form = parent::getEditForm($id, $fields);
-        return $form;      
+    public function getEditForm($id = null, $fields = null)
+    {
+        $form = parent::getEditForm($id, $fields);
+        return $form;
     }
 
     public function InitAnalytics()

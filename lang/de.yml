@@ -1,14 +1,113 @@
 de:
-  SeoHeroToolGoogleAnalytics:
+  LatLngField:
+    LatVal: 'Bitte geben sie korrekte Breitenangaben ein.'
+    LngVal: 'Bitte geben sie korrekte Längenangeben ein.'
+  SeoHeroTool:
+    AdvancedVersionRemark: 'Die Keywords und W-Fragen sind nur in der Pro Version enthalten.'
+    BetterSiteTitle: 'SEO Title'
+    Canonical: 'Canonical URL'
+    CanonicalAfter: 'Die Canonical URL nur nutzen, wenn sie wissen wie sie funktioniert.'
+    CanonicalAll: 'Am nde der Canonical URL all=all einfügen.'
+    DefaultValue: 'Der Standartwert für diesen Seitentyp ist nach der Konfiguration: '
+    FBConfigExists: 'Der Wert für diesen Seitentypen in der Konfiguration ist: '
+    FBDescription: 'Beschreibung für  Facebook'
+    FBImage: 'Bild für Facebook'
+    FBTitle: 'Titel für Facebook'
+    FBTypeOverride: 'Überschreib die Konfigurationseinstellungen'
+    FBType_Article: 'Artikel oder Blogpost'
+    FBType_Product: Produkt
+    FBType_Website: 'Webseite - Standardwert'
+    FOLLOW_I: 'Indeziere Webseite, folge Linkds (index)'
+    FOLLOW_IF: 'Indeziere Webseite, folge Links (index,follow)'
+    FOLLOW_IN: 'Indeziere Webseite, Links nicht folgen (index, nofollow)'
+    FOLLOW_N: 'Webseite nicht indezieren, folge Links (noindex)'
+    FOLLOW_NF: 'Webseite nicht indezieren, folge Links (noindex, follow)'
+    FOLLOW_NN: 'Webseite nicht indezieren, Links nicht folgen (noindex, nofollow)'
+    FeaturedKeyword: Keywords
+    FeaturedKeywordAfter: 'Kommas benutzen um mehrere Keywords zu trennen.'
+    FollowType: 'Soll die Seite die Einstellungen von der Oberseite erben?'
+    KeywordQuestion: W-Frage
+    KeywordQuestionAfter: 'Dieses Feld speichert die W-Fragen.'
+    MetaDescAfterInformation: 'Die ideale Länge der Metabeschreibung ist zwischen 120 und 140 Zeichen.'
+    OwnMetaDesc: 'Metabeschreibung'
+    RobotsHeadline: Robots
+    SEOSnippetPreviewHeadline: 'Snippet Preview'
+    TwDescription: 'Beschreibung für Twitter'
+    TwImage: 'Bild für Twitter'
+    TwTitle: 'Titel für Twitter'
+    jsonschemaDataExplanation: 'Wenn oben ein roter Text angezeigt wird konnte eine Variable or Verknüpfung nicht aufgelöst werden.'
+  SeoHeroToolAdmin:
+    MENUTITLE: SeoHeroTool
+    Overview: Übersicht
+  SeoHeroToolEditFile:
+    PLURALNAME: 'Robots Htaccess Editors'
+    Redirect: '301 Weiterleitungen'
+    RobotsContentField: 'Inhalt der robots.txt'
+    Robotstxtchmod: 'Bitte prüfen sie die Zugriffsrechte für die Datei robots.txt'
+    SINGULARNAME: 'Robots Htaccess Editor'
+  SeoHeroToolGoogleAnalytic:
+    ActivateInMode: 'Aktiviere im folgenden Modus: '
+    ActualModeDoesNotMatchEnvironment: 'Ihre aktuelle Environment Mode Einstellung stimmt nicht mit den Einstellungen überein. Google Analytics wird nicht aktiviert.'
+    ActualModeMatchEnvironment: 'Ihre aktuellen Environmen Mode Einstellungen stimmen überein.'
     AnalyticsKey: 'Google Analytics Key'
-    UserOptOut: 'User Opt Out?'
-    AnonymizeIp: 'IP Addressen anonymsieren?'
-    LoadTime: 'Ladezeiten Aufzeichnen?'
-    ActivateInMode: 'Analytics aktivieren, wenn im folgenden Modus:'
-    ActualModeMatchEnvironment: 'Die aktuellen Umgebungseinstellungen entsprechen den ausgewählten Einstellungen. Google Analytics wird geladen.'
-    ActualModeDoesNotMatchEnvironment: 'Die aktuellen Umgebungseinstellungen entsprechende nicht den ausgewählten Einstellungen. Google Analytics wird nicht geladen.'
-  SeoHeroToolTest:
-    FindInTemplate: 'Google Analytics wurden im Template gefunden.'
-    CantFindInTemplate: 'Google Analytics wurden nicht im Template gefunden.'
-    ModeTestedMode: 'Modus: %s - getesteter Modus: %s'
-    CanFindAnalyticsKey: 'Kann den Google Analytics Key nicht finden'
+    AnonymizeIp: 'Anonymisiere die IP Adresse?'
+    LoadTime: 'Ladezeit aufzeichnen?'
+    PLURALNAME: 'Google Analyticss'
+    SINGULARNAME: 'Google Analytics'
+    UserOptOut: 'User Opt-out?'
+  SeoHeroToolRedirect:
+    LinkAlreadyInUse: 'Alter Link hat bereits einen Redirect. Bitte prüfen sie den Link.'
+    NewLink: 'oder geben sie den neuen Link direkt ein.'
+    NewLinkNameHasSpace: 'Neuer Link enhält ein Leerzeichen welches nicht erlaubt ist. Bitte maskieren sie jedes Leerzeichen korrekt.'
+    NewLinkOrLinkNeedsToBeSet: 'Entweder muss ein Link eingegeben werden oder aus der Auswahlliste ausgewählt werden.'
+    OldLink: 'Alter Link'
+    OldLinkNameHasSpace: 'Der alte Link enthält ein Leerzeichen welches nicht erlaubt ist. Bitte maskieren sie jedes Leerzeichen korrekt.'
+    OldLinkNameHasToBeSet: 'Alter Link muss gesetzt und darf nicht leer sein.'
+    PLURALNAME: '301 Redirects'
+    SINGULARNAME: '301 Redirect'
+  SeoHeroToolSchemaCompany:
+    Company: Firma
+    Country: Land
+    HouseNmbr: Hausnummer
+    Link: Webseite
+    Location: Ort
+    Logo: 'Firmen Logo'
+    Mail: Mailsx
+    OpeningHoursFridayClosingTime: 'Schließzeit am Freitag'
+    OpeningHoursFridayOpeningTime: 'Öffnungszeit am Freitag'
+    OpeningHoursInSchema: 'Zeige die Öffnungszeiten im Schema mit an??'
+    OpeningHoursMondayClosingTime: 'Schließzeit am Montag'
+    OpeningHoursMondayOpeningTime: 'Öffnungszeit am Montag'
+    OpeningHoursSaturdayClosingTime: 'Schließzeit am Samstag'
+    OpeningHoursSaturdayOpeningTime: 'Öffnungszeit am Samstag'
+    OpeningHoursSundayClosingTime: 'Schließzeit am Sonntag'
+    OpeningHoursSundayOpeningTime: 'Öffnungszeit am Sonntag'
+    OpeningHoursText: 'Die Stunden müssen im Format 0900 (für 9 Uhr) bzw. 1730 (für 17.30) eingegeben werden.'
+    OpeningHoursThursdayClosingTime: 'Schließzeit am Donnerstag'
+    OpeningHoursThursdayOpeningTime: 'Öffnungszeit am Donnerstag'
+    OpeningHoursTuesdayClosingTime: 'Schließzeit am Dienstag'
+    OpeningHoursTuesdayOpeningTime: 'Öffnungszeit am Dienstag'
+    OpeningHoursWednesdayClosingTime: 'Schließzeit am Mittwoch'
+    OpeningHoursWednesdayOpeningTime: 'Öffnungszeit am Mittwoch'
+    OrganizationType: 'Organization Type'
+    PLURALNAME: 'Schema.org Companies'
+    Postal: Postleitzahl
+    SINGULARNAME: 'Schema.org Company'
+    Street: Straße
+    Tel: Telefon
+    VatID: Steuernummer
+  SeoHeroToolSocialLink:
+    ChooseFromSelectionOrEnterData: 'Bitte wählen sie einen Eintrag aus der Liste oder geben sie etwas ein.'
+    DisplayInSocialLoop: 'Im Social Loop verfübgar machen?'
+    IconName: 'Icon Name'
+    Link: 'Link (inkl. http://)'
+    Name: Name
+    NameFromSelection: 'Name aus der Auswahl'
+    PLURALNAME: 'Seo Hero Tool Social Links'
+    SINGULARNAME: 'Seo Hero Tool Social Link'
+    SocialLoopStatement: 'The Social Loop can be sorted either alphabetical or it can be sorted via the overview'
+    SortOrder: 'Sortierung im Social Loop'
+    SortOrderStatement: 'Sortierung im Social Loop ist standardmässig Sortierung aufsteigend.'
+    UserName: 'Nutzername zum Beispiel Twitter Nutzername'
+  SeoHerotool:
+    FBType: 'Typ der Seite'

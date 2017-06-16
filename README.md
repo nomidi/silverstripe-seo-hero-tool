@@ -1,141 +1,252 @@
 # SeoHeroTool
 
-The SeoHeroTool offers options to control the Meta Information of a Website better than with the default Silverstripe possibilities.
+[![Build Status](https://travis-ci.org/nomidi/silverstripe-seo-hero-tool.svg?branch=master)](https://travis-ci.org/nomidi/silverstripe-seo-hero-tool)
+[![License](https://poser.pugx.org/nomidi/silverstripe-seo-hero-tool/license)](https://packagist.org/packages/nomidi/silverstripe-seo-hero-tool)
 
-## Overview
- - GoogleAnalytics
- - Schema.org
- - Social Media
- - Keywords and Meta
- - Robots and .htaccess Editor
+The SeoHeroTool offers options to control the Meta Information of a Website. The SeoHeroTool offers on the hand to change settings on a per page basis (like the MetaTitle, OpenGraph- or Twitterinformation) and to enter general information (like Google Analytics, links to Facebook, Twitter or for example to enter Redirects).
+While the page settings are entered on each page, the general settings can be accessed via the SeoHeroTool-Icon.
 
-## Google Analytics
+As many Pages of the same type (for example all DummyPages) have the same MetaTitle structure in common it is possible to define for those the structure via the `config.yml` file.
 
-Add
+## Requirements
+
+- SilverStripe CMS ~3.2
+
+## Installation
+
+```sh
+composer require nomidi/silverstripe-seo-hero-tool
 ```
-SeoHeroTool:
-  google_key: 'UA-xxx'
-  environment_type: 'dev'
-  member_status: true
-  anonymizeIP: false
-  loadTime: false
-  userOptOut: false
+Alternatively simply download the zip file from github.
+After installation run a run `dev/build?flush=1` on your project.
+
+## Seo Hero Tool
+
+Once the SeoHeroTool is installed each page has a tab called *SeoHeroTool* will appear.
+
+![](docs/images/seoherotool_tab.png)
+
+The SeoHeroTool-Tab offers the following information:
+- Snippet Preview
+- SEO Title
+- Keywords
+- Meta Data
+- Facebook
+- Twitter
+
+### Snippet Preview
+
+The Snippet Preview is a preview on how this webpage will appear in a search result. If you update any site information it is necessary to save the site to get an updated Preview.
+
+![](docs/images/snippet_preview.png)
+
+### SEO Title
+
+The SEO Title is the part which appears in the *<head>* of each website within the *<title>*-tag. By default this is the *Title* of the Website.
+
+![](docs/images/seotitle.png)
+
+It is possible to define the SEO Title via the *config.yml*-file. This is explained in the part [Creating default settings in the configuration](#define-title-for-page-types).
+But it is also possible to set the SEO Title manually.
+The order of appearance if the following:
+- default Title
+- Title from configuration
+- Title entered via the SeoHeroTool
+
+The SEO Title which is actually used is entered as placeholder. If this Page Type has a Title configuration then the Title from the configuration will be displayed below the SEO Title.
+
+### Keywords
+
+The Keywords section is just used in the Pro Version of the SeoHeroTools. The entered Keywords are used in the Analysis of the page. The *W*-Questions are right now just available in german in the Pro Version of the SeoHeroTools.
+
+### Meta Data
+
+Meta Data contains information regarding Meta Informations:
+- Index
+- Canonincal URL
+- MetaDescription
+- Google Schema Org Data
+
+![](docs/images/metadata.png)
+
+The MetaDescription is by default the first 140 Characters from the Content. From that everything until the last space will be removed so that no incomplete word will be shown.
+The Meta Description can be overwritten.
+
+If there is any [Schema Data for this page type defined](#define-schema-data-for-page-types) this will be displayed under Google Schema Org Data.
+The preview will also show any errors in case that a field can not be resolved (for example missing field).
+
+
+### Facebook
+
+Under Facebook you will find all information regarding the sharing of this site on Facebook. This information will be parsed in the OpenGraph Format on the Website.
+
+![](docs/images/facebook.png)
+The Facebook Title is by default the same as the *SEO Title*.
+The MetaDescription is by default the MetaDescription.
+The Type of Site is by default `website`. This can be configured via the `SeoHeroToolDataObject`.
+If the Type of Site is set via the configuration it can be overwritten for a specific page. In order to so please select a different Type and check the box *overturn config setting*.
+
+### Twitter
+
+Under Twitter you will find all information regarding the sharing of this site on Twitter. This information will be parsed in Twitters own format.
+
+![](docs/images/twitter.png)
+
+The Twitter Title is by default the same as the *SEO Title*.
+The MetaDescription is by default the MetaDescription.
+
+## Creating default settings in the configuration
+### Define Title for Page Types
+
+This defination takes place in the `mysite/_config/config.yml'.
+
+``` yml
+SeoHeroToolDataObject:
+  Page:
+    Title:
+      - $Title # reads the field Title
+      - $LastEdited # reads the date from the field LastEdited
+    WithoutSpace: false # defines that all entries above are separated by a space
+  TestPage:
+    Title:
+      - $Title # reads the field Title
+      - " at " # just the string " at "
+      - $LastEdited # the date from the field LastEdited
+      - $MyTest() # the value of the method MyTest within the class TestPage
+      - $TestObject.Title # The title of the Has_One Connection with TestObject
+    DateFormat: SpecialFormat # Each Datefield shall be formated in a special format
+    DateFormatting: d/m # each datefield will be output just by date and month (you can use here the normal php date values)
+    WithoutSpace: true # no space between entries
+    SiteConfigTitle: true # the title from the SiteConfig will be attached ( default false)
+    FBType: article # The og:type for this site will be article (default website)
 ```
-to your config.yml. Replace UA-xxx with your Google Analytics Universal ID.
-Environment type can be either 'dev','test','live' or 'all'.
-Member status checks if logged in Members are also counted. true counts them,
-false not.
-anonymizeIP defines if the IP Address will be transmitted anonymized, which is
-the default setting.
 
-## Schema.org
+This configuration will result in the following:
+All Pages with the Type of Page will have a MetaTitle which consist of the `Title`of the Page followed by a blank followed by the date of the `lastEdit` of the Page. If the title of this page is `Home` and the date of the last edit is `2017-04-30 10:13:12` this will result in the MetaTitle `Home 30/04/2017`. By default all datefields will be output by the Silverstripe `date()`-function.
 
-Data entered here will be used to create a correct schema file which is useful for search engines.
+All Pages with the Type of TestPage will have a more complex MetaTitle. These Pages have no blank character between each entry.
+`$Title` works as in the example above. `" at "` adds just these characters directly after the value of `$Title`.
+`$MyTest` runs the method MyTest in the class TestPage. Keep in mind that this method needs a return value.
+`$TestObject.Title` returns the `Title`from the has_one connection with `TestObject`.
+`DateFormat` can have the following values: Nice, Year, Nice24 and SpecialFormat. Except SpecialFormat the other values uses the default Silverstripe functions to format the date.
+If the DateFormat is SpecialFormat, then the field DateFormatting will be used. Here the configuration which would be used for the Silverstripe Date Format method is allowed. d/m will result in the day followed by the month.
+`WithoutSpace: true` defines that no blank will be entered between each entry.
+`SiteConfigTitle: true` defines that the Title from the SiteConfig will be added at the end.
+`FBType: artice` defines, that all sites of the type TestPage will have as og:type the value of `article`. The default value here is `website`.
 
-Furthermore it is possible via the .yml configuration to create own schemas. In those schemas it is possible
-to access variables of the page and to access variables of has_one connections.
+#### Important to know
+ - It is not possible to define has-many or many-many connections directly. To do so please create a method in your class which returns the wanted value and use then the method via `$myMethodName()`.
+ - When a page type is configured via the `config.yml` it can be overwritten in the backend. Information in the backend always overwrites the configuration setting.
+ - When you do a change to the `config.yml` remember to do a `dev/build?flush=1` afterwards to apply the new settings.
 
-The below example shows all possibilities which can be used within the .yml creation.
-The normal fields should be pretty self-explanatory. Just keep in mind that the first part should match
-exactly the definition on schema.org.
-name, streetAddress and addressLocality are the interesting parts.
+### Define schema data for Page Types
 
-name has $Title. This means that after processing there will be displayed the Title-Varibale from the DummyPage.
-streetAddress has the value of the method getStreet() which must be either part of the class or any parent-class. This way it is possible to create return values of basically any kind.
-$DummyOBject.Title means, that DummyPage has a has_one connection with DummyObject. And from this dataobject the Title will be used.
+With the SeoHeroTool it is possible to define for page types a json schema which will always be part of the website.
+This defination takes place in the `mysite/_config/config.yml'.
 
-If any of the variable/connections/methods returns nothing or an empty value the whole json object will not be created.
-
-```
+```yml
 SeoHeroToolSchemaDataObject:
-  DummyPage:
-    @context: "http://www.schema.org"
-    @type: "LocalBusiness"
+  LocationPage:
+    @type: "Test"
     address:
       @type: "PostalAddress"
       addressLocality: $DummyObject.Title
       postalCode: "12345"
       streetAddress: $getStreet()
     name: $Title
-    telephone: "01234 23234234"
-    email: "mail@testfirma.de"
+    telephone: "XXX XXX"
+    email: "mail@example.com"
 ```
-
-This will create when the page is rendered the following json in the schema.org format. It is important that if you are
-willing to use this feature you ensure that you know about the correct structure of the schema you want to represent.
-
-```
+The above configuration will result in the following output.
+``` json
 <script type="application/ld+json">
  {
-   "@context": "http:\/\/www.schema.org",
-   "@type": "LocalBusiness",
+   "@type": "Test",
    "address": {
        "@type": "PostalAddress",
-       "addressLocality": "Dummy Object Title",
+       "addressLocality": "London",
        "postalCode": "12345",
-       "streetAddress": "Am Bruch 1"
+       "streetAddress": "John Doe Avenue 1"
    },
    "name": "Dummy Page Title",
    "telephone": "01234 23234234",
-   "email": "mail@testfirma.de"
+   "email": "mail@exampl.com"
 }
  </script>
 ```
-## SocialMedia
 
-SocialMedia sites can be entered and for examples looped later on the website. this is useful to have all important social media data in one place.
+The Configuration of the SeoHeroToolSchemaDataObject is quite similar to the configuration of the SeoHeroToolDataObject.
+You can use normal strings by entering them simply. To use variables of a class just enter them with a starting *$*.
+A Has-One connection can be represented by a starting *$* followed by the name of the Has-One connection. Add then the Variabe separated by a dot.
+Methods of the class can be accessed a starting *$* and an ending *()*. To access the public Method *getStreet()* from the class LocationPage simply enter `$getStreet()`.
 
-To output the Social Media Loop simply loop the function $SocialLoop.
-By default the loop will be sorted by the sorting which can be changed in the backend. But it is possible to sort it alphabetical with the default
-Silverstripe functions which would look like this $SocialLoop.Sort(Name,ASC)
+#### Important to know
+ - It is not possible to define has-many, many-many and similar relationships directly. For this please write a method which returns the correct value.
+ - The output of the json configuration of this website can be viewed in the backend. Simply on a page which has a configuration switch to the SeoHeroTool-tab and open the MetaData.
+ - If there is *any* error in the configuration you will also see this in the backend.
+ - After a change in the `config.yml` please do not forget to run a `dev/build?flush=1`.
 
-## Keywords and Metadata
+# General settings
 
-### Generating of the MetaDataTitle and FB Type
+Under General Settings the following options can be configured:
+- Google Analytics
+- Schema.org Company
+- Robots and .htaccess Editor
 
-SeoHeroTool and MetaDataTitle.
-Please replace in your template in the header section the title output.
-You can add in your config.yml default values for the title for certain types of page.
+## Google Analytics
 
-To do so please add the following:
+Google Analytics allows an easy integration of Google Analytics into the website.
+
+![](docs/images/googleanalytics.png)
+
+*Activate when Site is in Mode* defines in which environment mode Google Analytics should be active. The possible values are *dev*, *live*, *test*, *All*. *All* covers all environment modes.
+Directly above the field you will see if the current environment mode matches the choosen selection. Keep in mind that this setting just updates after you hit save.
+
+## Schema Org Company
+
+Schema Org Company allows to enter directly in the backend some information about the company. This information is meant mainly for search engines and will be used by them.
+It is also possible in the Tab *Opening Hours* to define the Opening Hours. This is especially useful for buisnesses which have stores like restaurants or shops.
+In the last Tab *Social Links* information about the used Social Networks can be entered (see Social Media channels).
+This information will be used in the Schema Org JSON Object but will also be used for example in the Social Loop.
+
+### Social Media channels
+
+![](docs/images/sociallinks.png)
+
+Each Social Link contains of the following Information:
+- Name
+- Link
+- Username
+- Iconname
+- Display in Social Loop
+- Sorting
+
+The *Name* can either be choosen from the selection or entered manually if the Network is not in the list.
+The *Link* should be the complete http-Link.
+*Username* is necessary for example for Twitter as this will also be displayed in the Twitter Meta Data.
+*Iconname* is useful if in the Social Loop there should be the possiblity to add this as classname.
+*Make available in Social Loop Function* defines if this Network will be displayed in the `$SocialLoop` Function.
+*Sorting in Social Loop* defines the position in the Social Loop. See for more on this *Social Media Loop*.
+
+#### Social Media Loop
+
+If you want to loop all Social Media Channels which are entered and have the option do be displayed in a loop this can be achieved by looping `$SocialLoop`. By default it will return the Social Media Channel in order of their *Sort*-value ascending. But this can easily be changed with the Silverstripe methods. To loop the Social Media Channel in ascending Order by Name simply do the following loop:
 ```
-SeoHeroToolDataObject:
-  Page:
-    Title:
-      - Title
-      - LastEdited
-    WithoutSpace: false
-  TestPage:
-    Title:
-      - Title
-      - LastEdited
-    DateFormat: SpecialFormat
-    DateFormatting: d/m
-    WithoutSpace: true
-    SiteConfigTitle: true
-    FBType: article
+<% loop $SocialLoop(Name,ASC) %>
+$Title<br/>
+<% end_loop %>
 ```
-All Pages with the Type Page will be displayed in the title in this case with
-the Title and the Date of the last Edit. Between both there will be a space.
-All Pages with the Type TestPage will have both fields, but there will be no
-space between the fields. The Pages with the Type of TestPage will also have the
-SiteConfigTitle at the end.
-The default Title for those Page Types will just be used if there is no site
-specific BetterTitle given.
-Options for DateFormat are : Nice24, Year, Nice and SpecialFormat.
-If SpecialFormat is set, then the setting DateFormatting determines how the
-date will be formatted. In this example just the day and month of the date will be
-displayed.
-The option FBType defines the og:type attribute of the page type. The og:type is part of the OpenGraph Protocol.
-By default each page is a 'website', but it can also be for example an 'article', which is usefuel for Blogs or News Posts or it can be a 'product'.
-
-
-Please keep in mind, that in the default theme the Sitename will always be attached at the end of the title.
-If you use this option with the SeoHeroToolDataObject the Sitename will appear twice, so please check your
-theme and remove the Sitename in the title if you want to control it via SeoHeroTools.
+This will display all Social Media Channel-Titles with the option *Make available in Social Loop Function* in ascending order sorted by the Name.
 
 ## Robots and .htaccess Editor
 
-At the moment it is just possible in this section to create 301 Redirects. Those redirects can be used to
-forward old pages which are not exisiting anymore to a new page. The browser will then receive 404 error message but
-will be forwarded to the new page.
+The Robots and .htaccess Editor allows right now just the insertion of 301-Redirect Links. New 301-Redirects will be tested for reasonabless but keep in mind that it is possible to break the website with this tool. So just experienced Users should use this.
+
+# Todo
+
+- add own icon for SeoHeroTool Settings
+- Beautify General Settings structure so that it needs less clicks
+- add more functionality to the Robots and .htaccess Editor
+- add configuration setting to enable/disable Robots and .htaccess Editor
+
+To add your own Feature Request please use the [Github Issues for this project](https://github.com/nomidi/silverstripe-seo-hero-tool/issues)

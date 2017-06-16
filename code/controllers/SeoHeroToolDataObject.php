@@ -83,7 +83,6 @@ class SeoHeroToolDataObject extends DataExtension
             }
 
             $titleList = $entry['Title'];
-            //debug::show($titleList);
             for ($i = 0; $i < count($titleList); $i++) {
                 $elementIsVariable = false;
                 if (substr($titleList[$i], 0, 1) == '$') {
@@ -95,8 +94,8 @@ class SeoHeroToolDataObject extends DataExtension
 
 
                 if ($elementIsVariable) {
-                    # es handelt sich um eine Variable
-                    //debug::show($actualElement);
+                    #Variable
+
                     if (strpos($actualElement, '()')) {
                         $actualElement = substr($actualElement, 0, -2);
                         if (method_exists($this->owner->ClassName, $actualElement)) {
@@ -105,7 +104,7 @@ class SeoHeroToolDataObject extends DataExtension
                             $content = '';
                         }
                     } elseif (strpos($actualElement, '.')) {
-                        //  debug::show($actualElement.' ist eine has-one connection');
+                        #has-one connection
                         $HasOneArray = explode(".", $actualElement);
                         $object = $this->owner->{$HasOneArray[0]}();
                         if (isset($object->$HasOneArray[1]) && $object->ID != 0) {
@@ -210,12 +209,17 @@ class SeoHeroToolDataObject extends DataExtension
 
                 )
             );
+        if (!defined('SEO_HERO_TOOL_ADVANCED_PATH')) {
+            $advancedRemark = _t('SeoHeroTool.AdvancedVersionRemark', 'The Keywords and Keyword Question are just available in the Advanced Version!');
+            $keywordQuestionField->setRightTitle($advancedRemark);
+        } else {
+            $keywordQuestionField->setRightTitle(
+                     _t('SeoHeroTool.KeywordQuestionAfter', 'This field saves questions from the W-Questions, available only in German right now.')
+                 );
+        }
         $fields->addFieldToTab('Root.SeoHeroTool', $keywordToggleField);
         $keywordField->setRightTitle(
                 _t('SeoHeroTool.FeaturedKeywordAfter', 'Using commas to separate Keywords..')
-            );
-        $keywordQuestionField->setRightTitle(
-                _t('SeoHeroTool.KeywordQuestionAfter', 'This field saves questions from the W-Questions, available only in German right now.')
             );
 
         # translations href

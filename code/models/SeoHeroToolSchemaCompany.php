@@ -94,7 +94,6 @@ class SeoHeroToolSchemaCompany extends DataObject
 
         $grid = new GridField("SeoHeroToolSocialLinks", "Social Links", $this->SeoHeroToolSocialLinks(), GridFieldConfig_RelationEditor::create(), $this);
         $config = $grid->getConfig();
-        //$config->addComponents(new GridFieldSortableRows('SortOrder'));
         $config->getComponentByType('GridFieldPaginator')->setItemsPerPage(20);
         $fields->addFieldToTab('Root.SocialLinks', $grid);
 

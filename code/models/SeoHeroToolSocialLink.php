@@ -19,8 +19,9 @@ class SeoHeroToolSocialLink extends DataObject
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
+        $fields->removeByName('SeoHeroToolSchemaCompany');
         $DropDownValues = $fields->addFieldToTab('Root.Main', new LiteralField('', _t('SeoHeroToolSocialLink.ChooseFromSelectionOrEnterData', 'Please choose either an entry from the Dropdown or enter a Value on your own.')));
-        $fields->addFieldToTab('Root.Main', new DropdownField('NameFromSelection', _t('SeoHeroToolSocialLink.NameFromSelection', 'Name from Selection'), array(''=>'Keine Auswahl', 'Facebook'=>'Facebook', 'Twitter'=>'Twitter', 'Instagram'=>'Instagram', 'LinkedIn'=>'LinkedIn', 'YouTube'=>'YouTube', 'Google+'=>'Google+', 'Xing' => 'Xing')));
+        $fields->addFieldToTab('Root.Main', new DropdownField('NameFromSelection', _t('SeoHeroToolSocialLink.NameFromSelection', 'Name from Selection'), array(''=>'No Selection', 'Facebook'=>'Facebook', 'Twitter'=>'Twitter', 'Instagram'=>'Instagram', 'LinkedIn'=>'LinkedIn', 'YouTube'=>'YouTube', 'Google+'=>'Google+', 'Xing' => 'Xing')));
         $fields->addFieldToTab('Root.Main', new TextField('Name', _t('SeoHeroToolSocialLink.Name', 'Name')));
         $fields->addFieldToTab('Root.Main', new TextField('Link', _t('SeoHeroToolSocialLink.Link', 'Link (inkl. http://)')));
         $fields->addFieldToTab('Root.Main', new TextField('UserName', _t('SeoHeroToolSocialLink.UserName', 'Username for example Twitter Username')));

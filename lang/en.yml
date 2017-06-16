@@ -1,20 +1,113 @@
 en:
-  SeoHeroToolGoogleAnalytics:
-    AnalyticsKey: 'Google Analytics Key'
-    UserOptOut: 'User Opt Out?'
-    AnonymizeIp: 'Anonymize IP Addresses?'
-    LoadTime: 'Record Load Time?'
-    ActivateInMode: 'Activate Analytics just in Mode:'
-    ActualModeMatchEnvironment: 'Your actual Environment mode does match the Settings. Google Anayltics should be working.'
+  LatLngField:
+    LatVal: 'Please enter an correct Latitude Value'
+    LngVal: 'Please enter an correct Longitude Value'
+  SeoHeroTool:
+    AdvancedVersionRemark: 'The Keywords and Keyword Question are just available in the Advanced Version!'
+    BetterSiteTitle: 'SEO Title'
+    Canonical: 'Canonical URL'
+    CanonicalAfter: 'Canonical URL, only use it if you know what you are going to do.'
+    CanonicalAll: 'Add at the end of the Canonical URL all=all.'
+    DefaultValue: 'Default Value for this Pagetype due to config file is: '
+    FBConfigExists: 'There is a value for this page type in the configuration which is:'
+    FBDescription: 'Description for Facebook'
+    FBImage: 'Image for Facebook'
+    FBTitle: 'Title for Facebook'
+    FBTypeOverride: 'Overturn config setting'
+    FBType_Article: 'Article or Blogpost'
+    FBType_Product: Product
+    FBType_Website: 'Website - default value'
+    FOLLOW_I: 'Index website, follow links (index)'
+    FOLLOW_IF: 'Index website, follow links (index,follow)'
+    FOLLOW_IN: 'Index website, do not follow links (index, nofollow)'
+    FOLLOW_N: 'Do not follow website, follow index (noindex)'
+    FOLLOW_NF: 'Do not index website, follow links (noindex, follow)'
+    FOLLOW_NN: 'Do not index website, do not follow links (noindex, nofollow)'
+    FeaturedKeyword: Keywords
+    FeaturedKeywordAfter: 'Using commas to separate Keywords..'
+    FollowType: 'Should the site inherit the settings from the parent site?'
+    KeywordQuestion: Interrogation
+    KeywordQuestionAfter: 'This field saves questions from the W-Questions, available only in German right now.'
+    MetaDescAfterInformation: 'The ideal length of the Meta Description is between 120 and 140 character.'
+    OwnMetaDesc: 'Meta description'
+    RobotsHeadline: Robots
+    SEOSnippetPreviewHeadline: 'Snippet Preview'
+    TwDescription: 'Description for Twitter'
+    TwImage: 'Image for Twitter'
+    TwTitle: 'Title for Twitter'
+    jsonschemaDataExplanation: 'If there is any red text above this means that either a variable or a connection was not resolveable. Please check your configuration.'
+  SeoHeroToolAdmin:
+    MENUTITLE: SeoHeroTool
+    Overview: Overview
+  SeoHeroToolEditFile:
+    PLURALNAME: 'Robots Htaccess Editors'
+    Redirect: '301 Weiterleitungen'
+    RobotsContentField: 'Content of robots.txt'
+    Robotstxtchmod: 'Please check the access right to the file robots.txt'
+    SINGULARNAME: 'Robots Htaccess Editor'
+  SeoHeroToolGoogleAnalytic:
+    ActivateInMode: 'Activate when Site is in Mode'
     ActualModeDoesNotMatchEnvironment: 'Your actual Environment mode does not Match the Settings. Google Analytics will not work.'
-  SeoHeroToolTest:
-    FindInTemplate: 'Found Google Analytics implementation in Template.'
-    CantFindInTemplate: 'Can't find Google Analytics implementation in Template.'
-    ModeTestedMode: 'Modus: %s - tested Mode: %s'
-    ModeTestedModeMember: 'LoginStatus: %s'
-    CanFindAnalyticsKey: 'Can not find your Google Analytics Key'
-    CantFindAnonymizeOption: 'Can not find the option to Anonymize the IP Address'
-    FindAnonymizeInTemplate: 'Found Anonymize IP in Template, but should not be there.'
-    MissingAnonymizeInTemplate: 'Missing Anonymize IP in Template, but should be there.'
-    FindUserOptOut: 'Found User Opt Out Code, but should not be there.'
-    MissingUserOptOut: 'Missing User Opt Out Code, but should be there.' 
+    ActualModeMatchEnvironment: 'Your actual Environment mode does match the Settings. Google Anayltics should be working.'
+    AnalyticsKey: 'Google Analytics Key'
+    AnonymizeIp: 'Anonymize IP Adress?'
+    LoadTime: 'Record Loading Time?'
+    PLURALNAME: 'Google Analyticss'
+    SINGULARNAME: 'Google Analytics'
+    UserOptOut: 'User Opt-out?'
+  SeoHeroToolRedirect:
+    LinkAlreadyInUse: 'Old Link has already a redirect, please check the link.'
+    NewLink: 'or enter the New Link directly'
+    NewLinkNameHasSpace: 'New Link contains a space which is not allowed here, please mask any space with the correct HTML character!'
+    NewLinkOrLinkNeedsToBeSet: 'Either the New Link or the Select needs to be choosen.'
+    OldLink: 'Old Link'
+    OldLinkNameHasSpace: 'Old Link contains a space which is not allowed here, please mask any space with the correct HTML character!'
+    OldLinkNameHasToBeSet: 'Old Link has to be set and can not be empty'
+    PLURALNAME: '301 Redirects'
+    SINGULARNAME: '301 Redirect'
+  SeoHeroToolSchemaCompany:
+    Company: Company
+    Country: Country
+    HouseNmbr: Housenumber
+    Link: Website
+    Location: Location
+    Logo: 'Company Logo'
+    Mail: Mail
+    OpeningHoursFridayClosingTime: 'Closing Hour Friday'
+    OpeningHoursFridayOpeningTime: 'Opening Hour Friday'
+    OpeningHoursInSchema: 'Display Opening Hours in Schemadata?'
+    OpeningHoursMondayClosingTime: 'Closing Hour Monday'
+    OpeningHoursMondayOpeningTime: 'Opening Hour Monday'
+    OpeningHoursSaturdayClosingTime: 'Closing Hour Saturday'
+    OpeningHoursSaturdayOpeningTime: 'Opening Hour Saturday'
+    OpeningHoursSundayClosingTime: 'Closing Hour Sunday'
+    OpeningHoursSundayOpeningTime: 'Opening Hour Sunday'
+    OpeningHoursText: 'Hours should be in the format 0900 (for 09.00) or 1730 (for 17.30)'
+    OpeningHoursThursdayClosingTime: 'Closing Hour Thursday'
+    OpeningHoursThursdayOpeningTime: 'Opening Hour Thursday'
+    OpeningHoursTuesdayClosingTime: 'Closing Hour Tuesday'
+    OpeningHoursTuesdayOpeningTime: 'Opening Hour Tuesday'
+    OpeningHoursWednesdayClosingTime: 'Closing Hour Wednesday'
+    OpeningHoursWednesdayOpeningTime: 'Opening Hour Wednesday'
+    OrganizationType: 'Organization Type'
+    PLURALNAME: 'Schema.org Companies'
+    Postal: Postal
+    SINGULARNAME: 'Schema.org Company'
+    Street: Street
+    Tel: Telephon
+    VatID: VatID
+  SeoHeroToolSocialLink:
+    ChooseFromSelectionOrEnterData: 'Please choose either an entry from the Dropdown or enter a Value on your own.'
+    DisplayInSocialLoop: 'Make available in Social Loop Function'
+    IconName: 'Icon Name'
+    Link: 'Link (inkl. http://)'
+    Name: Name
+    NameFromSelection: 'Name from Selection'
+    PLURALNAME: 'Seo Hero Tool Social Links'
+    SINGULARNAME: 'Seo Hero Tool Social Link'
+    SocialLoopStatement: 'The Social Loop can be sorted either alphabetical or it can be sorted via the overview'
+    SortOrder: 'Sorting in Social Loop'
+    SortOrderStatement: 'Sorting in Social Loop is by default by SortOrder Ascending'
+    UserName: 'Username for example Twitter Username'
+  SeoHerotool:
+    FBType: 'Type of Site'
