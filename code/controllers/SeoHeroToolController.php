@@ -108,7 +108,7 @@ class SeoHeroToolController extends DataExtension
     private function compressTemplate($template)
     {
         if (Director::isLive()) {
-            return trim(preg_replace('/[^[:print:]]\s+/', "", $template));
+            return trim(str_replace(array("\r\n", "\r", "\n"), "", $template));
         } else {
             return $template;
         }
