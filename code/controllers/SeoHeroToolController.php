@@ -30,9 +30,12 @@ class SeoHeroToolController extends DataExtension
     public function getGoogleAnalytic()
     {
         if (strpos($_SERVER['REQUEST_URI'], '/admin') === false &&
-            strpos($_SERVER['REQUEST_URI'], '/Security') === false) {
+            strpos($_SERVER['REQUEST_URI'], '/Security') === false &&
+            strpos($_SERVER['REQUEST_URI'], '/install') === false) {
             $AnalyticsData = SeoHeroToolGoogleAnalytic::get()->first();
-            //debug::show($AnalyticsData);
+            if ($AnalyticsData->AnalyticsKey == '') {
+                return false;
+            }
             $template = $this->owner->customise(array(
                 'GoogleAnalytics' => $AnalyticsData,
             ))->renderWith('SeoHeroToolGoogleAnalytic');
