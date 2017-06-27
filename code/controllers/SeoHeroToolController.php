@@ -7,7 +7,9 @@ class SeoHeroToolController extends DataExtension
 {
     public function onAfterInit()
     {
-        Requirements::insertHeadTags($this->SeoHeroToolMeta());
+        if ($this->owner->data()) {
+            Requirements::insertHeadTags($this->SeoHeroToolMeta());
+        }
     }
 
     /**
