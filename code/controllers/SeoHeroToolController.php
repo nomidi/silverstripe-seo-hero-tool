@@ -8,7 +8,9 @@ class SeoHeroToolController extends DataExtension
     public function onAfterInit()
     {
         if ($this->owner->data()) {
-            Requirements::insertHeadTags($this->SeoHeroToolMeta());
+            # fix installation issue with non existing pages
+          # todo find better solution during installation
+          Requirements::insertHeadTags($this->SeoHeroToolMeta());
         }
     }
 
