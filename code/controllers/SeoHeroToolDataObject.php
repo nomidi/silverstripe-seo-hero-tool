@@ -34,6 +34,84 @@ class SeoHeroToolDataObject extends DataExtension
 
     public static $current_meta_desc;
 
+    public function CanonicalURL()
+    {
+        if (isset($this->owner->CanonicalAll) && $this->owner->CanonicalAll == 1) {
+            $all = '?all=all';
+        } else {
+            $all = '';
+        }
+
+        if (isset($this->owner->Canonical) && $this->owner->Canonical != null) {
+            return $this->owner->Canonical.$all;
+        }
+
+        $classname = $this->owner->ClassName;
+        $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
+        if ($yamlsettings) {
+            $return = $this->checkCanonicalSettings($yamlsettings);
+            if ($return) {
+                debug::show($return);
+                return $return.$all;
+            } else {
+                return $this->owner->AbsoluteLink().$all;
+            }
+        } else {
+            return $this->owner->AbsoluteLink().$all;
+        }
+    }
+
+    public function checkCanonicalSettings($entry)
+    {
+        if (isset($entry)) {
+            $return = '';
+            if (isset($entry['Canonical'])) {
+                $canon = $entry['Canonical'];
+                for ($i=0; $i< count($canon); $i++) {
+                    $elementIsVariable = false;
+                    if (substr($canon[$i], 0, 1) == '$') {
+                        $actualElement = substr($canon[$i], 1);
+                        $elementIsVariable = true;
+                    } else {
+                        $actualElement = $canon[$i];
+                    }
+
+                    if ($elementIsVariable) {
+                        if (strpos($actualElement, '()')) {
+                            $actualElement = substr($actualElement, 0, -2);
+                            if (method_exists($this->owner->ClassName, $actualElement)) {
+                                $content = $this->owner->{$actualElement}();
+                            } else {
+                                $content = '';
+                            }
+                        } elseif (strpos($actualElement, '.')) {
+                            $HasOneArray = explode(".", $actualElement);
+                            $object = $this->owner->{$HasOneArray[0]}();
+                            if (isset($object->$HasOneArray[1]) && $object->ID != 0) {
+                                $content = $object->$HasOneArray[1];
+                            } else {
+                                $content = '';
+                            }
+                        } else {
+                            $obj = $this->owner->obj($actualElement);
+                            $content = $obj->Value;
+                        }
+                    } else {
+                        debug::show("geht in den string");
+                        $content = $actualElement;
+                    }
+                    if ($i == 0) {
+                        $return = $content;
+                    } else {
+                        $return .= $content;
+                    }
+                }
+                return $return;
+            }
+            return false;
+        }
+    }
+
     /**
      *
      *   Function MetaTitle() overwrites the default title. If BetterSiteTitle is set,

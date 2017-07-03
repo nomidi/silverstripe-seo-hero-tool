@@ -21,6 +21,7 @@ class SeoHeroToolController extends DataExtension
     {
         return $this->compressTemplate(
           '<!-- Seo Hero Tools for Silverstripe -->' .
+          $this->getCanonicalURL() .
           $this->getMetaRobots().
           $this->getGoogleAnalytic().
           $this->getSchemaCompany().
@@ -29,6 +30,12 @@ class SeoHeroToolController extends DataExtension
           $this->getSchemaDataObject() .
           '<!-- Seo Hero Tools for Silverstripe -->'
         );
+    }
+
+    public function getCanonicalURL()
+    {
+        $template = $this->owner->renderWith('SeoHeroToolCanonical');
+        return $this->compressTemplate($template);
     }
 
     public function getGoogleAnalytic()
