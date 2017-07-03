@@ -1,3 +1,6 @@
+<% if BetterMetaDescription %>
+	<meta name="description" content="$BetterMetaDescription">
+<% end_if %>
 <%-- Facebook --%>
 <meta property="og:title" content="<% if FBTitle %>$FBTitle<% else %>$MetaTitle<% end_if %>" />
 <meta property="og:url" content="$AbsoluteLink" />
