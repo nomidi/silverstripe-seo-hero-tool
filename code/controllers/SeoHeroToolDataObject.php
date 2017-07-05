@@ -51,7 +51,6 @@ class SeoHeroToolDataObject extends DataExtension
         if ($yamlsettings) {
             $return = $this->checkCanonicalSettings($yamlsettings);
             if ($return) {
-                debug::show($return);
                 return $return.$all;
             } else {
                 return $this->owner->AbsoluteLink().$all;
@@ -97,7 +96,6 @@ class SeoHeroToolDataObject extends DataExtension
                             $content = $obj->Value;
                         }
                     } else {
-                        debug::show("geht in den string");
                         $content = $actualElement;
                     }
                     if ($i == 0) {

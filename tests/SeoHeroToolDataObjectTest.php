@@ -91,6 +91,18 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $this->assertTrue($test == 'Title of TestObject1', 'The response does not match the expected value of the title. The response is '.$test.' while the expected value is Title of TestObject1');
     }
 
+    public function testCanonicalYAML()
+    {
+        $obj = $this->objFromFixture('SeoHeroToolDataObject_TestPage', 'testsite');
+        $seodo = new SeoHeroToolDataObject();
+        $seodo = $obj;
+
+        $data = array('Canonical'=>array(0=>'$Title', 1=>'von', 2=>'$Title'));
+        $test = $seodo->checkCanonicalSettings($data);
+        $this->assertTrue($test == 'TestsitevonTestsite', 'The response does not match the expected value of the title. The response is '.$test.' while the expected value is TestsitevonTestsite');
+    }
+
+
     /*
       Function tests that if a FBTitle is present this will be used
      */
