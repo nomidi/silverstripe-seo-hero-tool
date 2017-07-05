@@ -1,3 +1,7 @@
+<%-- MetaDescription --%>
+<% if $BetterMetaDescription %>
+	<meta name="description" content="$BetterMetaDescription">
+<% end_if %>
 <%-- Facebook --%>
 <meta property="og:title" content="<% if FBTitle %>$FBTitle<% else %>$MetaTitle<% end_if %>" />
 <meta property="og:url" content="$AbsoluteLink" />
@@ -14,7 +18,6 @@
 <meta name="twitter:title" content="<% if TwTitle %>$TwTitle<% else %>$MetaTitle<% end_if %>">
 <% if TwDescription || BetterMetaDescription %> <meta name="twitter:description" content="<% if TwDescription %>$TwDescription<% else %>$BetterMetaDescription<% end_if %>"> <% end_if %>
 <% if TwImage %><meta name="twitter:image" content="$TwImage.AbsoluteURL"><% end_if %>
-
 
 <% if SeoHeroToolSocialMediaChannels %>
 	<% loop SeoHeroToolSocialMediaChannels %>
