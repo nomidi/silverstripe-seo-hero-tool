@@ -23,6 +23,9 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $this->assertTrue($test == $obj->Title.' '.date('d/m/Y'), 'The return does not match the expected value');
     }
 
+    /*
+      Function testYAMLSettingsNoSpace tests if the option 'WithoutSpace' will be used correctly.
+     */
     public function testYAMLSettingsNoSpace()
     {
         $obj = $this->objFromFixture('Page', 'dataobjecttest');
