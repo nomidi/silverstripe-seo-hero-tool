@@ -7,7 +7,7 @@ de:
     BetterSiteTitle: 'SEO Title'
     Canonical: 'Canonical URL'
     CanonicalAfter: 'Die Canonical URL nur nutzen, wenn sie wissen wie sie funktioniert.'
-    CanonicalAll: 'Am nde der Canonical URL all=all einfügen.'
+    CanonicalAll: 'Am Ende der Canonical URL all=all einfügen.'
     DefaultValue: 'Der Standartwert für diesen Seitentyp ist nach der Konfiguration: '
     FBConfigExists: 'Der Wert für diesen Seitentypen in der Konfiguration ist: '
     FBDescription: 'Beschreibung für  Facebook'

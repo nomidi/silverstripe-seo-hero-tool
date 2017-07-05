@@ -25,6 +25,9 @@ Page:
     FBTitle: Site with FBType from Config
     URLSegment: sitewithfbtypefromconfig
     FBType: website
+  pageWithCanonicalAll:
+    Title: Page With Canonical
+    CanonicalAll: 1
 SeoHeroToolGoogleAnalytic:
   default:
     AnalyticsKey: 'UA-12345678-1'

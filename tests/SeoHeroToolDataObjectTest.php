@@ -91,6 +91,9 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $this->assertTrue($test == 'Title of TestObject1', 'The response does not match the expected value of the title. The response is '.$test.' while the expected value is Title of TestObject1');
     }
 
+    /*
+      Functions tests that the function checkCanonicalSettings returns the correct value for Variables and strings
+    */
     public function testCanonicalYAML()
     {
         $obj = $this->objFromFixture('SeoHeroToolDataObject_TestPage', 'testsite');
@@ -99,7 +102,62 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
 
         $data = array('Canonical'=>array(0=>'$Title', 1=>'von', 2=>'$Title'));
         $test = $seodo->checkCanonicalSettings($data);
-        $this->assertTrue($test == 'TestsitevonTestsite', 'The response does not match the expected value of the title. The response is '.$test.' while the expected value is TestsitevonTestsite');
+        $testobject = $obj->Title.'von'.$obj->Title;
+        $this->assertTrue($test == $testobject, 'The response does not match the expected value of the title. The response is '.$test.' while the expected value is TestsitevonTestsite');
+    }
+
+    /*
+      Functions tests that the function checkCanonicalSettings returns the correct value a function
+     */
+    public function testCanonicalYAMLWithFunction()
+    {
+        $obj = $this->objFromFixture('SeoHeroToolDataObject_TestPage', 'testsite');
+        $seodo = new SeoHeroToolDataObject();
+        $seodo = $obj;
+
+        $data = array('Canonical'=>array(0=>'$myTest()'));
+        $test = $seodo->checkCanonicalSettings($data);
+        $TestPage = new SeoHeroToolSchema_TestPage;
+        $this->assertTrue($test == $TestPage->myTest(), 'The response does not match the expected value of the title. The response is '.$test.' while the expected value is '.$TestPage->myTest());
+    }
+
+    /*
+      Functions tests that the function checkCanonicalSettings returns the correct value for a HasOne Connection
+     */
+    public function testCanonicalWithHasOneConnection()
+    {
+        $obj = $this->objFromFixture('SeoHeroToolDataObject_TestPage', 'testsite');
+        $seodo = new SeoHeroToolDataObject();
+        $seodo = $obj;
+        $data = array('Canonical'=>array(0=>'$SeoHeroToolDataObject_TestObject.Title'));
+        $test = $seodo->checkCanonicalSettings($data);
+        $TestObject = $this->objFromFixture('SeoHeroToolDataObject_TestObject', 'testobject1');
+        $testobject = $TestObject->Title;
+        $this->assertTrue($test == $testobject, 'The response does not match the expected value of the title. The response is '.$test.' while the expected value is Title of TestObject1');
+    }
+
+    /*
+      Function tests that the Canonical URL is present and will be the AbsoluteLink
+     */
+    public function testCanonicalNothingSet()
+    {
+        $obj = $this->objFromFixture('Page', 'dataobjecttest');
+        $response = $this->get($obj->Link());
+        $needle = '<link rel="canonical" href="'.$obj->AbsoluteLink().'" />';
+        $body = strpos($response->getBody(), $needle);
+        $this->assertTrue(is_numeric($body), 'Could not find the searched Canonical Link within the data');
+    }
+
+    /*
+      Function tests that the CanonicalAll Parameter will be used correctly if set to true
+     */
+    public function testCanonicalAllOption()
+    {
+        $obj = $this->objFromFixture('Page', 'pageWithCanonicalAll');
+        $response = $this->get($obj->Link());
+        $needle = '<link rel="canonical" href="'.$obj->AbsoluteLink().'?all=all" />';
+        $body = strpos($response->getBody(), $needle);
+        $this->assertTrue(is_numeric($body), 'Could not find the searched Canonical Link with ?all=all option within the data');
     }
 
 
