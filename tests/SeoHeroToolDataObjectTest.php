@@ -163,11 +163,9 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $this->assertTrue(is_numeric($body), 'Could not find the searched Canonical Link with ?all=all option within the data');
     }
 
-
     /*
       Function tests that if a FBTitle is present this will be used
      */
-
     public function testFBspecificTitle()
     {
         $obj = $this->objFromFixture('Page', 'dataobjecttest');

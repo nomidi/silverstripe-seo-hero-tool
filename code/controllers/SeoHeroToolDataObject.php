@@ -409,6 +409,49 @@ class SeoHeroToolDataObject extends DataExtension
         return false;
     }
 
+    public function checkBetterMetaDescriptionYaml($entry)
+    {
+        for ($i=0; $i< count($entry); $i++) {
+            $elementIsVariable = false;
+            if (substr($entry[$i], 0, 1) == '$') {
+                $actualElement = substr($entry[$i], 1);
+                $elementIsVariable = true;
+            } else {
+                $actualElement = $entry[$i];
+            }
+
+            if ($elementIsVariable) {
+                if (strpos($actualElement, '()')) {
+                    $actualElement = substr($actualElement, 0, -2);
+                    if (method_exists($this->owner->ClassName, $actualElement)) {
+                        $content = $this->owner->{$actualElement}();
+                    } else {
+                        $content = '';
+                    }
+                } elseif (strpos($actualElement, '.')) {
+                    $HasOneArray = explode(".", $actualElement);
+                    $object = $this->owner->{$HasOneArray[0]}();
+                    if (isset($object->$HasOneArray[1]) && $object->ID != 0) {
+                        $content = $object->$HasOneArray[1];
+                    } else {
+                        $content = '';
+                    }
+                } else {
+                    $obj = $this->owner->obj($actualElement);
+                    $content = $obj->Value;
+                }
+            } else {
+                $content = $actualElement;
+            }
+            if ($i == 0) {
+                $return = $content;
+            } else {
+                $return .= $content;
+            }
+        }
+        return $return;
+    }
+
     /**
      * BetterMetaDescription returns the current MetaDescription.
      * If there is no MetaDescription then the generated MetaDescription will be used (if existing).
@@ -418,12 +461,18 @@ class SeoHeroToolDataObject extends DataExtension
      */
     public function BetterMetaDescription()
     {
-        if ($this->owner->MetaDescription == '') {
-            return $this->owner->GenMetaDesc;
-        } elseif ($this->owner->MetaDescription != '') {
+        if ($this->owner->MetaDescription != '') {
             return $this->owner->MetaDescription;
         } else {
-            return false;
+            $classname = $this->owner->ClassName;
+            $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
+            if (isset($yamlsettings) && isset($yamlsettings['MetaDescription'])) {
+                $val = $yamlsettings['MetaDescription'];
+                $return = $this->checkBetterMetaDescriptionYaml($val);
+                return $return;
+            } else {
+                return $this->owner->GenMetaDesc;
+            }
         }
     }
 
