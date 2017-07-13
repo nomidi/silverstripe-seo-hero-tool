@@ -149,7 +149,7 @@ class SeoHeroToolDataObject extends DataExtension
      */
     public function checkTitleYAMLSettings($entry)
     {
-        if (isset($entry)) {
+        if (isset($entry) && isset($entry['Title'])) {
             $return = '';
             if (isset($entry['WithoutSpace'])) {
                 if ($entry['WithoutSpace']) {
@@ -242,7 +242,7 @@ class SeoHeroToolDataObject extends DataExtension
             }
             return $return;
         }
-        return false;
+        return $this->owner->Title;
     }
 
     /**
