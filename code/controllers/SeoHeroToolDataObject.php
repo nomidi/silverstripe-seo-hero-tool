@@ -104,7 +104,7 @@ class SeoHeroToolDataObject extends DataExtension
                         $return .= $content;
                     }
                 }
-                return $return;
+                return strip_tags($return);
             }
             return false;
         }
@@ -240,7 +240,7 @@ class SeoHeroToolDataObject extends DataExtension
                 $siteconfig = SiteConfig::current_site_config();
                 $return .= ' '.$siteconfig->Title;
             }
-            return $return;
+            return strip_tags($return);
         }
         return $this->owner->Title;
     }
@@ -355,7 +355,7 @@ class SeoHeroToolDataObject extends DataExtension
                 )
             );
         $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));
-        $metaDescField->setAttribute('placeholder', self::$current_meta_desc);
+        $metaDescField->setAttribute('placeholder', $this->BetterMetaDescription());
 
         # Facebook
         $FBFormArray = $this->getFBFormFields();
@@ -452,7 +452,12 @@ class SeoHeroToolDataObject extends DataExtension
                 $return .= $content;
             }
         }
-        return $return;
+        $return = preg_replace('/\s+/', ' ', preg_replace('/<[^>]*>/', ' ', $return));
+        if (strlen($return) < 140) {
+            return $return;
+        } else {
+            return preg_replace("/[^ ]*$/", '', substr($return, 0, 140));
+        }
     }
 
     /**
