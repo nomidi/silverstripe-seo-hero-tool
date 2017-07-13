@@ -32,7 +32,7 @@ class SeoHeroToolDataObject extends DataExtension
         'TwImage' => 'Image',
     );
 
-    public static $current_meta_desc;
+    public $current_meta_desc;
 
     public function CanonicalURL()
     {
@@ -253,17 +253,12 @@ class SeoHeroToolDataObject extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         Requirements::javascript('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true');
-        if ($this->owner->MetaDescription == "") {
-            self::$current_meta_desc = $this->owner->GenMetaDesc;
-        } else {
-            self::$current_meta_desc = $this->owner->MetaDescription;
-        }
 
         # Snippet Preview
         $SEOPreview = $this->owner->customise(array(
           'Title' => $this->MetaTitle(),
           'AbsoluteLink' => $this->owner->AbsoluteLink,
-          'MetaDesc' => self::$current_meta_desc))->renderWith('SeoHeroToolSnippetPreview');
+          'MetaDesc' => $this->BetterMetaDescription()))->renderWith('SeoHeroToolSnippetPreview');
 
         $SEOPreviewField = CompositeField::create(
           HeaderField::create('SeoHeroTool', _t('SeoHeroTool.SEOSnippetPreviewHeadline', 'Snippet Preview')),
@@ -379,7 +374,7 @@ class SeoHeroToolDataObject extends DataExtension
         $fbimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
         $fbimg->setFolderName('social-media-images');
         $fbtit->setAttribute('placeholder', $this->MetaTitle());
-        $fbdesc->setAttribute('placeholder', self::$current_meta_desc);
+        $fbdesc->setAttribute('placeholder', $this->BetterMetaDescription());
 
         # Twitter
         $tw = ToggleCompositeField::create(
@@ -394,7 +389,7 @@ class SeoHeroToolDataObject extends DataExtension
         $twimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
         $twimg->setFolderName('social-media-images');
         $twtit->setAttribute('placeholder', $this->MetaTitle());
-        $twdesc->setAttribute('placeholder', self::$current_meta_desc);
+        $twdesc->setAttribute('placeholder', $this->BetterMetaDescription());
 
         // Hide Silverstripe default Metadata and display instead our own MetaData
         $fields->removeFieldsFromTab('Root', array('Metadata'));
@@ -472,13 +467,18 @@ class SeoHeroToolDataObject extends DataExtension
         if ($this->owner->MetaDescription != '') {
             return $this->owner->MetaDescription;
         } else {
+            if (isset($this->current_meta_desc)) {
+                return $this->current_meta_desc;
+            }
             $classname = $this->owner->ClassName;
             $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
             if (isset($yamlsettings) && isset($yamlsettings['MetaDescription'])) {
                 $val = $yamlsettings['MetaDescription'];
                 $return = $this->checkBetterMetaDescriptionYaml($val);
+                $this->current_meta_desc = $return;
                 return $return;
             } else {
+                $this->current_meta_desc = $this->owner->GenMetaDesc;
                 return $this->owner->GenMetaDesc;
             }
         }
