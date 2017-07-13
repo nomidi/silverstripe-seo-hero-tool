@@ -130,9 +130,12 @@ class SeoHeroToolDataObject extends DataExtension
         $classname = $this->owner->ClassName;
         $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
         if ($yamlsettings) {
-            $return = $this->checkTitleYAMLSettings($yamlsettings);
-
-            return $return;
+            if (isset($yamlsettings['Title'])) {
+                $return = $this->checkTitleYAMLSettings($yamlsettings);
+                return $return;
+            } else {
+                return $this->owner->Title;
+            }
         } else {
             // If no BetterTitle is set and no Title is set via configuration
           return $this->owner->Title;
