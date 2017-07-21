@@ -36,6 +36,7 @@ en:
     TwImage: 'Image for Twitter'
     TwTitle: 'Title for Twitter'
     jsonschemaDataExplanation: 'If there is any red text above this means that either a variable or a connection was not resolveable. Please check your configuration.'
+    NoSchemaDataPresendOnThisSite: No Google Schema Org Data present on this website.
   SeoHeroToolAdmin:
     MENUTITLE: SeoHeroTool
     Overview: Overview

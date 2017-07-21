@@ -327,6 +327,17 @@ class SeoHeroToolDataObject extends DataExtension
         $googleSchemaValidatorLink = "https://search.google.com/structured-data/testing-tool?url=".urlencode($this->owner->AbsoluteLink());
         $googleSchemaLinkField = '<br> <a href="'.$googleSchemaValidatorLink.'" target="_blank">Test your Schema with Google Structured Data Testing Tool</a>.';
 
+        if ($schemaData) {
+            $schemaFieldContent = '<div class="field"><p>Google Schema Org Data</p>
+          <pre class="prettyprint linenums:1">'.$schemaData.'</pre><br>'._t('SeoHeroTool.jsonschemaDataExplanation', 'If there is any red text above this means that either a variable or a connection was not resolveable. Please check your configuration.').'
+          <br><p>'.$googleSchemaLinkField.'</p></div>
+          ';
+        } else {
+            $schemaFieldContent = '<div class="field"><p>Google Schema Org Data</p>'.
+          _t('SeoHeroTool.NoSchemaDataPresendOnThisSite', 'No Google Schema Org Data present on this website.').'</div>';
+        }
+
+
         # Meta Datas
         $SeoFormArray = $this->getSeoFollowFields();
         $meta = ToggleCompositeField::create(
@@ -343,10 +354,7 @@ class SeoHeroToolDataObject extends DataExtension
                         $langhrefFieldLabel,
                         $langhrefField
                         ),
-                  $jsonSchemaField = LiteralField::create('SeoPreviewLiteral', '<div class="field"><p>Google Schema Org Data</p>
-                    <pre class="prettyprint linenums:1">'.$schemaData.'</pre><br>'._t('SeoHeroTool.jsonschemaDataExplanation', 'If there is any red text above this means that either a variable or a connection was not resolveable. Please check your configuration.').'
-                    <br><p>'.$googleSchemaLinkField.'</p></div>
-                    '),
+                  $jsonSchemaField = LiteralField::create('SeoPreviewLiteral', $schemaFieldContent),
                 )
             );
         $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));

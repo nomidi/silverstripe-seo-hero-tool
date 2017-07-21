@@ -36,6 +36,7 @@ de:
     TwImage: 'Bild für Twitter'
     TwTitle: 'Titel für Twitter'
     jsonschemaDataExplanation: 'Wenn oben ein roter Text angezeigt wird konnte eine Variable or Verknüpfung nicht aufgelöst werden.'
+    NoSchemaDataPresendOnThisSite: No Google Schema Org Data present on this website.
   SeoHeroToolAdmin:
     MENUTITLE: SeoHeroTool
     Overview: Übersicht
