@@ -7,7 +7,8 @@ class SeoHeroToolController extends DataExtension
 {
     public function onAfterInit()
     {
-        if ($this->owner->data()) {
+        $class = get_class($this->owner);
+        if ($this->owner->data() && $class != 'ErrorPage_Controller') {
             # fix installation issue with non existing pages
           # todo find better solution during installation
           Requirements::insertHeadTags($this->SeoHeroToolMeta());
@@ -47,6 +48,8 @@ class SeoHeroToolController extends DataExtension
             if ($AnalyticsData->AnalyticsKey == '') {
                 return false;
             }
+            debug::show($class = Controller::curr()->ClassName);
+            die();
             $template = $this->owner->customise(array(
                 'GoogleAnalytics' => $AnalyticsData,
             ))->renderWith('SeoHeroToolGoogleAnalytic');
