@@ -32,7 +32,7 @@ class SeoHeroToolDataObject extends DataExtension
         'TwImage' => 'Image',
     );
 
-    public static $current_meta_desc;
+    public $current_meta_desc;
 
     public function CanonicalURL()
     {
@@ -51,7 +51,6 @@ class SeoHeroToolDataObject extends DataExtension
         if ($yamlsettings) {
             $return = $this->checkCanonicalSettings($yamlsettings);
             if ($return) {
-                debug::show($return);
                 return $return.$all;
             } else {
                 return $this->owner->AbsoluteLink().$all;
@@ -97,7 +96,6 @@ class SeoHeroToolDataObject extends DataExtension
                             $content = $obj->Value;
                         }
                     } else {
-                        debug::show("geht in den string");
                         $content = $actualElement;
                     }
                     if ($i == 0) {
@@ -106,7 +104,7 @@ class SeoHeroToolDataObject extends DataExtension
                         $return .= $content;
                     }
                 }
-                return $return;
+                return strip_tags($return);
             }
             return false;
         }
@@ -132,9 +130,12 @@ class SeoHeroToolDataObject extends DataExtension
         $classname = $this->owner->ClassName;
         $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
         if ($yamlsettings) {
-            $return = $this->checkTitleYAMLSettings($yamlsettings);
-
-            return $return;
+            if (isset($yamlsettings['Title'])) {
+                $return = $this->checkTitleYAMLSettings($yamlsettings);
+                return $return;
+            } else {
+                return $this->owner->Title;
+            }
         } else {
             // If no BetterTitle is set and no Title is set via configuration
           return $this->owner->Title;
@@ -148,7 +149,7 @@ class SeoHeroToolDataObject extends DataExtension
      */
     public function checkTitleYAMLSettings($entry)
     {
-        if (isset($entry)) {
+        if (isset($entry) && isset($entry['Title'])) {
             $return = '';
             if (isset($entry['WithoutSpace'])) {
                 if ($entry['WithoutSpace']) {
@@ -239,9 +240,9 @@ class SeoHeroToolDataObject extends DataExtension
                 $siteconfig = SiteConfig::current_site_config();
                 $return .= ' '.$siteconfig->Title;
             }
-            return $return;
+            return strip_tags($return);
         }
-        return false;
+        return $this->owner->Title;
     }
 
     /**
@@ -252,17 +253,12 @@ class SeoHeroToolDataObject extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         Requirements::javascript('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true');
-        if ($this->owner->MetaDescription == "") {
-            self::$current_meta_desc = $this->owner->GenMetaDesc;
-        } else {
-            self::$current_meta_desc = $this->owner->MetaDescription;
-        }
 
         # Snippet Preview
         $SEOPreview = $this->owner->customise(array(
           'Title' => $this->MetaTitle(),
           'AbsoluteLink' => $this->owner->AbsoluteLink,
-          'MetaDesc' => self::$current_meta_desc))->renderWith('SeoHeroToolSnippetPreview');
+          'MetaDesc' => $this->BetterMetaDescription()))->renderWith('SeoHeroToolSnippetPreview');
 
         $SEOPreviewField = CompositeField::create(
           HeaderField::create('SeoHeroTool', _t('SeoHeroTool.SEOSnippetPreviewHeadline', 'Snippet Preview')),
@@ -331,6 +327,17 @@ class SeoHeroToolDataObject extends DataExtension
         $googleSchemaValidatorLink = "https://search.google.com/structured-data/testing-tool?url=".urlencode($this->owner->AbsoluteLink());
         $googleSchemaLinkField = '<br> <a href="'.$googleSchemaValidatorLink.'" target="_blank">Test your Schema with Google Structured Data Testing Tool</a>.';
 
+        if ($schemaData) {
+            $schemaFieldContent = '<div class="field"><p>Google Schema Org Data</p>
+          <pre class="prettyprint linenums:1">'.$schemaData.'</pre><br>'._t('SeoHeroTool.jsonschemaDataExplanation', 'If there is any red text above this means that either a variable or a connection was not resolveable. Please check your configuration.').'
+          <br><p>'.$googleSchemaLinkField.'</p></div>
+          ';
+        } else {
+            $schemaFieldContent = '<div class="field"><p>Google Schema Org Data</p>'.
+          _t('SeoHeroTool.NoSchemaDataPresendOnThisSite', 'No Google Schema Org Data present on this website.').'</div>';
+        }
+
+
         # Meta Datas
         $SeoFormArray = $this->getSeoFollowFields();
         $meta = ToggleCompositeField::create(
@@ -347,14 +354,11 @@ class SeoHeroToolDataObject extends DataExtension
                         $langhrefFieldLabel,
                         $langhrefField
                         ),
-                  $jsonSchemaField = LiteralField::create('SeoPreviewLiteral', '<div class="field"><p>Google Schema Org Data</p>
-                    <pre class="prettyprint linenums:1">'.$schemaData.'</pre><br>'._t('SeoHeroTool.jsonschemaDataExplanation', 'If there is any red text above this means that either a variable or a connection was not resolveable. Please check your configuration.').'
-                    <br><p>'.$googleSchemaLinkField.'</p></div>
-                    '),
+                  $jsonSchemaField = LiteralField::create('SeoPreviewLiteral', $schemaFieldContent),
                 )
             );
         $metaDescField->setRightTitle(_t('SeoHeroTool.MetaDescAfterInformation', 'The ideal length of the Meta Description is between 120 and 140 character.'));
-        $metaDescField->setAttribute('placeholder', self::$current_meta_desc);
+        $metaDescField->setAttribute('placeholder', $this->BetterMetaDescription());
 
         # Facebook
         $FBFormArray = $this->getFBFormFields();
@@ -378,7 +382,7 @@ class SeoHeroToolDataObject extends DataExtension
         $fbimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
         $fbimg->setFolderName('social-media-images');
         $fbtit->setAttribute('placeholder', $this->MetaTitle());
-        $fbdesc->setAttribute('placeholder', self::$current_meta_desc);
+        $fbdesc->setAttribute('placeholder', $this->BetterMetaDescription());
 
         # Twitter
         $tw = ToggleCompositeField::create(
@@ -393,7 +397,7 @@ class SeoHeroToolDataObject extends DataExtension
         $twimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
         $twimg->setFolderName('social-media-images');
         $twtit->setAttribute('placeholder', $this->MetaTitle());
-        $twdesc->setAttribute('placeholder', self::$current_meta_desc);
+        $twdesc->setAttribute('placeholder', $this->BetterMetaDescription());
 
         // Hide Silverstripe default Metadata and display instead our own MetaData
         $fields->removeFieldsFromTab('Root', array('Metadata'));
@@ -411,6 +415,54 @@ class SeoHeroToolDataObject extends DataExtension
         return false;
     }
 
+    public function checkBetterMetaDescriptionYaml($entry)
+    {
+        for ($i=0; $i< count($entry); $i++) {
+            $elementIsVariable = false;
+            if (substr($entry[$i], 0, 1) == '$') {
+                $actualElement = substr($entry[$i], 1);
+                $elementIsVariable = true;
+            } else {
+                $actualElement = $entry[$i];
+            }
+
+            if ($elementIsVariable) {
+                if (strpos($actualElement, '()')) {
+                    $actualElement = substr($actualElement, 0, -2);
+                    if (method_exists($this->owner->ClassName, $actualElement)) {
+                        $content = $this->owner->{$actualElement}();
+                    } else {
+                        $content = '';
+                    }
+                } elseif (strpos($actualElement, '.')) {
+                    $HasOneArray = explode(".", $actualElement);
+                    $object = $this->owner->{$HasOneArray[0]}();
+                    if (isset($object->$HasOneArray[1]) && $object->ID != 0) {
+                        $content = $object->$HasOneArray[1];
+                    } else {
+                        $content = '';
+                    }
+                } else {
+                    $obj = $this->owner->obj($actualElement);
+                    $content = $obj->Value;
+                }
+            } else {
+                $content = $actualElement;
+            }
+            if ($i == 0) {
+                $return = $content;
+            } else {
+                $return .= $content;
+            }
+        }
+        $return = preg_replace('/\s+/', ' ', preg_replace('/<[^>]*>/', ' ', $return));
+        if (strlen($return) < 140) {
+            return $return;
+        } else {
+            return preg_replace("/[^ ]*$/", '', substr($return, 0, 140));
+        }
+    }
+
     /**
      * BetterMetaDescription returns the current MetaDescription.
      * If there is no MetaDescription then the generated MetaDescription will be used (if existing).
@@ -420,12 +472,23 @@ class SeoHeroToolDataObject extends DataExtension
      */
     public function BetterMetaDescription()
     {
-        if ($this->owner->MetaDescription == '') {
-            return $this->owner->GenMetaDesc;
-        } elseif ($this->owner->MetaDescription != '') {
+        if ($this->owner->MetaDescription != '') {
             return $this->owner->MetaDescription;
         } else {
-            return false;
+            if (isset($this->current_meta_desc)) {
+                return $this->current_meta_desc;
+            }
+            $classname = $this->owner->ClassName;
+            $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
+            if (isset($yamlsettings) && isset($yamlsettings['MetaDescription'])) {
+                $val = $yamlsettings['MetaDescription'];
+                $return = $this->checkBetterMetaDescriptionYaml($val);
+                $this->current_meta_desc = $return;
+                return $return;
+            } else {
+                $this->current_meta_desc = $this->owner->GenMetaDesc;
+                return $this->owner->GenMetaDesc;
+            }
         }
     }
 

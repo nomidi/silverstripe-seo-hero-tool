@@ -72,6 +72,10 @@ Meta Data contains information regarding Meta Informations:
 The MetaDescription is by default the first 140 Characters from the Content. From that everything until the last space will be removed so that no incomplete word will be shown.
 The Meta Description can be overwritten.
 
+It is also possible to configure the MetaDescription via the *config.yml*-file. This works the same as it does for Title or Canonical URL.
+
+The Canonical URL can also be configured via the *config.yml*-file.
+
 If there is any [Schema Data for this page type defined](#define-schema-data-for-page-types) this will be displayed under Google Schema Org Data.
 The preview will also show any errors in case that a field can not be resolved (for example missing field).
 
@@ -248,5 +252,6 @@ The Robots and .htaccess Editor allows right now just the insertion of 301-Redir
 - Beautify General Settings structure so that it needs less clicks
 - add more functionality to the Robots and .htaccess Editor
 - add configuration setting to enable/disable Robots and .htaccess Editor
+- update README.md to reflect changes on CanonicalURL and BetterMetaDescription
 
 To add your own Feature Request please use the [Github Issues for this project](https://github.com/nomidi/silverstripe-seo-hero-tool/issues)

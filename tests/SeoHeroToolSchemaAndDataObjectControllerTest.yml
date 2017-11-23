@@ -11,6 +11,8 @@ Page:
     TwTitle: ThisIsATwTitleTest
     FBDescription: This is a FB description
     TwDescription: This is a Twitter Description
+    MetaDescription: This is a manual set MetaDescription
+    Content: This is some kind of content
   objectWithBetterSiteTitle:
     Title: Some Default Title
     URLSegment: somedefaulttitle
@@ -25,6 +27,12 @@ Page:
     FBTitle: Site with FBType from Config
     URLSegment: sitewithfbtypefromconfig
     FBType: website
+  pageWithCanonicalAll:
+    Title: Page With Canonical
+    CanonicalAll: 1
+  pageWithGenMetaDesc:
+    Title: Some Title
+    Content: Here is some generic content. This is not set manually as Meta Description
 SeoHeroToolGoogleAnalytic:
   default:
     AnalyticsKey: 'UA-12345678-1'

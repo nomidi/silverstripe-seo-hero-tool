@@ -7,7 +7,7 @@ de:
     BetterSiteTitle: 'SEO Title'
     Canonical: 'Canonical URL'
     CanonicalAfter: 'Die Canonical URL nur nutzen, wenn sie wissen wie sie funktioniert.'
-    CanonicalAll: 'Am nde der Canonical URL all=all einfügen.'
+    CanonicalAll: 'Am Ende der Canonical URL all=all einfügen.'
     DefaultValue: 'Der Standartwert für diesen Seitentyp ist nach der Konfiguration: '
     FBConfigExists: 'Der Wert für diesen Seitentypen in der Konfiguration ist: '
     FBDescription: 'Beschreibung für  Facebook'
@@ -36,6 +36,7 @@ de:
     TwImage: 'Bild für Twitter'
     TwTitle: 'Titel für Twitter'
     jsonschemaDataExplanation: 'Wenn oben ein roter Text angezeigt wird konnte eine Variable or Verknüpfung nicht aufgelöst werden.'
+    NoSchemaDataPresendOnThisSite: Auf dieser Seite befinden sich keine Google Schema Org Daten.
   SeoHeroToolAdmin:
     MENUTITLE: SeoHeroTool
     Overview: Übersicht
