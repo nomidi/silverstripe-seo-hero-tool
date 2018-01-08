@@ -48,8 +48,6 @@ class SeoHeroToolController extends DataExtension
             if ($AnalyticsData->AnalyticsKey == '') {
                 return false;
             }
-            debug::show($class = Controller::curr()->ClassName);
-            die();
             $template = $this->owner->customise(array(
                 'GoogleAnalytics' => $AnalyticsData,
             ))->renderWith('SeoHeroToolGoogleAnalytic');

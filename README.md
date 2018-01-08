@@ -123,6 +123,7 @@ SeoHeroToolDataObject:
     WithoutSpace: true # no space between entries
     SiteConfigTitle: true # the title from the SiteConfig will be attached ( default false)
     FBType: article # The og:type for this site will be article (default website)
+    FBImage: $myFBImageFunc # the value of the method MyTest within the class TestPage
 ```
 
 This configuration will result in the following:
@@ -137,6 +138,7 @@ If the DateFormat is SpecialFormat, then the field DateFormatting will be used. 
 `WithoutSpace: true` defines that no blank will be entered between each entry.
 `SiteConfigTitle: true` defines that the Title from the SiteConfig will be added at the end.
 `FBType: artice` defines, that all sites of the type TestPage will have as og:type the value of `article`. The default value here is `website`.
+`FBImage: $myFBImageFunc` defines, that all sites of the type TestPage will have as og:image the URL Image of `$myFBImageFunc`.
 
 #### Important to know
  - It is not possible to define has-many or many-many connections directly. To do so please create a method in your class which returns the wanted value and use then the method via `$myMethodName()`.

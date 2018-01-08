@@ -362,10 +362,17 @@ class SeoHeroToolDataObject extends DataExtension
 
         # Facebook
         $FBFormArray = $this->getFBFormFields();
+        #check config.yml fbimage
+        if ($this->FBPreviewImage() && !$this->owner->FBImage()->exists()) {
+            $FBPreviewImage =  new LiteralField('FBPreviewImage', '<div class="field"><p>Für die Seite ist ein Bild automatisch hinterlegt: <br><img src="'.$this->FBPreviewImage().'" width="150px"></p></div>');
+        } else {
+            $FBPreviewImage = false;
+        }
         $fb = ToggleCompositeField::create(
             'Facebook', 'Facebook',
             array(
                 $fbtit = Textfield::create('FBTitle', _t('SeoHeroTool.FBTitle', 'Title for Facebook')),
+                $FBPreviewImage,
                 $fbimg = UploadField::create('FBImage', _t('SeoHeroTool.FBImage', 'Image for Facebook')),
                 $fbtypedd = DropdownField::create('FBType', _t('SeoHerotool.FBType', 'Type of Site'), $FBFormArray),
                 CheckboxField::create('FBTypeOverride', _t('SeoHeroTool.FBTypeOverride', 'Overturn config setting')),
@@ -381,14 +388,22 @@ class SeoHeroToolDataObject extends DataExtension
         $fbimg->getValidator()->setAllowedMaxFileSize($imgFilesize);
         $fbimg->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
         $fbimg->setFolderName('social-media-images');
+
+
         $fbtit->setAttribute('placeholder', $this->MetaTitle());
         $fbdesc->setAttribute('placeholder', $this->BetterMetaDescription());
 
         # Twitter
+        if ($this->TWPreviewImage() && !$this->owner->TWImage()->exists()) {
+            $TWPreviewImage =  new LiteralField('FBPreviewImage', '<div class="field"><p>Für die Seite ist ein Bild automatisch hinterlegt: <br><img src="'.$this->TWPreviewImage().'" width="150px"></p></div>');
+        } else {
+            $TWPreviewImage = false;
+        }
         $tw = ToggleCompositeField::create(
             'Twitter', 'Twitter',
             array(
                 $twtit = Textfield::create('TwTitle', _t('SeoHeroTool.TwTitle', 'Title for Twitter')),
+                $TWPreviewImage,
                 $twimg = UploadField::create('TwImage', _t('SeoHeroTool.TwImage', 'Image for Twitter')),
                 $twdesc = TextareaField::create('TwDescription', _t('SeoHeroTool.TwDescription', 'Description for Twitter')),
             )
@@ -606,5 +621,74 @@ class SeoHeroToolDataObject extends DataExtension
         if ($this->owner->FollowType == 1) {
             $this->owner->Follow = $this->owner->Parent()->Follow;
         }
+    }
+
+    public function FBPreviewImage()
+    {
+        if ($this->owner->FBImage()->exists()) {
+
+        // check for Admin FB Image
+            return $this->owner->FBImage()->AbsoluteURL;
+        }
+        // Check for YAML Configuration
+        $classname = $this->owner->ClassName;
+        $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
+
+        if ($yamlsettings) {
+            if (isset($yamlsettings['FBImage'])) {
+                $return = $this->checkSMImageYAMLSettings($yamlsettings, 'FBImage');
+                return $return;
+            }
+        } else {
+            return false;
+        }
+    }
+    public function TWPreviewImage()
+    {
+
+        // check for Admin TW Image
+        if ($this->owner->TWImage()->exists()) {
+            return $this->owner->TWImage()->AbsoluteURL;
+        }
+
+        // Check for YAML Configuration
+        $classname = $this->owner->ClassName;
+        $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
+
+        if ($yamlsettings) {
+            if (isset($yamlsettings['TWImage'])) {
+                $return = $this->checkSMImageYAMLSettings($yamlsettings, 'TWImage');
+                return $return;
+            }
+        } else {
+            return false;
+        }
+    }
+    public function checkSMImageYAMLSettings($entry, $SMType)
+    {
+        $return = false;
+        if (isset($entry) && isset($entry[$SMType])) {
+            $fbimageList = $entry[$SMType];
+            for ($i = 0; $i < count($fbimageList); $i++) {
+                $elementIsVariable = false;
+                if (substr($fbimageList[$i], 0, 1) == '$') {
+                    $actualElement = substr($fbimageList, 1);
+                    $elementIsVariable = true;
+                } else {
+                    $actualElement = $fbimageList[$i];
+                }
+                if ($elementIsVariable) {
+                    #Variable
+                    if (strpos($actualElement, '()')) {
+                        #function
+                        $actualElement = substr($actualElement, 0, -2);
+                        if (method_exists($this->owner->ClassName, $actualElement)) {
+                            $return = $this->owner->{$actualElement}();
+                        }
+                    }
+                }
+            }
+        }
+        return $return;
     }
 }
