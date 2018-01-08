@@ -13,6 +13,17 @@ Page:
     TwDescription: This is a Twitter Description
     MetaDescription: This is a manual set MetaDescription
     Content: This is some kind of content
+  smobjecttest:
+    Title: smobject test
+    ID: 6
+    URLSegment: smobjecttest
+    Created: 2016-12-12 12:34:34
+    FBTitle: ThisIsAFBTitleTest
+    TwTitle: ThisIsATwTitleTest
+    FBDescription: This is a FB description
+    TwDescription: This is a Twitter Description
+    MetaDescription: This is a manual set MetaDescription
+    Content: This is some kind of content
   objectWithBetterSiteTitle:
     Title: Some Default Title
     URLSegment: somedefaulttitle

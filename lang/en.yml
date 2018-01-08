@@ -3,6 +3,8 @@ en:
     LatVal: 'Please enter an correct Latitude Value'
     LngVal: 'Please enter an correct Longitude Value'
   SeoHeroTool:
+    AutoFBImage: 'This site has a facebook picture configured via the configuration'
+    AutoTWImage: 'This site has a twitter picture configured via the configuration'
     AdvancedVersionRemark: 'The Keywords and Keyword Question are just available in the Advanced Version!'
     BetterSiteTitle: 'SEO Title'
     Canonical: 'Canonical URL'

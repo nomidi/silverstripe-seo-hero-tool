@@ -90,6 +90,19 @@ The MetaDescription is by default the MetaDescription.
 The Type of Site is by default `website`. This can be configured via the `SeoHeroToolDataObject`.
 If the Type of Site is set via the configuration it can be overwritten for a specific page. In order to so please select a different Type and check the box *overturn config setting*.
 
+It is possible to define the Facebook Image via the Configuration. To do so simply add the following to your `SeoHeroToolDataObject`:
+``` yml
+FBImage: $functionname()
+```
+Replace functionname with the real name of the function. Keep in mind that this function needs to return an absolute Path.
+An Example for a has_one Image with the name of Photo would look like:
+``` php
+public function returnMyImage()
+{
+    return $this->Photo()->AbsoluteURL;
+}
+```
+
 ### Twitter
 
 Under Twitter you will find all information regarding the sharing of this site on Twitter. This information will be parsed in Twitters own format.
@@ -98,6 +111,19 @@ Under Twitter you will find all information regarding the sharing of this site o
 
 The Twitter Title is by default the same as the *SEO Title*.
 The MetaDescription is by default the MetaDescription.
+
+It is possible to define the Twitter Image via the Configuration. To do so simply add the following to your `SeoHeroToolDataObject`:
+```yml
+TWImage: $functionname()
+```
+Replace functionname with the real name of the function. Keep in mind that this function needs to return an absolute Path.
+An Example for a has_one Image with the name of Photo would look like:
+``` php
+public function returnMyImage()
+{
+    return $this->Photo()->AbsoluteURL;
+}
+```
 
 ## Creating default settings in the configuration
 ### Define Title for Page Types
@@ -123,7 +149,8 @@ SeoHeroToolDataObject:
     WithoutSpace: true # no space between entries
     SiteConfigTitle: true # the title from the SiteConfig will be attached ( default false)
     FBType: article # The og:type for this site will be article (default website)
-    FBImage: $myFBImageFunc # the value of the method MyTest within the class TestPage
+    FBImage: $myFBImage() # needs to return an absolute path , value of the method myFBImage() within the class TestPage
+    TWImage: $myTWImage() # needs to return an absolute path , value of the method myTWImage() within the class TestPage
 ```
 
 This configuration will result in the following:
@@ -138,7 +165,8 @@ If the DateFormat is SpecialFormat, then the field DateFormatting will be used. 
 `WithoutSpace: true` defines that no blank will be entered between each entry.
 `SiteConfigTitle: true` defines that the Title from the SiteConfig will be added at the end.
 `FBType: artice` defines, that all sites of the type TestPage will have as og:type the value of `article`. The default value here is `website`.
-`FBImage: $myFBImageFunc` defines, that all sites of the type TestPage will have as og:image the URL Image of `$myFBImageFunc`.
+`FBImage: $myFBImage` defines, that all sites of the type TestPage will have an og:image with the URL of the return from the method`$myFBImage`.
+`TWImage: $myTWImage` defines, that all sites of the type TestPage will have an twitter:image with the URL of the return from the method `$myTWImage`.
 
 #### Important to know
  - It is not possible to define has-many or many-many connections directly. To do so please create a method in your class which returns the wanted value and use then the method via `$myMethodName()`.

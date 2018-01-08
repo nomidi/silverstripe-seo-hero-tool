@@ -6,18 +6,17 @@
 <meta property="og:title" content="<% if FBTitle %>$FBTitle<% else %>$MetaTitle<% end_if %>" />
 <meta property="og:url" content="$AbsoluteLink" />
 <meta property="og:type" content="$CheckFBType" />
-<% if FBPreviewImage %><meta property="og:image" content="$FBPreviewImage" /><% end_if %>
+<% if $SMPreviewImage('FB') %><meta property="og:image" content="$SMPreviewImage('FB')" /><% end_if %>
 <% if FBDescription || BetterMetaDescription %> <meta property="og:description" content="<% if FBDescription %>$FBDescription<% else %>$BetterMetaDescription<% end_if %>"><% end_if %>
 <meta property="article:published_time" content="$Created.format('c')" />
 <meta property="article:modified_time" content="$LastEdited.format('c')" />
 <meta property="og:updated_time" content="$LastEdited.format('c')" />
 
-
 <%-- Twitter --%>
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="<% if TwTitle %>$TwTitle<% else %>$MetaTitle<% end_if %>">
 <% if TwDescription || BetterMetaDescription %> <meta name="twitter:description" content="<% if TwDescription %>$TwDescription<% else %>$BetterMetaDescription<% end_if %>"> <% end_if %>
-<% if TWPreviewImage %><meta name="twitter:image" content="$TWPreviewImage"><% end_if %>
+<% if $SMPreviewImage('TW') %><meta name="twitter:image" content="$SMPreviewImage('TW')"><% end_if %>
 
 <% if SeoHeroToolSocialMediaChannels %>
 	<% loop SeoHeroToolSocialMediaChannels %>

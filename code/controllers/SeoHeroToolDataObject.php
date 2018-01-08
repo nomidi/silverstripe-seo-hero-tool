@@ -363,8 +363,8 @@ class SeoHeroToolDataObject extends DataExtension
         # Facebook
         $FBFormArray = $this->getFBFormFields();
         #check config.yml fbimage
-        if ($this->FBPreviewImage() && !$this->owner->FBImage()->exists()) {
-            $FBPreviewImage =  new LiteralField('FBPreviewImage', '<div class="field"><p>Für die Seite ist ein Bild automatisch hinterlegt: <br><img src="'.$this->FBPreviewImage().'" width="150px"></p></div>');
+        if ($this->SMPreviewImage('FB') && !$this->owner->FBImage()->exists()) {
+            $FBPreviewImage =  new LiteralField('FBPreviewImage', '<div class="field"><p>'._t('SeoHeroTool.AutoFBImage', 'This site has a facebook picture configured via the configuration').': <br><img src="'.$this->SMPreviewImage('FB').'" width="150px"></p></div>');
         } else {
             $FBPreviewImage = false;
         }
@@ -394,8 +394,8 @@ class SeoHeroToolDataObject extends DataExtension
         $fbdesc->setAttribute('placeholder', $this->BetterMetaDescription());
 
         # Twitter
-        if ($this->TWPreviewImage() && !$this->owner->TWImage()->exists()) {
-            $TWPreviewImage =  new LiteralField('FBPreviewImage', '<div class="field"><p>Für die Seite ist ein Bild automatisch hinterlegt: <br><img src="'.$this->TWPreviewImage().'" width="150px"></p></div>');
+        if ($this->SMPreviewImage('FB') && !$this->owner->TWImage()->exists()) {
+            $TWPreviewImage =  new LiteralField('FBPreviewImage', '<div class="field"><p>'._t('SeoHeroTool.AutoTWImage', 'This site has a twitter picture configured via the configuration').': <br><img src="'.$this->SMPreviewImage('FB').'" width="150px"></p></div>');
         } else {
             $TWPreviewImage = false;
         }
@@ -623,47 +623,49 @@ class SeoHeroToolDataObject extends DataExtension
         }
     }
 
-    public function FBPreviewImage()
+    /**
+     * SMPreviewImage takes care for checking if an Image for Facebook and Twitter is defined. First check is if there is one uploaded in the backend,
+     * if not it will be checked if there is one set via the configuration.
+     * @param [type] $type Either FB for Facebook or TW for Twitter, otherwise false will be returned
+     * @return [type]      returns either false or the absolute path to the defined image
+     */
+    public function SMPreviewImage($type)
     {
-        if ($this->owner->FBImage()->exists()) {
-
-        // check for Admin FB Image
-            return $this->owner->FBImage()->AbsoluteURL;
+        //  debug::show($type);
+        if ($type == 'FB') {
+            if ($this->owner->FBImage()->exists()) {
+                return $this->owner->FBImage()->AbsoluteURL;
+            }
+        } elseif ($type == 'TW') {
+            if ($this->owner->TWImage()->exists()) {
+                return $this->owner->TWImage()->AbsoluteURL;
+            }
+        } else {
+            return false;
         }
+
+
         // Check for YAML Configuration
         $classname = $this->owner->ClassName;
         $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
-
         if ($yamlsettings) {
-            if (isset($yamlsettings['FBImage'])) {
-                $return = $this->checkSMImageYAMLSettings($yamlsettings, 'FBImage');
+            if (isset($yamlsettings[$type.'Image'])) {
+                //debug::show('hier');
+
+                $return = $this->checkSMImageYAMLSettings($yamlsettings, $type.'Image');
                 return $return;
             }
         } else {
             return false;
         }
     }
-    public function TWPreviewImage()
-    {
 
-        // check for Admin TW Image
-        if ($this->owner->TWImage()->exists()) {
-            return $this->owner->TWImage()->AbsoluteURL;
-        }
-
-        // Check for YAML Configuration
-        $classname = $this->owner->ClassName;
-        $yamlsettings = config::inst()->get('SeoHeroToolDataObject', $classname);
-
-        if ($yamlsettings) {
-            if (isset($yamlsettings['TWImage'])) {
-                $return = $this->checkSMImageYAMLSettings($yamlsettings, 'TWImage');
-                return $return;
-            }
-        } else {
-            return false;
-        }
-    }
+    /**
+     * checkSMImageYAMLSettings checks if an Image for twitter or facebook is set correctly if configured via configuration file
+     * @param  [type] $entry  the actual yaml settings
+     * @param  [type] $SMType either FBImage for facebook or TWImage for Twitter
+     * @return [type]         returns the value of this. Right now this has to be an absolute path, but this will not be checked
+     */
     public function checkSMImageYAMLSettings($entry, $SMType)
     {
         $return = false;

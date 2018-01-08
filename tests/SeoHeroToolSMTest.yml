@@ -2,15 +2,17 @@ Page:
   home:
     Title: home
     URLSegment: home
-  dataobjecttest:
-    Title: something
-    ID: 5
-    URLSegment: something
+  smobjecttest:
+    Title: smobject test
+    ID: 6
+    URLSegment: smobjecttest
     Created: 2016-12-12 12:34:34
     FBTitle: ThisIsAFBTitleTest
     TwTitle: ThisIsATwTitleTest
     FBDescription: This is a FB description
     TwDescription: This is a Twitter Description
+    MetaDescription: This is a manual set MetaDescription
+    Content: This is some kind of content
   objectWithBetterSiteTitle:
     Title: Some Default Title
     URLSegment: somedefaulttitle
@@ -25,6 +27,12 @@ Page:
     FBTitle: Site with FBType from Config
     URLSegment: sitewithfbtypefromconfig
     FBType: website
+  pageWithCanonicalAll:
+    Title: Page With Canonical
+    CanonicalAll: 1
+  pageWithGenMetaDesc:
+    Title: Some Title
+    Content: Here is some generic content. This is not set manually as Meta Description
 Group:
   cmseditorgroup:
     Code: cmseditorgroup
@@ -59,7 +67,7 @@ SeoHeroToolSocialLink:
     Name: Facebook
     Link: https://www.facebook.com/examplesite
     UserName: ''
-    IconName: ''
+    IconName:''
     DisplayInSocialLoop: 1
     ID: 1
     SortOrder: 2
@@ -96,3 +104,14 @@ SeoHeroToolSchemaCompany:
     Latitude: '53.0788767'
     Longitude: '8.8085507'
     SeoHeroToolSocialLinks: =>SeoHeroToolSocialLink.default, =>SeoHeroToolSocialLink.secondEntry, =>SeoHeroToolSocialLink.thirdEntry
+SeoHeroToolSM_TestObject:
+  smtestobject1:
+    Name: TestObject1
+    Title: Title of TestObject1
+    ID: 1
+SeoHeroToolSM_TestPage:
+  smtestsite:
+    Title: Testsite
+    URLSegment: testsite
+    SeoHeroToolSM_TestObject: =>SeoHeroToolSM_TestObject.smtestobject1
+    ID: 12

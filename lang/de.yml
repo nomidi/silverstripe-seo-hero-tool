@@ -3,6 +3,8 @@ de:
     LatVal: 'Bitte geben sie korrekte Breitenangaben ein.'
     LngVal: 'Bitte geben sie korrekte Längenangeben ein.'
   SeoHeroTool:
+    AutoFBImage: 'Für die Seite ist ein Bild automatisch hinterlegt'
+    AutoTWImage: 'Für die Seite ist ein Bild automatisch hinterlegt'
     AdvancedVersionRemark: 'Die Keywords und W-Fragen sind nur in der Pro Version enthalten.'
     BetterSiteTitle: 'SEO Title'
     Canonical: 'Canonical URL'
