@@ -68,6 +68,10 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $data = array('Title'=>array(0=>'$Created'), 'DateFormat'=>'SpecialFormat', 'DateFormatting'=>'d/m');
         $test = $seodo->checkTitleYAMLSettings($data);
         $this->assertTrue($test == '12/12', 'The return does not match the specific format and is not day/month.');
+
+        $dataNoArray = array('Title'=>'NoArrayData');
+        $testNoArray = $seodo->checkTitleYAMLSettings($dataNoArray);
+        $this->assertTrue($testNoArray == 'NoArrayData', 'The return does not match the expected format.');
     }
 
     public function testYAMLSettingsWithFunction()
@@ -107,6 +111,11 @@ class SeoHeroToolDataObjectTest extends FunctionalTest
         $test = $seodo->checkCanonicalSettings($data);
         $testobject = $obj->Title.'von'.$obj->Title;
         $this->assertTrue($test == $testobject, 'The response does not match the expected value of the title. The response is '.$test.' while the expected value is TestsitevonTestsite');
+
+
+        $dataNoArray = array('Canonical'=>'testWithoutArray');
+        $testNoArray = $seodo->checkCanonicalSettings($dataNoArray);
+        $this->assertTrue($testNoArray == 'testWithoutArray', 'The response does not match the expected value of the title');
     }
 
     /*

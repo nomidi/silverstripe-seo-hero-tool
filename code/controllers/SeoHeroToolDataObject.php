@@ -66,6 +66,9 @@ class SeoHeroToolDataObject extends DataExtension
             $return = '';
             if (isset($entry['Canonical'])) {
                 $canon = $entry['Canonical'];
+                if (!is_array($canon)) {
+                    $canon = array($canon);
+                }
                 for ($i=0; $i< count($canon); $i++) {
                     $elementIsVariable = false;
                     if (substr($canon[$i], 0, 1) == '$') {
@@ -162,6 +165,9 @@ class SeoHeroToolDataObject extends DataExtension
             }
 
             $titleList = $entry['Title'];
+            if (! is_array($titleList)) {
+                $titleList = array($titleList);
+            }
             for ($i = 0; $i < count($titleList); $i++) {
                 $elementIsVariable = false;
                 if (substr($titleList[$i], 0, 1) == '$') {
@@ -432,6 +438,9 @@ class SeoHeroToolDataObject extends DataExtension
 
     public function checkBetterMetaDescriptionYaml($entry)
     {
+        if (!is_array($entry)) {
+            $entry = array($entry);
+        }
         for ($i=0; $i< count($entry); $i++) {
             $elementIsVariable = false;
             if (substr($entry[$i], 0, 1) == '$') {
