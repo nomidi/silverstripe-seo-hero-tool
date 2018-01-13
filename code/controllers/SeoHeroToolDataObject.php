@@ -259,11 +259,17 @@ class SeoHeroToolDataObject extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         Requirements::javascript('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true');
-
         # Snippet Preview
         $SEOPreview = $this->owner->customise(array(
           'Title' => $this->MetaTitle(),
           'AbsoluteLink' => $this->owner->AbsoluteLink,
+          'FBImage' => $this->SMPreviewImage('FB'),
+          'FBTitle' =>  $this->owner->FBTitle,
+          'FBDescription'=> $this->owner->FBDescription,
+          'TWImage' => $this->SMPreviewImage('TW'),
+          'TWTitle' =>  $this->owner->TWTitle,
+          'TWDescription'=> $this->owner->TWDescription,
+          'Server'=> $_SERVER['SERVER_NAME'],
           'MetaDesc' => $this->BetterMetaDescription()))->renderWith('SeoHeroToolSnippetPreview');
 
         $SEOPreviewField = CompositeField::create(
@@ -271,7 +277,7 @@ class SeoHeroToolDataObject extends DataExtension
           LiteralField::create('SeoPreviewLiteral', $SEOPreview)
         );
 
-        $fields->addFieldToTab('Root.SeoHeroTool', $SEOPreviewField);
+        $fields->addFieldToTab('Root.SeoHeroToolPreview', $SEOPreviewField);
         # BetterSiteTitle
         $fields->addFieldToTab('Root.SeoHeroTool', $bstitle = new TextField('BetterSiteTitle', _t('SeoHeroTool.BetterSiteTitle', 'SEO Title')));
         $defaultValue = config::inst()->get('SeoHeroToolDataObject', $this->owner->ClassName);
