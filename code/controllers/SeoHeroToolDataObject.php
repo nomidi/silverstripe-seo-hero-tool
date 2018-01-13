@@ -649,11 +649,21 @@ class SeoHeroToolDataObject extends DataExtension
         //  debug::show($type);
         if ($type == 'FB') {
             if ($this->owner->FBImage()->exists()) {
-                return $this->owner->FBImage()->AbsoluteURL;
+                if ($this->owner->FBImage()->exists()) {
+                    if (class_exists('FocusPointImage')) {
+                        return $this->owner->FBImage()->CroppedFocusedImage(1200, 627)->AbsoluteURL;
+                    } else {
+                        return $this->owner->FBImage()->CroppedImage(1200, 627)->AbsoluteURL;
+                    }
+                }
             }
         } elseif ($type == 'TW') {
             if ($this->owner->TWImage()->exists()) {
-                return $this->owner->TWImage()->AbsoluteURL;
+                if (class_exists('FocusPointImage')) {
+                    return $this->owner->TWImage()->CroppedFocusedImage(600, 314)->AbsoluteURL;
+                } else {
+                    return $this->owner->TWImage()->CroppedImage(600, 314)->AbsoluteURL;
+                }
             }
         } else {
             return false;

@@ -7,12 +7,11 @@
 
 <div class="seo-hero-tool-snippet-container">
   <div>
-  <strong>Facebook</strong>
+  <strong>Facebook</strong> <span>(1200x627)</span>
     <div class="seo-hero-tool-snippet-fb">
       <a class="seo-hero-tool-snippet-fb__link" href="$AbsoluteLink" rel="noopener nofollow" target="_blank">
         <% if $FBImage %>
-          <div style="background-image:url($FBImage)" class="seo-hero-tool-snippet-fb__image">
-          </div>
+          <img src="$FBImage" class="seo-hero-tool-snippet-fb__image">
         <% end_if %>
         <div class="seo-hero-tool-snippet-fb__text">
           <div class="seo-hero-tool-snippet-fb__text__title">
@@ -29,12 +28,11 @@
     </div>
   </div>
   <div>
-  <strong>Twitter</strong>
+  <strong>Twitter</strong> <span>(600x314)</span>
     <div class="seo-hero-tool-snippet-tw">
       <a class="seo-hero-tool-snippet-tw__link" href="$AbsoluteLink" rel="noopener nofollow" target="_blank">
         <% if $TWImage %>
-          <div style="background-image:url($TWImage)" class="seo-hero-tool-snippet-tw__image">
-          </div>
+          <img src="$TWImage" class="seo-hero-tool-snippet-tw__image">
         <% end_if %>
         <div class="seo-hero-tool-snippet-tw__text">
           <div class="seo-hero-tool-snippet-tw__text__title">
