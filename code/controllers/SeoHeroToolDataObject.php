@@ -378,7 +378,7 @@ class SeoHeroToolDataObject extends DataExtension
         if ($this->SMPreviewImage('FB') && !$this->owner->FBImage()->exists()) {
             $FBPreviewImage =  new LiteralField('FBPreviewImage', '<div class="field"><p>'._t('SeoHeroTool.AutoFBImage', 'This site has a facebook picture configured via the configuration').': <br><img src="'.$this->SMPreviewImage('FB').'" width="150px"></p></div>');
         } else {
-            $FBPreviewImage = false;
+            $FBPreviewImage = new LiteralField('FBPreviewImage', '<span></span>');
         }
         $fb = ToggleCompositeField::create(
             'Facebook', 'Facebook',
@@ -409,7 +409,7 @@ class SeoHeroToolDataObject extends DataExtension
         if ($this->SMPreviewImage('FB') && !$this->owner->TWImage()->exists()) {
             $TWPreviewImage =  new LiteralField('FBPreviewImage', '<div class="field"><p>'._t('SeoHeroTool.AutoTWImage', 'This site has a twitter picture configured via the configuration').': <br><img src="'.$this->SMPreviewImage('FB').'" width="150px"></p></div>');
         } else {
-            $TWPreviewImage = false;
+            $TWPreviewImage = new LiteralField('FBPreviewImage', '<span></span>');
         }
         $tw = ToggleCompositeField::create(
             'Twitter', 'Twitter',
