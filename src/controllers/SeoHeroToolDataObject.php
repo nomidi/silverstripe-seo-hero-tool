@@ -294,7 +294,7 @@ class SeoHeroToolDataObject extends DataExtension
           'TWTitle' =>  $this->owner->TWTitle,
           'TWDescription'=> $this->owner->TWDescription,
           'Server'=> $_SERVER['SERVER_NAME'],
-          'MetaDesc' => $this->BetterMetaDescription()))->renderWith('nomidi/SeoHeroTool/Includes/SeoHeroToolSnippetPreview');
+          'MetaDesc' => $this->BetterMetaDescription()))->renderWith('nomidi/SeoHeroTool/SeoHeroToolSnippetPreview');
 
         $SEOPreviewField = CompositeField::create(
           HeaderField::create('SeoHeroTool', _t('SeoHeroTool.SEOSnippetPreviewHeadline', 'Snippet Preview')),

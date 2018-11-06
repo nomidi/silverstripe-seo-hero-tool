@@ -48,7 +48,7 @@ class SeoHeroToolController extends DataExtension
 
     public function getCanonicalURL()
     {
-        $template = $this->owner->renderWith('SeoHeroToolCanonical');
+        $template = $this->owner->renderWith('nomidi\SeoHeroTool\SeoHeroToolCanonical');
         return $this->compressTemplate($template);
     }
 
@@ -63,7 +63,7 @@ class SeoHeroToolController extends DataExtension
             }
             $template = $this->owner->customise(array(
                 'GoogleAnalytics' => $AnalyticsData,
-            ))->renderWith('SeoHeroToolGoogleAnalytic');
+            ))->renderWith('nomidi\SeoHeroTool\SeoHeroToolGoogleAnalytic');
           //  debug::show($template);
           $env_type =  Config::inst()->get('Director', 'environment_type');
             if ($AnalyticsData->ActivateInMode === $env_type || $AnalyticsData->ActivateInMode === 'All') {
@@ -81,16 +81,16 @@ class SeoHeroToolController extends DataExtension
     public function getSchemaCompany()
     {
         $SchemaCompany = SeoHeroToolSchemaCompany::get()->first();
-        $value = $SchemaCompany->custom_database_fields('SeoHeroToolSchemaCompany');
+        /*$value = $SchemaCompany->databaseFields(SeoHeroToolSchemaCompany::class);
         foreach ($value as $k => $v) {
             if ($k != 'LogoID') {
                 $SchemaCompany->$k = stripslashes($SchemaCompany->$k);
             }
         }
         if ($SchemaCompany->OrganizationType != "") {
-            $template = $this->owner->customise(array('SchemaCompany'=>$SchemaCompany))->renderWith('SeoHeroToolSchemaCompany');
+            $template = $this->owner->customise(array('SchemaCompany'=>$SchemaCompany))->renderWith('nomidi\SeoHeroTool\SeoHeroToolSchemaCompany');
             return $template;
-        }
+        }*/
     }
 
     /*
@@ -98,7 +98,7 @@ class SeoHeroToolController extends DataExtension
      */
     public function getMetaRobots()
     {
-        $template = $this->owner->renderWith('SeoHeroToolMetaRobots');
+        $template = $this->owner->renderWith('nomidi\SeoHeroTool\SeoHeroToolMetaRobots');
         return $this->compressTemplate($template);
     }
 
@@ -108,7 +108,7 @@ class SeoHeroToolController extends DataExtension
     */
    public function getSchemaDataObject()
    {
-       $template = $this->owner->renderWith('SeoHeroToolSchemaDataObject');
+       $template = $this->owner->renderWith('nomidi\SeoHeroTool\SeoHeroToolSchemaDataObject');
        return $this->compressTemplate($template);
    }
     /*
@@ -118,13 +118,13 @@ class SeoHeroToolController extends DataExtension
      {
          $template = $this->owner->customise(array(
             'SeoHeroToolSocialMediaChannels' => SeoHeroToolSocialLink::get(),
-        ))->renderWith('SeoHeroToolMetaSocialMedia');
+        ))->renderWith('nomidi\SeoHeroTool\SeoHeroToolMetaSocialMedia');
          return $this->compressTemplate($template);
      }
 
     public function getTranslationLink()
     {
-        $template = $this->owner->renderWith('SeoHeroToolTranslationLink');
+        $template = $this->owner->renderWith('nomidi\SeoHeroTool\SeoHeroToolTranslationLink');
         return $this->compressTemplate($template);
     }
 
