@@ -1,5 +1,28 @@
 <?php
 
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\Assets\Image;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\ToggleCompositeField;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\i18n\i18n;
+use SilverStripe\Forms\LabelField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+
+
 /**
  *  DataExtension which gives the ability to specify better Data for SEO, Twitter and Facebook
  *
@@ -27,11 +50,12 @@ class SeoHeroToolDataObject extends DataExtension
     );
 
     private static $has_one = array(
-        'CanonicalLink' => 'SiteTree',
-        'FBImage' => 'Image',
-        'TwImage' => 'Image',
+        'CanonicalLink' => SiteTree::class,
+        'FBImage' => Image::class,
+        'TwImage' => Image::class,
     );
 
+    private static $table_name = 'SeoHeroToolDataObject';
     public $current_meta_desc;
 
     public function CanonicalURL()
@@ -270,7 +294,7 @@ class SeoHeroToolDataObject extends DataExtension
           'TWTitle' =>  $this->owner->TWTitle,
           'TWDescription'=> $this->owner->TWDescription,
           'Server'=> $_SERVER['SERVER_NAME'],
-          'MetaDesc' => $this->BetterMetaDescription()))->renderWith('SeoHeroToolSnippetPreview');
+          'MetaDesc' => $this->BetterMetaDescription()))->renderWith('nomidi/SeoHeroTool/Includes/SeoHeroToolSnippetPreview');
 
         $SEOPreviewField = CompositeField::create(
           HeaderField::create('SeoHeroTool', _t('SeoHeroTool.SEOSnippetPreviewHeadline', 'Snippet Preview')),
@@ -359,7 +383,7 @@ class SeoHeroToolDataObject extends DataExtension
                     CheckboxField::create("FollowType", _t('SeoHeroTool.FollowType', 'Should the site inherit the settings from the parent site?')),
                     $canonicalField = TextField::create('Canonical', _t('SeoHeroTool.Canonical', 'Canonical URL'))
                         ->setRightTitle(_t('SeoHeroTool.CanonicalAfter', 'Canonical URL, only use it if you know what you are going to do.')),
-                    $canonicalFieldSiteTree = new TreeDropdownField("CanonicalLinkID", "Choose Canonical URL from the SiteTree", "SiteTree"),
+                    $canonicalFieldSiteTree = new TreeDropdownField("CanonicalLinkID", "Choose Canonical URL from the SiteTree", SiteTree::class),
                     $canonicalFieldAll = CheckboxField::create('CanonicalAll', _t('SeoHeroTool.CanonicalAll', 'Add at the end of the Canonical URL all=all.')),
                     $metaDescField = TextareaField::create("MetaDescription", _t('SeoHeroTool.OwnMetaDesc', 'Meta description')),
                     $metaLangHrefField = CompositeField::create(

@@ -1,4 +1,13 @@
 <?php
+
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\CheckboxField;
+
 class SeoHeroToolSocialLink extends DataObject
 {
     private static $db = array(
@@ -10,6 +19,7 @@ class SeoHeroToolSocialLink extends DataObject
     'SortOrder' => 'Int'
   );
 
+    private static $table_name = 'SeoHeroToolSocialLink';
     private static $default_sort = 'SortOrder ASC';
 
     private static $has_one = array(

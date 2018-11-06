@@ -1,5 +1,11 @@
 <?php
 
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Config\Config;
+
+
 /**
  *  Class SeoHeroToolSchemaDataObject extends the DataObject and gives the possiblity for pages
  *  to add a schema.org definition via the .yml configuration.

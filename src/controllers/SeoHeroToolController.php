@@ -1,5 +1,18 @@
 <?php
 
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\View\Requirements;
+use nomidi\SeoHeroTool\SeoHeroToolGoogleAnalytic;
+use SilverStripe\Core\Config\Config;
+use nomidi\SeoHeroTool\SeoHeroToolSchemaCompany;
+use nomidi\SeoHeroTool\SeoHeroToolSocialLink;
+use SilverStripe\Control\Director;
+
+
+
+
 /**
  * SeoHeroToolController takes care that all SeoHeroTool modules will be included.
  */

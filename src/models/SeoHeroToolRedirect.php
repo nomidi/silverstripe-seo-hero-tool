@@ -1,6 +1,15 @@
 <?php
+
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\Control\Director;
+
 class SeoHeroToolRedirect extends DataObject
 {
+    private static $table_name = 'SeoHeroToolRedirect';
     private static $db = array(
       'OldLinkName' => 'Varchar(200)',
       'NewLinkName' => 'Varchar(200)'
@@ -17,12 +26,12 @@ class SeoHeroToolRedirect extends DataObject
       'OldLinkName' =>  'Old Link'
     );
 
-    private static $indexes = array(
+    /*private static $indexes = array(
       'OldLinkNameIndex'=> array(
         'type' => 'unique',
         'value' => 'OldLinkName'
       )
-    );
+    );*/
 
     public $debug = false;
     public static $has_written = false;

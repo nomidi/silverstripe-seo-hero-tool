@@ -1,6 +1,20 @@
 <?php
+
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\ORM\DB;
+use SilverStripe\Security\Permission;
+
 class SeoHeroToolEditFile extends DataObject
 {
+    private static $table_name = 'SeoHeroToolEditFile';
+
+
     private static $has_many = array(
     'SeoHeroToolRedirects' => 'SeoHeroToolRedirect',
   );
@@ -83,9 +97,9 @@ class SeoHeroToolEditFile extends DataObject
         }
     }
 
-    public function canCreate($Member = null)
+    public function canCreate($member = null, $context = [])
     {
-        if (permission::check('SUPERUSER')) {
+        if (Permission::check('SUPERUSER')) {
             return false;
         } else {
             return false;
@@ -94,7 +108,7 @@ class SeoHeroToolEditFile extends DataObject
 
     public function canDelete($Member = null)
     {
-        if (permission::check('SUPERUSER')) {
+        if (Permission::check('SUPERUSER')) {
             return false;
         } else {
             return false;

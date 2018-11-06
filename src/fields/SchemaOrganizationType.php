@@ -1,4 +1,10 @@
 <?php
+
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FormField;
+
 /**
  *
  *    SchemaOrganizationTypeField

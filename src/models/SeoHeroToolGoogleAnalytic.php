@@ -1,6 +1,19 @@
 <?php
+
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\ORM\DB;
+use SilverStripe\Security\Permission;
+
 class SeoHeroToolGoogleAnalytic extends DataObject
 {
+    private static $table_name = 'SeoHeroToolGoogleAnalytic';
     private static $db = array(
       'AnalyticsKey' => 'Text',
       'UserOptOut' => 'Boolean',
@@ -15,7 +28,7 @@ class SeoHeroToolGoogleAnalytic extends DataObject
       'ActivateInMode' => 'All'
     );
 
-    public static $singular_name = 'Google Analytics';
+    private static $singular_name = 'Google Analytics';
 
     public function getCMSFields()
     {
@@ -27,50 +40,50 @@ class SeoHeroToolGoogleAnalytic extends DataObject
         $fields->addFieldToTab('Root.Main', new CheckboxField('LoadTime', _t('SeoHeroToolGoogleAnalytic.LoadTime', 'Record Loading Time?')));
         $fields->addFieldToTab('Root.Main', new DropdownField('ActivateInMode', _t('SeoHeroToolGoogleAnalytic.ActivateInMode', 'Activate when Site is in Mode'), $this->dbObject('ActivateInMode')->enumValues()));
 
-        $env_type = Config::inst()->get('Director', 'environment_type');
+       /* $env_type = Config::inst()->get('Director', 'environment_type');
         if ($env_type == $this->ActivateInMode || $this->ActivateInMode == 'All') {
             $matchString = _t('SeoHeroToolGoogleAnalytic.ActualModeMatchEnvironment', 'Your actual Environment mode does match the Settings. Google Anayltics should be working.');
         } else {
             $matchString = _t('SeoHeroToolGoogleAnalytic.ActualModeDoesNotMatchEnvironment', 'Your actual Environment mode does not Match the Settings. Google Analytics will not work.');
-        }
+        }*/
         $fields->addFieldToTab('Root.Main', new LiteralField('DoesModeMatch', $matchString), 'ActivateInMode');
 
         return $fields;
     }
 
-    public function getEditForm($id = null, $fields = null)
+    /*public function getEditForm($id = null, $fields = null)
     {
         $form = parent::getEditForm($id, $fields);
         return $form;
-    }
+    }*/
 
     public function InitAnalytics()
     {
-        if (
+        /*if (
             (SS_ENVIRONMENT_TYPE == $this->ActivateInMode || $this->ActivateInMode == 'All') &&
-            strpos($_SERVER['REQUEST_URI'], '/admin') === false &&
-            strpos($_SERVER['REQUEST_URI'], '/Security') === false) {
-            return true;
+        strpos($_SERVER['REQUEST_URI'], '/admin') === false &&
+        strpos($_SERVER['REQUEST_URI'], '/Security') === false) {
+        return true;
         }
         return false;
+        */
+        return true;
     }
 
     public static function current_entry()
     {
-        if ($entry = DataObject::get_one('SeoHeroToolGoogleAnalytic')) {
+        if ($entry = DataObject::get_one(SeoHeroToolGoogleAnalytic::class)) {
             return $entry;
         }
-        return self::make_site_config();
+        return self::make_entry();
     }
-    /**
-     * Create SiteConfig with defaults from language file.
-     *
-     * @return SiteConfig
-     */
+
+
     public static function make_entry()
     {
         $config = SeoHeroToolGoogleAnalytic::create();
         $config->write();
+
         return $config;
     }
 
@@ -80,7 +93,7 @@ class SeoHeroToolGoogleAnalytic extends DataObject
     public function requireDefaultRecords()
     {
         parent::requireDefaultRecords();
-        $entry = DataObject::get_one('SeoHeroToolGoogleAnalytic');
+        $entry = DataObject::get_one(SeoHeroToolGoogleAnalytic::class);
         if (!$entry) {
             self::make_entry();
             DB::alteration_message("Added default SeoHeroToolGoogleAnalytic", "created");
@@ -92,7 +105,7 @@ class SeoHeroToolGoogleAnalytic extends DataObject
      * @param  [type] $Member The logged in Member^
      * @return [type]         Always return false to disallow any creation.
      */
-    public function canCreate($Member = null)
+    public function canCreate($member = null, $context = [])
     {
         if (permission::check('SUPERUSER')) {
             return false;

@@ -1,0 +1,12 @@
+mappings:
+  SeoHeroToolAdmin: nomidi\seo-hero-tool\SeoHeroToolAdmin
+  SeoHeroToolController: nomidi\SeoHeroTool\SeoHeroToolController
+  SeoHeroToolDataObject: nomidi\SeoHeroTool\SeoHeroToolDataObject
+  SeoHeroToolSchemaDataObject: nomidi\SeoHeroTool\SeoHeroToolSchemaDataObject
+  SeoHeroToolSchemaCompany: nomidi\SeoHeroTool\SeoHeroToolSchemaCompany
+  SeoHeroToolRedirect: nomidi\SeoHeroTool\SeoHeroToolRedirect
+  SeoHeroToolSocialLink: nomidi\SeoHeroTool\SeoHeroToolSocialLink
+  SeoHeroToolGoogleAnalytic: nomidi\SeoHeroTool\SeoHeroToolGoogleAnalytic
+  SeoHeroToolEditFile: nomidi\SeoHeroTool\SeoHeroToolEditFile
+  LatLngField: nomidi\SeoHeroTool\LatLngField
+  SchemaOrganizationType: nomidi\SeoHeroTool\SchemaOrganizationType

@@ -1,5 +1,10 @@
 <?php
 
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\Forms\TextField;
+
+
 /**
  * Text input field with validation for latitude and lingitude values
  *

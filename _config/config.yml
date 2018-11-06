@@ -1,7 +1,7 @@
-ContentController:
+SilverStripe\CMS\Controllers\ContentController:
   extensions:
-    - SeoHeroToolController
-SiteTree:
+    - nomidi\SeoHeroTool\SeoHeroToolController
+SilverStripe\CMS\Model\SiteTree:
   extensions:
-    - SeoHeroToolDataObject
-    - SeoHeroToolSchemaDataObject
+    - nomidi\SeoHeroTool\SeoHeroToolDataObject
+    - nomidi\SeoHeroTool\SeoHeroToolSchemaDataObject

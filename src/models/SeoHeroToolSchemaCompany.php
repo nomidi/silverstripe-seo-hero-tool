@@ -1,6 +1,24 @@
 <?php
+
+namespace nomidi\SeoHeroTool;
+
+use SilverStripe\ORM\DataObject;
+
+use CountryDropdownField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\View\ArrayData;
+use SilverStripe\ORM\DB;
+use SilverStripe\Security\Permission;
+
 class SeoHeroToolSchemaCompany extends DataObject
 {
+    private static $table_name = 'SeoHeroToolSchemaCompany';
     private static $db = array(
     'Company' => 'Text',
     #'CompanyMore' =>  'Text',
@@ -41,7 +59,7 @@ class SeoHeroToolSchemaCompany extends DataObject
       'SeoHeroToolSocialLinks' => 'SeoHeroToolSocialLink'
     );
 
-    public static $singular_name = 'Schema.org Company';
+    private static $singular_name = 'Schema.org Company';
 
 
     public function getCMSFields()
@@ -147,7 +165,7 @@ class SeoHeroToolSchemaCompany extends DataObject
 
     public static function current_entry()
     {
-        if ($entry = DataObject::get_one('SeoHeroToolSchemaCompany')) {
+        if ($entry = DataObject::get_one(SeoHeroToolSchemaCompany::class)) {
             return $entry;
         }
         return self::make_site_config();
@@ -170,7 +188,7 @@ class SeoHeroToolSchemaCompany extends DataObject
     public function requireDefaultRecords()
     {
         parent::requireDefaultRecords();
-        $entry = DataObject::get_one('SeoHeroToolSchemaCompany');
+        $entry = DataObject::get_one(SeoHeroToolSchemaCompany::class);
         if (!$entry) {
             self::make_entry();
             DB::alteration_message("Added default SeoHeroToolSchemaCompany", "created");
@@ -182,7 +200,7 @@ class SeoHeroToolSchemaCompany extends DataObject
      * @param  [type] $Member The logged in Member^
      * @return [type]         Always return false to disallow any creation.
      */
-    public function canCreate($Member = null)
+    public function canCreate($member = null, $context = [])
     {
         if (permission::check('SUPERUSER')) {
             return false;
