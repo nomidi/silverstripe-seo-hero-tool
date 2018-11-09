@@ -3,9 +3,9 @@ en:
     LatVal: 'Please enter an correct Latitude Value'
     LngVal: 'Please enter an correct Longitude Value'
   SeoHeroTool:
+    AdvancedVersionRemark: 'The Keywords and Keyword Question are just available in the Advanced Version!'
     AutoFBImage: 'This site has a facebook picture configured via the configuration'
     AutoTWImage: 'This site has a twitter picture configured via the configuration'
-    AdvancedVersionRemark: 'The Keywords and Keyword Question are just available in the Advanced Version!'
     BetterSiteTitle: 'SEO Title'
     Canonical: 'Canonical URL'
     CanonicalAfter: 'Canonical URL, only use it if you know what you are going to do.'
@@ -31,6 +31,7 @@ en:
     KeywordQuestion: Interrogation
     KeywordQuestionAfter: 'This field saves questions from the W-Questions, available only in German right now.'
     MetaDescAfterInformation: 'The ideal length of the Meta Description is between 120 and 140 character.'
+    NoSchemaDataPresendOnThisSite: 'No Google Schema Org Data present on this website.'
     OwnMetaDesc: 'Meta description'
     RobotsHeadline: Robots
     SEOSnippetPreviewHeadline: 'Snippet Preview'
@@ -38,25 +39,17 @@ en:
     TwImage: 'Image for Twitter'
     TwTitle: 'Title for Twitter'
     jsonschemaDataExplanation: 'If there is any red text above this means that either a variable or a connection was not resolveable. Please check your configuration.'
-    NoSchemaDataPresendOnThisSite: No Google Schema Org Data present on this website.
   SeoHeroToolAdmin:
-    MENUTITLE: SeoHeroTool
     Overview: Overview
   SeoHeroToolEditFile:
-    PLURALNAME: 'Robots Htaccess Editors'
     Redirect: '301 Weiterleitungen'
     RobotsContentField: 'Content of robots.txt'
     Robotstxtchmod: 'Please check the access right to the file robots.txt'
-    SINGULARNAME: 'Robots Htaccess Editor'
   SeoHeroToolGoogleAnalytic:
     ActivateInMode: 'Activate when Site is in Mode'
-    ActualModeDoesNotMatchEnvironment: 'Your actual Environment mode does not Match the Settings. Google Analytics will not work.'
-    ActualModeMatchEnvironment: 'Your actual Environment mode does match the Settings. Google Anayltics should be working.'
     AnalyticsKey: 'Google Analytics Key'
     AnonymizeIp: 'Anonymize IP Adress?'
     LoadTime: 'Record Loading Time?'
-    PLURALNAME: 'Google Analyticss'
-    SINGULARNAME: 'Google Analytics'
     UserOptOut: 'User Opt-out?'
   SeoHeroToolRedirect:
     LinkAlreadyInUse: 'Old Link has already a redirect, please check the link.'
@@ -66,8 +59,6 @@ en:
     OldLink: 'Old Link'
     OldLinkNameHasSpace: 'Old Link contains a space which is not allowed here, please mask any space with the correct HTML character!'
     OldLinkNameHasToBeSet: 'Old Link has to be set and can not be empty'
-    PLURALNAME: '301 Redirects'
-    SINGULARNAME: '301 Redirect'
   SeoHeroToolSchemaCompany:
     Company: Company
     Country: Country
@@ -93,9 +84,7 @@ en:
     OpeningHoursWednesdayClosingTime: 'Closing Hour Wednesday'
     OpeningHoursWednesdayOpeningTime: 'Opening Hour Wednesday'
     OrganizationType: 'Organization Type'
-    PLURALNAME: 'Schema.org Companies'
     Postal: Postal
-    SINGULARNAME: 'Schema.org Company'
     Street: Street
     Tel: Telephon
     VatID: VatID
@@ -106,11 +95,43 @@ en:
     Link: 'Link (inkl. http://)'
     Name: Name
     NameFromSelection: 'Name from Selection'
-    PLURALNAME: 'Seo Hero Tool Social Links'
-    SINGULARNAME: 'Seo Hero Tool Social Link'
     SocialLoopStatement: 'The Social Loop can be sorted either alphabetical or it can be sorted via the overview'
     SortOrder: 'Sorting in Social Loop'
     SortOrderStatement: 'Sorting in Social Loop is by default by SortOrder Ascending'
     UserName: 'Username for example Twitter Username'
   SeoHerotool:
     FBType: 'Type of Site'
+  nomidi\SeoHeroToolAnalysis\SeoHeroToolAnalysisAdmin:
+    MENUTITLE: nomidi\SeoHeroToolAnalysis\SeoHeroToolAnalysis
+  nomidi\SeoHeroTool\SeoHeroToolAdmin:
+    MENUTITLE: SeoHeroTool
+  nomidi\SeoHeroTool\SeoHeroToolEditFile:
+    PLURALNAME: 'Robots Htaccess Editors'
+    PLURALS:
+      one: 'A Robots Htaccess Editor'
+      other: '{count} Robots Htaccess Editors'
+    SINGULARNAME: 'Robots Htaccess Editor'
+  nomidi\SeoHeroTool\SeoHeroToolGoogleAnalytic:
+    PLURALNAME: 'Google Analyticss'
+    PLURALS:
+      one: 'A Google Analytics'
+      other: '{count} Google Analyticss'
+    SINGULARNAME: 'Google Analytics'
+  nomidi\SeoHeroTool\SeoHeroToolRedirect:
+    PLURALNAME: '301 Redirects'
+    PLURALS:
+      one: 'A 301 Redirect'
+      other: '{count} 301 Redirects'
+    SINGULARNAME: '301 Redirect'
+  nomidi\SeoHeroTool\SeoHeroToolSchemaCompany:
+    PLURALNAME: 'Schema.org Companies'
+    PLURALS:
+      one: 'A Schema.org Company'
+      other: '{count} Schema.org Companies'
+    SINGULARNAME: 'Schema.org Company'
+  nomidi\SeoHeroTool\SeoHeroToolSocialLink:
+    PLURALNAME: 'Seo Hero Tool Social Links'
+    PLURALS:
+      one: 'A Seo Hero Tool Social Link'
+      other: '{count} Seo Hero Tool Social Links'
+    SINGULARNAME: 'Seo Hero Tool Social Link'
