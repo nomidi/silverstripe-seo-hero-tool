@@ -1,13 +1,13 @@
 {
     "name": "nomidi/silverstripe-seo-hero-tool",
-    "description": "SEO Hero Tool helps in optimizing websites for search engines",
+    "description": "SEO Hero Tool Analysis helps in optimizing websites for search engines",
     "keywords": [
         "silverstripe",
         "SEO",
         "Search Engine Optimization"
     ],
-    "version": "1.0.0",
-    "type": "silverstripe-module",
+    "version": "0.1.0",
+    "type": "silverstripe-vendormodule",
     "authors": [{
         "name": "Bastian Fritsch",
         "email": "mail@bastian-fritsch.de",
@@ -21,14 +21,13 @@
         "role": "Developer"
     }],
     "extra": {
-    "installer-name": "seo-hero-tool"
+        "installer-name": "seo-hero-tool",
+        "expose": [
+            "client/dist"
+        ]
     },
     "support": {
-    "issues": "https://github.com/nomidi/silverstripe-seo-hero-tool/issues"
+        "issues": "https://github.com/nomidi/silverstripe-seo-hero-tool/issues"
     },
-    "license": "BSD-3-Clause",
-    "require-dev": {
-		    "phpunit/PHPUnit": "~3.7@stable"
-	  }
-
+    "license": "BSD-3-Clause"
 }
