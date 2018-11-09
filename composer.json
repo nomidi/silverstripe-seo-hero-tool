@@ -27,12 +27,6 @@
     "issues": "https://github.com/nomidi/silverstripe-seo-hero-tool/issues"
     },
     "license": "BSD-3-Clause",
-    "require": {
-        "php": ">=5.5.31",
-        "composer/installers": "~1.0",
-        "silverstripe/cms": "~4.2",
-        "silverstripe/framework": "~4.2"
-    },
     "require-dev": {
 		    "phpunit/PHPUnit": "~3.7@stable"
 	  }
