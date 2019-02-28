@@ -724,7 +724,7 @@ class SeoHeroToolDataObject extends DataExtension
             for ($i = 0; $i < count($fbimageList); $i++) {
                 $elementIsVariable = false;
                 if (substr($fbimageList[$i], 0, 1) == '$') {
-                    $actualElement = substr($fbimageList, 1);
+                    $actualElement = substr($fbimageList[$i], 1);
                     $elementIsVariable = true;
                 } else {
                     $actualElement = $fbimageList[$i];
