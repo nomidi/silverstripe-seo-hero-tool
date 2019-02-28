@@ -511,10 +511,10 @@ class SeoHeroToolDataObject extends DataExtension
             }
         }
         $return = preg_replace('/\s+/', ' ', preg_replace('/<[^>]*>/', ' ', $return));
-        if (strlen($return) < 140) {
+        if (strlen($return) < 180) {
             return $return;
         } else {
-            return preg_replace("/[^ ]*$/", '', substr($return, 0, 140));
+            return preg_replace("/[^ ]*$/", '', substr($return, 0, 180));
         }
     }
 
