@@ -21,7 +21,8 @@ class SeoHeroToolController extends DataExtension
     public function onAfterInit()
     {
         $class = get_class($this->owner);
-        if ($this->owner->data() && $class != 'ErrorPage_Controller') {
+        $yamlsettings = config::inst()->get('SeoHeroToolDataObject', 'exclude');
+        if ($this->owner->data() && $class != 'ErrorPage_Controller' && !in_array($class,$yamlsettings)) {
             # fix installation issue with non existing pages
           # todo find better solution during installation
           Requirements::insertHeadTags($this->SeoHeroToolMeta());
