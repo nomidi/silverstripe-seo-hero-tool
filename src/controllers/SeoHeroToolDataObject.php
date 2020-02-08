@@ -282,8 +282,8 @@ class SeoHeroToolDataObject extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        Requirements::javascript('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true');
-        Requirements::css('nomidi/silverstripe-seo-hero-tool:client/dist/css/style.css');
+        #Requirements::javascript('https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true');
+        #Requirements::css('nomidi/silverstripe-seo-hero-tool:client/dist/css/style.css');
         # Snippet Preview
         $SEOPreview = $this->owner->customise(array(
           'Title' => $this->MetaTitle(),

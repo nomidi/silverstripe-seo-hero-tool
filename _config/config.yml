@@ -5,3 +5,6 @@ SilverStripe\CMS\Model\SiteTree:
   extensions:
     - nomidi\SeoHeroTool\SeoHeroToolDataObject
     - nomidi\SeoHeroTool\SeoHeroToolSchemaDataObject
+SilverStripe\Admin\LeftAndMain:
+  extra_requirements_css:
+    - 'nomidi/silverstripe-seo-hero-tool:client/dist/css/style.css'
