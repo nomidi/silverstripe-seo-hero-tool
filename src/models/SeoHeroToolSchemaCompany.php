@@ -2,9 +2,10 @@
 
 namespace nomidi\SeoHeroTool;
 
+use Dynamic\CountryDropdownField\Fields\CountryDropdownField;
+use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
 
-use CountryDropdownField;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\TextField;
@@ -53,11 +54,11 @@ class SeoHeroToolSchemaCompany extends DataObject
   );
 
     private static $has_one = array(
-    'Logo' => 'Image');
+    'Logo' => Image::class);
 
-    private static $has_many = array(
+    /*private static $has_many = array(
       'SeoHeroToolSocialLinks' => 'SeoHeroToolSocialLink'
-    );
+    );*/
 
     private static $singular_name = 'Schema.org Company';
 
@@ -110,10 +111,10 @@ class SeoHeroToolSchemaCompany extends DataObject
         $fields->addFieldToTab('Root.Main', $lngf = new LatLngField('Longitude'));
         $lngf->setConfig('lng', true);
 
-        $grid = new GridField("SeoHeroToolSocialLinks", "Social Links", $this->SeoHeroToolSocialLinks(), GridFieldConfig_RelationEditor::create(), $this);
+        /*$grid = new GridField("SeoHeroToolSocialLinks", "Social Links", $this->SeoHeroToolSocialLinks(), GridFieldConfig_RelationEditor::create(), $this);
         $config = $grid->getConfig();
         $config->getComponentByType('GridFieldPaginator')->setItemsPerPage(20);
-        $fields->addFieldToTab('Root.SocialLinks', $grid);
+        $fields->addFieldToTab('Root.SocialLinks', $grid);*/
 
         return $fields;
     }

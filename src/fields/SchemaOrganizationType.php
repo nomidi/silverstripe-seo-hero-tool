@@ -4,6 +4,7 @@ namespace nomidi\SeoHeroTool;
 
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FormField;
+use SilverStripe\Forms\GroupedDropdownField;
 
 /**
  *
@@ -14,7 +15,7 @@ use SilverStripe\Forms\FormField;
  * @copyright  Copyright (c) 2017 Bastian Fritsch (http://www.bit-basti.de)
  * @license    BSD 2-clause license
  */
-class SchemaOrganizationType extends DropdownField {
+class SchemaOrganizationType extends GroupedDropdownField {
 
 	protected $extraClasses = array('dropdown');
 
@@ -25,35 +26,7 @@ class SchemaOrganizationType extends DropdownField {
 		parent::__construct($name, ($title === null) ? $name : $title, $source, $value, $form);
 	}
 
-	public function Field($properties = array()) {
-		$options = '';
-		foreach ($this->getSource() as $value => $title) {
-			if (is_array($title)) {
-				$options .= "<optgroup label=\"$value\">";
-				foreach ($title as $value2 => $title2) {
-					$disabled = '';
-					if (array_key_exists($value, $this->disabledItems)
-						&& is_array($this->disabledItems[$value])
-						&& in_array($value2, $this->disabledItems[$value])) {
-						$disabled = 'disabled="disabled"';
-					}
-					$selected = $value2 == $this->value ? " selected=\"selected\"" : "";
-					$options .= "<option$selected value=\"$value2\" $disabled>$title2</option>";
-				}
-				$options .= "</optgroup>";
-			} else {
-				// Fall back to the standard dropdown field
-				$disabled = '';
-				if (in_array($value, $this->disabledItems)) {
-					$disabled = 'disabled="disabled"';
-				}
-				$selected = $value == $this->value ? " selected=\"selected\"" : "";
-				$options .= "<option$selected value=\"$value\" $disabled>$title</option>";
-			}
-		}
 
-		return FormField::create_tag('select', $this->getAttributes(), $options);
-	}
 
 	public function Type() {
 		return 'groupeddropdown dropdown';
@@ -71,19 +44,19 @@ class SchemaOrganizationType extends DropdownField {
 			"NGO" => "NGO",
 			"EducationalOrganization" => array(
 				"EducationalOrganization" => "Educational Organization",
-				"CollegeOrUniversity" => "&mdash; College or University",
-				"ElementarySchool" => "&mdash; Elementary School",
-				"HighSchool" => "&mdash; High School",
-				"MiddleSchool" => "&mdash; Middle School",
-				"Preschool" => "&mdash; Preschool",
-				"School" => "&mdash; School",
+				"CollegeOrUniversity" => "– College or University",
+				"ElementarySchool" => "– Elementary School",
+				"HighSchool" => "– High School",
+				"MiddleSchool" => "– Middle School",
+				"Preschool" => "– Preschool",
+				"School" => "– School",
 
 			),
 			"PerformingGroup" => array(
 				"PerformingGroup" => "Performing Group",
-				"DanceGroup" => "&mdash; Dance Group",
-				"MusicGroup" => "&mdash; Music Group",
-				"TheaterGroup" => "&mdash; Theater Group",
+				"DanceGroup" => "– Dance Group",
+				"MusicGroup" => "– Music Group",
+				"TheaterGroup" => "– Theater Group",
 
 			),
 			"SportsTeam" => "Sports Team",
@@ -91,110 +64,110 @@ class SchemaOrganizationType extends DropdownField {
 			"AnimalShelter" => "Animal Shelter",
 			"AutomotiveBusiness" => array(
 				"AutomotiveBusiness" => "Automotive Business",
-				"AutoBodyShop" => "&mdash; Auto Body Shop",
-				"AutoDealer" => "&mdash; Auto Dealer",
-				"AutoPartsStore" => "&mdash; Auto Parts Store",
-				"AutoRental" => "&mdash; Auto Rental",
-				"AutoRepair" => "&mdash; Auto Repair",
-				"AutoWash" => "&mdash; Auto Wash",
-				"GasStation" => "&mdash; Gas Station",
-				"MotorcycleDealer" => "&mdash; Motorcycle Dealer",
-				"MotorcycleRepair" => "&mdash; Motorcycle Repair",
+				"AutoBodyShop" => "– Auto Body Shop",
+				"AutoDealer" => "– Auto Dealer",
+				"AutoPartsStore" => "– Auto Parts Store",
+				"AutoRental" => "– Auto Rental",
+				"AutoRepair" => "– Auto Repair",
+				"AutoWash" => "– Auto Wash",
+				"GasStation" => "– Gas Station",
+				"MotorcycleDealer" => "– Motorcycle Dealer",
+				"MotorcycleRepair" => "– Motorcycle Repair",
 			),
 			"ChildCare" => "Child Care",
 			"DryCleaningOrLaundry" => "Dry Cleaning or Laundry",
 			"EmergencyService" => array(
 				"EmergencyService" => "Emergency Service",
-				"FireStation" => "&mdash; Fire Station",
-				"Hospital" => "&mdash; Hospital",
-				"PoliceStation" => "&mdash; Police Station",
+				"FireStation" => "– Fire Station",
+				"Hospital" => "– Hospital",
+				"PoliceStation" => "– Police Station",
 			),
 			"EmploymentAgency" => "Employment Agency",
 			"EntertainmentBusiness" => array(
 				"EntertainmentBusiness" => "Entertainment Business",
-				"AdultEntertainment" => "&mdash; Adult Entertainment",
-				"AmusementPark" => "&mdash; Amusement Park",
-				"ArtGallery" => "&mdash; Art Gallery",
-				"Casino" => "&mdash; Casino",
-				"ComedyClub" => "&mdash; Comedy Club",
-				"MovieTheater" => "&mdash; Movie Theater",
-				"NightClub" => "&mdash; Night Club",
+				"AdultEntertainment" => "– Adult Entertainment",
+				"AmusementPark" => "– Amusement Park",
+				"ArtGallery" => "– Art Gallery",
+				"Casino" => "– Casino",
+				"ComedyClub" => "– Comedy Club",
+				"MovieTheater" => "– Movie Theater",
+				"NightClub" => "– Night Club",
 
 			),
 			"FinancialService" => array(
 				"FinancialService" => "Financial Service",
-				"AccountingService" => "&mdash; Accounting Service",
-				"AutomatedTeller" => "&mdash; Automated Teller",
-				"BankOrCreditUnion" => "&mdash; Bank or Credit Union",
-				"InsuranceAgency" => "&mdash; Insurance Agency",
+				"AccountingService" => "– Accounting Service",
+				"AutomatedTeller" => "– Automated Teller",
+				"BankOrCreditUnion" => "– Bank or Credit Union",
+				"InsuranceAgency" => "– Insurance Agency",
 			),
 			"FoodEstablishment" => array(
 				"FoodEstablishment" => "Food Establishment",
-				"Bakery" => "&mdash; Bakery",
-				"BarOrPub" => "&mdash; Bar or Pub",
-				"Brewery" => "&mdash; Brewery",
-				"CafeOrCoffeeShop" => "&mdash; Cafe or Coffee Shop",
-				"FastFoodRestaurant" => "&mdash; Fast Food Restaurant",
-				"IceCreamShop" => "&mdash; Ice Cream Shop",
-				"Restaurant" => "&mdash; Restaurant",
-				"Winery" => "&mdash; Winery",
+				"Bakery" => "– Bakery",
+				"BarOrPub" => "– Bar or Pub",
+				"Brewery" => "– Brewery",
+				"CafeOrCoffeeShop" => "– Cafe or Coffee Shop",
+				"FastFoodRestaurant" => "– Fast Food Restaurant",
+				"IceCreamShop" => "– Ice Cream Shop",
+				"Restaurant" => "– Restaurant",
+				"Winery" => "– Winery",
 			),
 			"GovernmentOffice" => array(
 				"GovernmentOffice" => "Government Office",
-				"PostOffice" => "&mdash; Post Office",
+				"PostOffice" => "– Post Office",
 			),
 			"HealthAndBeautyBusiness" => array(
 				"HealthAndBeautyBusiness" => "Health And Beauty Business",
-				"BeautySalon" => "&mdash; Beauty Salon",
-				"DaySpa" => "&mdash; Day Spa",
-				"HairSalon" => "&mdash; Hair Salon",
-				"HealthClub" => "&mdash; Health Club",
-				"NailSalon" => "&mdash; Nail Salon",
-				"TattooParlor" => "&mdash; Tattoo Parlor",
+				"BeautySalon" => "– Beauty Salon",
+				"DaySpa" => "– Day Spa",
+				"HairSalon" => "– Hair Salon",
+				"HealthClub" => "– Health Club",
+				"NailSalon" => "– Nail Salon",
+				"TattooParlor" => "– Tattoo Parlor",
 			),
 			"HomeAndConstructionBusiness" => array(
 				"HomeAndConstructionBusiness" => "Home And Construction Business",
-				"Electrician" => "&mdash; Electrician",
-				"GeneralContractor" => "&mdash; General Contractor",
-				"HVACBusiness" => "&mdash; HVAC Business",
-				"HousePainter" => "&mdash; House Painter",
-				"Locksmith" => "&mdash; Locksmith",
-				"MovingCompany" => "&mdash; Moving Company",
-				"Plumber" => "&mdash; Plumber",
-				"RoofingContractor" => "&mdash; Roofing Contractor",
+				"Electrician" => "– Electrician",
+				"GeneralContractor" => "– General Contractor",
+				"HVACBusiness" => "– HVAC Business",
+				"HousePainter" => "– House Painter",
+				"Locksmith" => "– Locksmith",
+				"MovingCompany" => "– Moving Company",
+				"Plumber" => "– Plumber",
+				"RoofingContractor" => "– Roofing Contractor",
 			),
 			"InternetCafe" => "Internet Cafe",
 			"Library" => " Library",
 			"LodgingBusiness" => array(
 				"LodgingBusiness" => "Lodging Business",
-				"BedAndBreakfast" => "&mdash; Bed And Breakfast",
-				"Hostel" => "&mdash; Hostel",
-				"Hotel" => "&mdash; Hotel",
-				"Motel" => "&mdash; Motel",
+				"BedAndBreakfast" => "– Bed And Breakfast",
+				"Hostel" => "– Hostel",
+				"Hotel" => "– Hotel",
+				"Motel" => "– Motel",
 			),
 			"MedicalOrganization" => array(
 				"MedicalOrganization" => "Medical Organization",
-				"Dentist" => "&mdash; Dentist",
-				"DiagnosticLab" => "&mdash; Diagnostic Lab",
-				"Hospital" => "&mdash; Hospital",
-				"MedicalClinic" => "&mdash; Medical Clinic",
-				"Optician" => "&mdash; Optician",
-				"Pharmacy" => "&mdash; Pharmacy",
-				"Physician" => "&mdash; Physician",
-				"VeterinaryCare" => "&mdash; Veterinary Care",
+				"Dentist" => "– Dentist",
+				"DiagnosticLab" => "– Diagnostic Lab",
+				"Hospital" => "– Hospital",
+				"MedicalClinic" => "– Medical Clinic",
+				"Optician" => "– Optician",
+				"Pharmacy" => "– Pharmacy",
+				"Physician" => "– Physician",
+				"VeterinaryCare" => "– Veterinary Care",
 			),
 			"ProfessionalService" => array(
 				"ProfessionalService" => "Professional Service",
-				"AccountingService" => "&mdash; Accounting Service",
-				"Attorney" => "&mdash; Attorney",
-				"Dentist" => "&mdash; Dentist",
-				"Electrician" => "&mdash; Electrician",
-				"GeneralContractor" => "&mdash; General Contractor",
-				"HousePainter" => "&mdash; House Painter",
-				"Locksmith" => "&mdash; Locksmith",
-				"Notary" => "&mdash; Notary",
-				"Plumber" => "&mdash; Plumber",
-				"RoofingContractor" => "&mdash; Roofing Contractor",
+				"AccountingService" => "– Accounting Service",
+				"Attorney" => "– Attorney",
+				"Dentist" => "– Dentist",
+				"Electrician" => "– Electrician",
+				"GeneralContractor" => "– General Contractor",
+				"HousePainter" => "– House Painter",
+				"Locksmith" => "– Locksmith",
+				"Notary" => "– Notary",
+				"Plumber" => "– Plumber",
+				"RoofingContractor" => "– Roofing Contractor",
 			),
 			"RadioStation" => "Radio Station",
 			"RealEstateAgent" => "Real Estate Agent",
@@ -203,48 +176,48 @@ class SchemaOrganizationType extends DropdownField {
 			"ShoppingCenter" => "Shopping Center",
 			"SportsActivityLocation" => array(
 				"SportsActivityLocation" => "Sports Activity Location",
-				"BowlingAlley" => "&mdash; Bowling Alley",
-				"ExerciseGym" => "&mdash; Exercise Gym",
-				"GolfCourse" => "&mdash; Golf Course",
-				"HealthClub" => "&mdash; Health Club",
-				"PublicSwimmingPool" => "&mdash; Public Swimming Pool",
-				"SkiResort" => "&mdash; Ski Resort",
-				"SportsClub" => "&mdash; Sports Club",
-				"StadiumOrArena" => "&mdash; Stadium or Arena",
-				"TennisComplex" => "&mdash; Tennis Complex",
+				"BowlingAlley" => "– Bowling Alley",
+				"ExerciseGym" => "– Exercise Gym",
+				"GolfCourse" => "– Golf Course",
+				"HealthClub" => "– Health Club",
+				"PublicSwimmingPool" => "– Public Swimming Pool",
+				"SkiResort" => "– Ski Resort",
+				"SportsClub" => "– Sports Club",
+				"StadiumOrArena" => "– Stadium or Arena",
+				"TennisComplex" => "– Tennis Complex",
 			),
 			"Store" => array(
 				"Store" => " Store",
-				"AutoPartsStore" => "&mdash; Auto Parts Store",
-				"BikeStore" => "&mdash; Bike Store",
-				"BookStore" => "&mdash; Book Store",
-				"ClothingStore" => "&mdash; Clothing Store",
-				"ComputerStore" => "&mdash; Computer Store",
-				"ConvenienceStore" => "&mdash; Convenience Store",
-				"DepartmentStore" => "&mdash; Department Store",
-				"ElectronicsStore" => "&mdash; Electronics Store",
-				"Florist" => "&mdash; Florist",
-				"FurnitureStore" => "&mdash; Furniture Store",
-				"GardenStore" => "&mdash; Garden Store",
-				"GroceryStore" => "&mdash; Grocery Store",
-				"HardwareStore" => "&mdash; Hardware Store",
-				"HobbyShop" => "&mdash; Hobby Shop",
-				"HomeGoodsStore" => "&mdash; HomeGoods Store",
-				"JewelryStore" => "&mdash; Jewelry Store",
-				"LiquorStore" => "&mdash; Liquor Store",
-				"MensClothingStore" => "&mdash; Mens Clothing Store",
-				"MobilePhoneStore" => "&mdash; Mobile Phone Store",
-				"MovieRentalStore" => "&mdash; Movie Rental Store",
-				"MusicStore" => "&mdash; Music Store",
-				"OfficeEquipmentStore" => "&mdash; Office Equipment Store",
-				"OutletStore" => "&mdash; Outlet Store",
-				"PawnShop" => "&mdash; Pawn Shop",
-				"PetStore" => "&mdash; Pet Store",
-				"ShoeStore" => "&mdash; Shoe Store",
-				"SportingGoodsStore" => "&mdash; Sporting Goods Store",
-				"TireShop" => "&mdash; Tire Shop",
-				"ToyStore" => "&mdash; Toy Store",
-				"WholesaleStore" => "&mdash; Wholesale Store",
+				"AutoPartsStore" => "– Auto Parts Store",
+				"BikeStore" => "– Bike Store",
+				"BookStore" => "– Book Store",
+				"ClothingStore" => "– Clothing Store",
+				"ComputerStore" => "– Computer Store",
+				"ConvenienceStore" => "– Convenience Store",
+				"DepartmentStore" => "– Department Store",
+				"ElectronicsStore" => "– Electronics Store",
+				"Florist" => "– Florist",
+				"FurnitureStore" => "– Furniture Store",
+				"GardenStore" => "– Garden Store",
+				"GroceryStore" => "– Grocery Store",
+				"HardwareStore" => "– Hardware Store",
+				"HobbyShop" => "– Hobby Shop",
+				"HomeGoodsStore" => "– HomeGoods Store",
+				"JewelryStore" => "– Jewelry Store",
+				"LiquorStore" => "– Liquor Store",
+				"MensClothingStore" => "– Mens Clothing Store",
+				"MobilePhoneStore" => "– Mobile Phone Store",
+				"MovieRentalStore" => "– Movie Rental Store",
+				"MusicStore" => "– Music Store",
+				"OfficeEquipmentStore" => "– Office Equipment Store",
+				"OutletStore" => "– Outlet Store",
+				"PawnShop" => "– Pawn Shop",
+				"PetStore" => "– Pet Store",
+				"ShoeStore" => "– Shoe Store",
+				"SportingGoodsStore" => "– Sporting Goods Store",
+				"TireShop" => "– Tire Shop",
+				"ToyStore" => "– Toy Store",
+				"WholesaleStore" => "– Wholesale Store",
 			),
 			"TelevisionStation" => "Television Station",
 			"TouristInformationCenter" => "Tourist Information Center",
@@ -261,11 +234,11 @@ class SchemaOrganizationType extends DropdownField {
 			"FireStation" => "Fire Station",
 			"GovernmentBuilding" => array(
 				"GovernmentBuilding" => "Government Building",
-				"CityHall" => "&mdash; City Hall",
-				"Courthouse" => "&mdash; Courthouse",
-				"DefenceEstablishment" => "&mdash; Defence Establishment",
-				"Embassy" => "&mdash; Embassy",
-				"LegislativeBuilding" => "&mdash; Legislative Building",
+				"CityHall" => "– City Hall",
+				"Courthouse" => "– Courthouse",
+				"DefenceEstablishment" => "– Defence Establishment",
+				"Embassy" => "– Embassy",
+				"LegislativeBuilding" => "– Legislative Building",
 			),
 			"Hospital" => "Hospital",
 			"MovieTheater" => "Movie Theater",
@@ -276,12 +249,12 @@ class SchemaOrganizationType extends DropdownField {
 			"PerformingArtsTheater" => "Performing Arts Theater",
 			"PlaceOfWorship" => array(
 				"PlaceOfWorship" => "Place Of Worship",
-				"BuddhistTemple" => "&mdash; Buddhist Temple",
-				"CatholicChurch" => "&mdash; Catholic Church",
-				"Church" => "&mdash; Church",
-				"HinduTemple" => "&mdash; Hindu Temple",
-				"Mosque" => "&mdash; Mosque",
-				"Synagogue" => "&mdash; Synagogue",
+				"BuddhistTemple" => "– Buddhist Temple",
+				"CatholicChurch" => "– Catholic Church",
+				"Church" => "– Church",
+				"HinduTemple" => "– Hindu Temple",
+				"Mosque" => "– Mosque",
+				"Synagogue" => "– Synagogue",
 			),
 			"Playground" => "Playground",
 			"PoliceStation" => "PoliceStation",
@@ -293,9 +266,9 @@ class SchemaOrganizationType extends DropdownField {
 			"Zoo" => "Zoo",
 			"Residence" => array(
 				"Residence" => "Residence",
-				"ApartmentComplex" => "&mdash; Apartment Complex",
-				"GatedResidenceCommunity" => "&mdash; Gated Residence Community",
-				"SingleFamilyResidence" => "&mdash; Single Family Residence",
+				"ApartmentComplex" => "– Apartment Complex",
+				"GatedResidenceCommunity" => "– Gated Residence Community",
+				"SingleFamilyResidence" => "– Single Family Residence",
 			),
 		);
 	}

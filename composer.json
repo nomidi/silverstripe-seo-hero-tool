@@ -26,6 +26,10 @@
             "client/dist"
         ]
     },
+    "require": {
+        "php": ">=7.1.0",
+        "dynamic/silverstripe-country-dropdown-field": "^1.2"
+    },
     "support": {
         "issues": "https://github.com/nomidi/silverstripe-seo-hero-tool/issues"
     },
