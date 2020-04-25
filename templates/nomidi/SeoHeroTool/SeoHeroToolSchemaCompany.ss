@@ -34,11 +34,11 @@
       <% end_if %>
       <% if $OpeningHoursInSchema %>
         ,"openingHoursSpecification": [
-          <% loop OpeningHours %>
+          <% loop $SeoHeroToolOpeningHours %>
             {
               "@type": "OpeningHoursSpecification",
-              <% if $Close %>"closes": "{$Close}:00",<% end_if %>
-              <% if $Open %>"opens": "{$Open}:00",<% end_if %>
+              <% if $Close %>"closes": "{$Close}",<% end_if %>
+              <% if $Open %>"opens": "{$Open}",<% end_if %>
               "dayOfWeek": "http://schema.org/{$Day}"
             }<% if not Last %>,<% end_if %>
           <% end_loop %>

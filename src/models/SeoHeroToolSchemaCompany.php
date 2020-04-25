@@ -35,20 +35,7 @@ class SeoHeroToolSchemaCompany extends DataObject
     'VatID' => 'Text',
     'Latitude' => 'Float()',
     'Longitude' => 'Float()',
-    'OpeningHoursMondayOpeningTime' => 'Text',
-    'OpeningHoursMondayClosingTime' => 'Text',
-    'OpeningHoursTuesdayOpeningTime' => 'Text',
-    'OpeningHoursTuesdayClosingTime' => 'Text',
-    'OpeningHoursWednesdayOpeningTime' => 'Text',
-    'OpeningHoursWednesdayClosingTime' => 'Text',
-    'OpeningHoursThursdayOpeningTime' => 'Text',
-    'OpeningHoursThursdayClosingTime' => 'Text',
-    'OpeningHoursFridayOpeningTime' => 'Text',
-    'OpeningHoursFridayClosingTime' => 'Text',
-    'OpeningHoursSaturdayOpeningTime' => 'Text',
-    'OpeningHoursSaturdayClosingTime' => 'Text',
-    'OpeningHoursSundayOpeningTime' => 'Text',
-    'OpeningHoursSundayClosingTime' => 'Text',
+
     'OpeningHoursInSchema' => 'Boolean'
 
   );
@@ -59,6 +46,11 @@ class SeoHeroToolSchemaCompany extends DataObject
     /*private static $has_many = array(
       'SeoHeroToolSocialLinks' => 'SeoHeroToolSocialLink'
     );*/
+
+
+    private static $has_many = [
+        'SeoHeroToolOpeningHours'=>SeoHeroToolOpeningHour::class
+    ];
 
     private static $singular_name = 'Schema.org Company';
 
@@ -82,20 +74,7 @@ class SeoHeroToolSchemaCompany extends DataObject
         $fields->addFieldToTab('Root.Main', new TextField('VatID', _t('SeoHeroToolSchemaCompany.VatID', 'VatID')));
         $fields->addFieldToTab('Root.OpeningHours', new Literalfield('', _t('SeoHeroToolSchemaCompany.OpeningHoursText', "Hours should be in the format 0900 (for 09.00) or 1730 (for 17.30)")));
         $fields->addFieldToTab('Root.OpeningHours', new CheckboxField('OpeningHoursInSchema', _t('SeoHeroToolSchemaCompany.OpeningHoursInSchema', 'Display Opening Hours in Schemadata?')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursMondayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursMondayOpeningTime', 'Opening Hour Monday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursMondayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursMondayClosingTime', 'Closing Hour Monday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursTuesdayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursTuesdayOpeningTime', 'Opening Hour Tuesday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursTuesdayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursTuesdayClosingTime', 'Closing Hour Tuesday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursWednesdayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursWednesdayOpeningTime', 'Opening Hour Wednesday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursWednesdayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursWednesdayClosingTime', 'Closing Hour Wednesday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursThursdayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursThursdayOpeningTime', 'Opening Hour Thursday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursThursdayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursThursdayClosingTime', 'Closing Hour Thursday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursFridayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursFridayOpeningTime', 'Opening Hour Friday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursFridayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursFridayClosingTime', 'Closing Hour Friday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursSaturdayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursSaturdayOpeningTime', 'Opening Hour Saturday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursSaturdayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursSaturdayClosingTime', 'Closing Hour Saturday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursSundayOpeningTime', _t('SeoHeroToolSchemaCompany.OpeningHoursSundayOpeningTime', 'Opening Hour Sunday')));
-        $fields->addFieldToTab('Root.OpeningHours', new Textfield('OpeningHoursSundayClosingTime', _t('SeoHeroToolSchemaCompany.OpeningHoursSundayClosingTime', 'Closing Hour Sunday')));
+
         $logoField = new UploadField(
                 $name = 'Logo',
                 $title = _t('SeoHeroToolSchemaCompany.Logo', 'Company Logo')
@@ -110,6 +89,12 @@ class SeoHeroToolSchemaCompany extends DataObject
         $latf->setConfig('lat', true);
         $fields->addFieldToTab('Root.Main', $lngf = new LatLngField('Longitude'));
         $lngf->setConfig('lng', true);
+
+        $fields->removeByName('SeoHeroToolOpeningHours');
+         $openinggrid = new GridField("SeoHeroToolOpeningHours", "Öffnungszeiten", $this->SeoHeroToolOpeningHours(), GridFieldConfig_RelationEditor::create(), $this);
+         $config = $openinggrid->getConfig();
+         $fields->addFieldToTab('Root.OpeningHours', $openinggrid);
+
 
         /*$grid = new GridField("SeoHeroToolSocialLinks", "Social Links", $this->SeoHeroToolSocialLinks(), GridFieldConfig_RelationEditor::create(), $this);
         $config = $grid->getConfig();

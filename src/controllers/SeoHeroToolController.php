@@ -2,7 +2,9 @@
 
 namespace nomidi\SeoHeroTool;
 
+use SilverStripe\Dev\Debug;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\DataObject;
 use SilverStripe\View\Requirements;
 use nomidi\SeoHeroTool\SeoHeroToolGoogleAnalytic;
 use SilverStripe\Core\Config\Config;
@@ -21,8 +23,9 @@ class SeoHeroToolController extends DataExtension
     public function onAfterInit()
     {
         $class = get_class($this->owner);
-        $yamlsettings = config::inst()->get('SeoHeroToolDataObject', 'exclude');
-        if (is_array($yamlsettings) && $this->owner->data() && $class != 'ErrorPage_Controller' && !in_array($class,$yamlsettings)) {
+        $yamlsettings = config::inst()->get(__CLASS__, 'exclude');
+
+        if (is_array($yamlsettings) && $this->owner->data() && !in_array($class,$yamlsettings)) {
             # fix installation issue with non existing pages
           # todo find better solution during installation
           Requirements::insertHeadTags($this->SeoHeroToolMeta());
@@ -82,7 +85,9 @@ class SeoHeroToolController extends DataExtension
     public function getSchemaCompany()
     {
         $SchemaCompany = SeoHeroToolSchemaCompany::get()->first();
-        /*$value = $SchemaCompany->databaseFields(SeoHeroToolSchemaCompany::class);
+        $schema = DataObject::getSchema();
+        $value = $schema->databaseFields(SeoHeroToolSchemaCompany::class);
+
         foreach ($value as $k => $v) {
             if ($k != 'LogoID') {
                 $SchemaCompany->$k = stripslashes($SchemaCompany->$k);
@@ -91,7 +96,7 @@ class SeoHeroToolController extends DataExtension
         if ($SchemaCompany->OrganizationType != "") {
             $template = $this->owner->customise(array('SchemaCompany'=>$SchemaCompany))->renderWith('nomidi\SeoHeroTool\SeoHeroToolSchemaCompany');
             return $template;
-        }*/
+        }
     }
 
     /*

@@ -8,3 +8,6 @@ SilverStripe\CMS\Model\SiteTree:
 SilverStripe\Admin\LeftAndMain:
   extra_requirements_css:
     - 'nomidi/silverstripe-seo-hero-tool:client/dist/css/style.css'
+nomidi\SeoHeroTool\SeoHeroToolController:
+  exclude:
+    - SilverStripe\ErrorPage\ErrorPageController

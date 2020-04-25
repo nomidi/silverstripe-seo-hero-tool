@@ -85,7 +85,7 @@ de:
     OpeningHoursSaturdayOpeningTime: 'Öffnungszeit am Samstag'
     OpeningHoursSundayClosingTime: 'Schließzeit am Sonntag'
     OpeningHoursSundayOpeningTime: 'Öffnungszeit am Sonntag'
-    OpeningHoursText: 'Die Stunden müssen im Format 0900 (für 9 Uhr) bzw. 1730 (für 17.30) eingegeben werden.'
+    OpeningHoursText: 'Die Stunden müssen im Format 09:00 (für 9 Uhr) bzw. 17:30 (für 17.30) eingegeben werden.'
     OpeningHoursThursdayClosingTime: 'Schließzeit am Donnerstag'
     OpeningHoursThursdayOpeningTime: 'Öffnungszeit am Donnerstag'
     OpeningHoursTuesdayClosingTime: 'Schließzeit am Dienstag'
