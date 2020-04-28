@@ -8,9 +8,9 @@
 <meta property="og:type" content="$CheckFBType" />
 <% if $SMPreviewImage('FB') %><meta property="og:image" content="$SMPreviewImage('FB')" /><% end_if %>
 <% if FBDescription || BetterMetaDescription %> <meta property="og:description" content="<% if FBDescription %>$FBDescription<% else %>$BetterMetaDescription<% end_if %>"><% end_if %>
-<meta property="article:published_time" content="$Created.format('c')" />
-<meta property="article:modified_time" content="$LastEdited.format('c')" />
-<meta property="og:updated_time" content="$LastEdited.format('c')" />
+<meta property="article:published_time" content="$Created.format('Y-MM-dd')" />
+<meta property="article:modified_time" content="$LastEdited.format('Y-MM-dd')" />
+<meta property="og:updated_time" content="$LastEdited.format('Y-MM-dd')" />
 
 <%-- Twitter --%>
 <meta name="twitter:card" content="summary" />
