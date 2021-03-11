@@ -69,7 +69,7 @@ class SeoHeroToolRedirect extends DataObject
 
     private function addSlashToLink($Link)
     {
-        if ($Link{0} != '/') {
+        if ($Link[0] != '/') {
             $Link = '/'.$Link;
         }
         return $Link;
